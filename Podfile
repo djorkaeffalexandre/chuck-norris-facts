@@ -3,6 +3,8 @@ platform :ios, '11.0'
 target 'Chuck Norris Facts' do
   use_frameworks!
 
+  pod 'SwiftLint'
+
   target 'Chuck Norris FactsTests' do
     inherit! :search_paths
   end
