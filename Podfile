@@ -3,6 +3,10 @@ platform :ios, '11.0'
 target 'Chuck Norris Facts' do
   use_frameworks!
 
+  # Rx
+  pod 'RxSwift'
+
+  # Tools
   pod 'SwiftLint'
 
   target 'Chuck Norris FactsTests' do
