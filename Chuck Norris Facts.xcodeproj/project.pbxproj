@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,9 @@
 		1EE0714925314AF600F6BF6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EE0714725314AF600F6BF6D /* LaunchScreen.storyboard */; };
 		1EE0715425314AF600F6BF6D /* Chuck_Norris_FactsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE0715325314AF600F6BF6D /* Chuck_Norris_FactsTests.swift */; };
 		1EE0715F25314AF600F6BF6D /* Chuck_Norris_FactsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE0715E25314AF600F6BF6D /* Chuck_Norris_FactsUITests.swift */; };
+		1EFE2867253206D3008806B9 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFE2866253206D3008806B9 /* BaseCoordinator.swift */; };
+		1EFE2869253207B2008806B9 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFE2868253207B2008806B9 /* AppCoordinator.swift */; };
+		1EFE286B253207DF008806B9 /* ViewControllerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFE286A253207DF008806B9 /* ViewControllerCoordinator.swift */; };
 		54AACBFAFA5E5798DDE49218 /* Pods_Chuck_Norris_Facts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02186229E02F0A408D2EE0C2 /* Pods_Chuck_Norris_Facts.framework */; };
 		D5197BBE6E28E81FC84E5C48 /* Pods_Chuck_Norris_FactsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9A8C577644798596588861 /* Pods_Chuck_Norris_FactsTests.framework */; };
 		E08677EA93CEAFF961473756 /* Pods_Chuck_Norris_Facts_Chuck_Norris_FactsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C1F7C697FAAC85D6A1F91F4 /* Pods_Chuck_Norris_Facts_Chuck_Norris_FactsUITests.framework */; };
@@ -51,6 +54,9 @@
 		1EE0715A25314AF600F6BF6D /* Chuck Norris FactsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chuck Norris FactsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE0715E25314AF600F6BF6D /* Chuck_Norris_FactsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chuck_Norris_FactsUITests.swift; sourceTree = "<group>"; };
 		1EE0716025314AF600F6BF6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1EFE2866253206D3008806B9 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		1EFE2868253207B2008806B9 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		1EFE286A253207DF008806B9 /* ViewControllerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerCoordinator.swift; sourceTree = "<group>"; };
 		21EE31E3903E76B09B8FBA96 /* Pods-Chuck Norris Facts-Chuck Norris FactsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chuck Norris Facts-Chuck Norris FactsUITests.debug.xcconfig"; path = "Target Support Files/Pods-Chuck Norris Facts-Chuck Norris FactsUITests/Pods-Chuck Norris Facts-Chuck Norris FactsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5BFEC696AC24CC9BF87C5195 /* Pods-Chuck Norris FactsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chuck Norris FactsTests.release.xcconfig"; path = "Target Support Files/Pods-Chuck Norris FactsTests/Pods-Chuck Norris FactsTests.release.xcconfig"; sourceTree = "<group>"; };
 		74304E6C0D317767335DC2AB /* Pods-Chuck Norris Facts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chuck Norris Facts.release.xcconfig"; path = "Target Support Files/Pods-Chuck Norris Facts/Pods-Chuck Norris Facts.release.xcconfig"; sourceTree = "<group>"; };
@@ -114,6 +120,7 @@
 		1EE0713B25314AF500F6BF6D /* Chuck Norris Facts */ = {
 			isa = PBXGroup;
 			children = (
+				1EFE2865253206C8008806B9 /* Library */,
 				1EFE28632532062A008806B9 /* Scenes */,
 				1EFE286225320625008806B9 /* Data */,
 				1EFE286125320620008806B9 /* App */,
@@ -155,6 +162,7 @@
 			children = (
 				1EE0713C25314AF500F6BF6D /* AppDelegate.swift */,
 				1EE0713E25314AF500F6BF6D /* SceneDelegate.swift */,
+				1EFE2868253207B2008806B9 /* AppCoordinator.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -171,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				1EE0714025314AF500F6BF6D /* ViewController.swift */,
+				1EFE286A253207DF008806B9 /* ViewControllerCoordinator.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -180,6 +189,14 @@
 			children = (
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		1EFE2865253206C8008806B9 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				1EFE2866253206D3008806B9 /* BaseCoordinator.swift */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 		4AEC7A1E4DDCD345F1E9B6DA /* Pods */ = {
@@ -217,6 +234,7 @@
 				1EE0713625314AF500F6BF6D /* Frameworks */,
 				1EE0713725314AF500F6BF6D /* Resources */,
 				1EFBC28C2531F8FB00594676 /* SwiftLint */,
+				735DB507838707E07E18E902 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -254,6 +272,7 @@
 				1EE0715625314AF600F6BF6D /* Sources */,
 				1EE0715725314AF600F6BF6D /* Frameworks */,
 				1EE0715825314AF600F6BF6D /* Resources */,
+				431049B51AA3B09194F28889 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -375,6 +394,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
+		431049B51AA3B09194F28889 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chuck Norris Facts-Chuck Norris FactsUITests/Pods-Chuck Norris Facts-Chuck Norris FactsUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chuck Norris Facts-Chuck Norris FactsUITests/Pods-Chuck Norris Facts-Chuck Norris FactsUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chuck Norris Facts-Chuck Norris FactsUITests/Pods-Chuck Norris Facts-Chuck Norris FactsUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		47A6A25B92C403E329DCC297 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -395,6 +431,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		735DB507838707E07E18E902 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chuck Norris Facts/Pods-Chuck Norris Facts-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chuck Norris Facts/Pods-Chuck Norris Facts-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chuck Norris Facts/Pods-Chuck Norris Facts-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B4BFEDAE06C957BE8D534340 /* [CP] Check Pods Manifest.lock */ = {
@@ -427,8 +480,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1EE0714125314AF500F6BF6D /* ViewController.swift in Sources */,
+				1EFE286B253207DF008806B9 /* ViewControllerCoordinator.swift in Sources */,
 				1EE0713D25314AF500F6BF6D /* AppDelegate.swift in Sources */,
+				1EFE2869253207B2008806B9 /* AppCoordinator.swift in Sources */,
 				1EE0713F25314AF500F6BF6D /* SceneDelegate.swift in Sources */,
+				1EFE2867253206D3008806B9 /* BaseCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,7 +687,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EA8CB0ABD6CE41AE1F636AB6 /* Pods-Chuck Norris FactsTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PHM6B5Y356;
@@ -654,7 +710,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5BFEC696AC24CC9BF87C5195 /* Pods-Chuck Norris FactsTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PHM6B5Y356;
@@ -677,7 +733,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 21EE31E3903E76B09B8FBA96 /* Pods-Chuck Norris Facts-Chuck Norris FactsUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PHM6B5Y356;
 				INFOPLIST_FILE = "Chuck Norris FactsUITests/Info.plist";
@@ -698,7 +754,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BA72CEAC53E67FEFA608F6B0 /* Pods-Chuck Norris Facts-Chuck Norris FactsUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PHM6B5Y356;
 				INFOPLIST_FILE = "Chuck Norris FactsUITests/Info.plist";
