@@ -114,12 +114,10 @@
 		1EE0713B25314AF500F6BF6D /* Chuck Norris Facts */ = {
 			isa = PBXGroup;
 			children = (
-				1EE0713C25314AF500F6BF6D /* AppDelegate.swift */,
-				1EE0713E25314AF500F6BF6D /* SceneDelegate.swift */,
-				1EE0714025314AF500F6BF6D /* ViewController.swift */,
-				1EE0714525314AF600F6BF6D /* Assets.xcassets */,
-				1EE0714725314AF600F6BF6D /* LaunchScreen.storyboard */,
-				1EE0714A25314AF600F6BF6D /* Info.plist */,
+				1EFE28632532062A008806B9 /* Scenes */,
+				1EFE286225320625008806B9 /* Data */,
+				1EFE286125320620008806B9 /* App */,
+				1EFE286025320614008806B9 /* Resources */,
 			);
 			path = "Chuck Norris Facts";
 			sourceTree = "<group>";
@@ -140,6 +138,48 @@
 				1EE0716025314AF600F6BF6D /* Info.plist */,
 			);
 			path = "Chuck Norris FactsUITests";
+			sourceTree = "<group>";
+		};
+		1EFE286025320614008806B9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1EE0714525314AF600F6BF6D /* Assets.xcassets */,
+				1EE0714725314AF600F6BF6D /* LaunchScreen.storyboard */,
+				1EE0714A25314AF600F6BF6D /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1EFE286125320620008806B9 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1EE0713C25314AF500F6BF6D /* AppDelegate.swift */,
+				1EE0713E25314AF500F6BF6D /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1EFE286225320625008806B9 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				1EFE28642532063C008806B9 /* Networking */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		1EFE28632532062A008806B9 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				1EE0714025314AF500F6BF6D /* ViewController.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		1EFE28642532063C008806B9 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		4AEC7A1E4DDCD345F1E9B6DA /* Pods */ = {
@@ -556,7 +596,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PHM6B5Y356;
-				INFOPLIST_FILE = "Chuck Norris Facts/Info.plist";
+				INFOPLIST_FILE = "Chuck Norris Facts/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -575,7 +615,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PHM6B5Y356;
-				INFOPLIST_FILE = "Chuck Norris Facts/Info.plist";
+				INFOPLIST_FILE = "Chuck Norris Facts/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
