@@ -1,5 +1,5 @@
 //
-//  ViewControllerCoordinator.swift
+//  FactsListCoordinator.swift
 //  Chuck Norris Facts
 //
 //  Created by Djorkaeff Alexandre Vilela Pereira on 10/10/20.
@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-final class ViewControllerCoordinator: BaseCoordinator<Void> {
+final class FactsListCoordinator: BaseCoordinator<Void> {
 
     private let window: UIWindow
 
@@ -18,9 +18,9 @@ final class ViewControllerCoordinator: BaseCoordinator<Void> {
     }
 
     override func start() -> Observable<Void> {
-        let viewController = ViewController()
+        let factsListViewController = FactsListViewController()
 
-        window.rootViewController = viewController
+        window.rootViewController = factsListViewController
         window.makeKeyAndVisible()
 
         return Observable.never()
