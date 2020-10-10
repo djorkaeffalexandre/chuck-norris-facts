@@ -21,6 +21,7 @@
 		1EFE288925321123008806B9 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFE288825321123008806B9 /* JSON.swift */; };
 		1EFE288E2532135B008806B9 /* FactsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFE288D2532135B008806B9 /* FactsListViewController.swift */; };
 		1EFE28902532137C008806B9 /* FactsListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFE288F2532137C008806B9 /* FactsListCoordinator.swift */; };
+		1EFE2892253214DB008806B9 /* FactsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFE2891253214DB008806B9 /* FactsListViewModel.swift */; };
 		54AACBFAFA5E5798DDE49218 /* Pods_Chuck_Norris_Facts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02186229E02F0A408D2EE0C2 /* Pods_Chuck_Norris_Facts.framework */; };
 		D5197BBE6E28E81FC84E5C48 /* Pods_Chuck_Norris_FactsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9A8C577644798596588861 /* Pods_Chuck_Norris_FactsTests.framework */; };
 		E08677EA93CEAFF961473756 /* Pods_Chuck_Norris_Facts_Chuck_Norris_FactsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C1F7C697FAAC85D6A1F91F4 /* Pods_Chuck_Norris_Facts_Chuck_Norris_FactsUITests.framework */; };
@@ -65,6 +66,7 @@
 		1EFE288825321123008806B9 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		1EFE288D2532135B008806B9 /* FactsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListViewController.swift; sourceTree = "<group>"; };
 		1EFE288F2532137C008806B9 /* FactsListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListCoordinator.swift; sourceTree = "<group>"; };
+		1EFE2891253214DB008806B9 /* FactsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListViewModel.swift; sourceTree = "<group>"; };
 		21EE31E3903E76B09B8FBA96 /* Pods-Chuck Norris Facts-Chuck Norris FactsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chuck Norris Facts-Chuck Norris FactsUITests.debug.xcconfig"; path = "Target Support Files/Pods-Chuck Norris Facts-Chuck Norris FactsUITests/Pods-Chuck Norris Facts-Chuck Norris FactsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5BFEC696AC24CC9BF87C5195 /* Pods-Chuck Norris FactsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chuck Norris FactsTests.release.xcconfig"; path = "Target Support Files/Pods-Chuck Norris FactsTests/Pods-Chuck Norris FactsTests.release.xcconfig"; sourceTree = "<group>"; };
 		74304E6C0D317767335DC2AB /* Pods-Chuck Norris Facts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chuck Norris Facts.release.xcconfig"; path = "Target Support Files/Pods-Chuck Norris Facts/Pods-Chuck Norris Facts.release.xcconfig"; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 			children = (
 				1EFE288D2532135B008806B9 /* FactsListViewController.swift */,
 				1EFE288F2532137C008806B9 /* FactsListCoordinator.swift */,
+				1EFE2891253214DB008806B9 /* FactsListViewModel.swift */,
 			);
 			path = FactsList;
 			sourceTree = "<group>";
@@ -532,6 +535,7 @@
 				1EE0713F25314AF500F6BF6D /* SceneDelegate.swift in Sources */,
 				1EFE288E2532135B008806B9 /* FactsListViewController.swift in Sources */,
 				1EFE28902532137C008806B9 /* FactsListCoordinator.swift in Sources */,
+				1EFE2892253214DB008806B9 /* FactsListViewModel.swift in Sources */,
 				1EFE2867253206D3008806B9 /* BaseCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
