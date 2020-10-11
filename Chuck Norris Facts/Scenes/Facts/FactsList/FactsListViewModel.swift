@@ -25,7 +25,9 @@ final class FactsListViewModel {
     let showShareFact: Observable<FactViewModel>
 
     init(factsService: FactsService = FactsService()) {
-        self.facts = factsService.searchFacts(query: "").map { [FactsSectionModel(model: "", items: $0)] }
+        self.facts = factsService.searchFacts(query: "")
+            .map { $0.map { FactViewModel(fact: $0) } }
+            .map { [FactsSectionModel(model: "", items: $0)] }
 
         let startShareFactSubject = PublishSubject<FactViewModel>()
         self.startShareFact = startShareFactSubject.asObserver()

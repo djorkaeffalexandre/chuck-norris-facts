@@ -15,13 +15,13 @@ struct SearchFactsResponse: Decodable {
 }
 
 protocol FactsServiceType {
-    func searchFacts(query: String) -> Observable<[FactViewModel]>
+    func searchFacts(query: String) -> Observable<[Fact]>
 }
 
 final class FactsService: FactsServiceType {
 
-    func searchFacts(query: String) -> Observable<[FactViewModel]> {
-        return Observable<[FactViewModel]>.create { observer in
+    func searchFacts(query: String) -> Observable<[Fact]> {
+        return Observable<[Fact]>.create { observer in
             do {
                 guard let file = Bundle.main.url(forResource: "search-facts", withExtension: ".json") else {
                     return Disposables.create {}
@@ -29,7 +29,7 @@ final class FactsService: FactsServiceType {
 
                 let data = try Data(contentsOf: file)
                 let searchFactsResponse = try JSON.decoder.decode(SearchFactsResponse.self, from: data)
-                observer.onNext(searchFactsResponse.result.map { FactViewModel(fact: $0) })
+                observer.onNext(searchFactsResponse.result)
             } catch {
                 observer.onError(error)
             }
