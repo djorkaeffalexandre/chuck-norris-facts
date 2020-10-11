@@ -54,6 +54,10 @@ class FactsListViewController: UIViewController {
             .observeOn(MainScheduler.instance)
             .bind(to: tableView.rx.items(cellIdentifier: FactTableViewCell.cellIdentifier, cellType: FactTableViewCell.self)) { _, fact, cell in
                 cell.setup(fact)
+                cell.shareButton.rx.tap
+                    .map { fact }
+                    .bind(to: self.viewModel.startShareFact)
+                    .disposed(by: self.disposeBag)
             }
             .disposed(by: disposeBag)
     }

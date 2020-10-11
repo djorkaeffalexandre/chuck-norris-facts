@@ -47,7 +47,7 @@ class FactTableViewCell: UITableViewCell {
         return label
     }()
 
-    private lazy var shareButton: UIButton = {
+    lazy var shareButton: UIButton = {
         let button = UIButton(type: .system)
 
         button.translatesAutoresizingMaskIntoConstraints = false

@@ -11,11 +11,21 @@ import RxSwift
 
 final class FactsListViewModel {
 
+    // MARK: - Inputs
+
+    let startShareFact: AnyObserver<FactViewModel>
+
     // MARK: - Outputs
 
     let facts: Observable<[FactViewModel]>
 
+    let showShareFact: Observable<FactViewModel>
+
     init(factsService: FactsService = FactsService()) {
         self.facts = factsService.searchFacts(query: "")
+
+        let startShareFactSubject = PublishSubject<FactViewModel>()
+        self.startShareFact = startShareFactSubject.asObserver()
+        self.showShareFact = startShareFactSubject.asObservable()
     }
 }

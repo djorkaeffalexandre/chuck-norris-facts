@@ -24,9 +24,26 @@ final class FactsListCoordinator: BaseCoordinator<Void> {
 
         let navigationController = UINavigationController(rootViewController: factsListViewController)
 
+        factsListViewModel.showShareFact
+            .bind(onNext: { [weak self] in
+                self?.showShareFact(fact: $0, in: navigationController)
+            })
+            .disposed(by: disposeBag)
+
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
 
         return Observable.never()
+    }
+
+    private func showShareFact(fact: FactViewModel, in navigationController: UINavigationController) {
+        var activityItems: [Any] = [fact.text]
+
+        if let factUrl = fact.url {
+            activityItems.append(factUrl)
+        }
+
+        let shareActivity = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        navigationController.present(shareActivity, animated: true, completion: nil)
     }
 }
