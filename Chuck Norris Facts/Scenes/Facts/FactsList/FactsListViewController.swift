@@ -33,13 +33,15 @@ class FactsListViewController: UIViewController {
     private func setupTableView() {
         view.addSubview(tableView)
 
+        tableView.separatorStyle = .none
+
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "uiTableViewCell")
+        tableView.register(FactTableViewCell.self, forCellReuseIdentifier: FactTableViewCell.cellIdentifier)
     }
 
     private func setupNavigationBar() {
@@ -50,8 +52,8 @@ class FactsListViewController: UIViewController {
     private func setupBindings() {
         viewModel.facts
             .observeOn(MainScheduler.instance)
-            .bind(to: tableView.rx.items(cellIdentifier: "uiTableViewCell", cellType: UITableViewCell.self)) { _, fact, cell in
-                cell.textLabel?.text = fact.value
+            .bind(to: tableView.rx.items(cellIdentifier: FactTableViewCell.cellIdentifier, cellType: FactTableViewCell.self)) { _, fact, cell in
+                cell.setup(fact)
             }
             .disposed(by: disposeBag)
     }

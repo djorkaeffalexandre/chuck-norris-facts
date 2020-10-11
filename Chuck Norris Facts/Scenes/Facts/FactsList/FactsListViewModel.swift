@@ -13,7 +13,7 @@ final class FactsListViewModel {
 
     // MARK: - Outputs
 
-    let facts: Observable<[Fact]>
+    let facts: Observable<[FactViewModel]>
 
     init(factsService: FactsService = FactsService()) {
         self.facts = factsService.searchFacts(query: "")
