@@ -20,16 +20,34 @@ final class EmptyListView: UIView {
         return animation
     }()
 
+    private lazy var label: UILabel = {
+        let label = UILabel()
+
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+
+        label.text = "Looks like there are no Facts"
+        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+
+        return label
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         addSubview(animation)
+        addSubview(label)
 
         animation.translatesAutoresizingMaskIntoConstraints = false
+        animation.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        animation.heightAnchor.constraint(equalToConstant: 200).isActive = true
         animation.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         animation.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        animation.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
-        animation.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.topAnchor.constraint(equalTo: animation.bottomAnchor).isActive = true
+        label.centerXAnchor.constraint(equalTo: animation.centerXAnchor).isActive = true
     }
 
     required init?(coder: NSCoder) {

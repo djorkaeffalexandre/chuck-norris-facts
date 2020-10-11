@@ -34,7 +34,7 @@ class FactsListViewModelTests: XCTestCase {
     }
 
     func test_showShareFact() throws {
-        guard let file = Bundle.main.url(forResource: "small-fact", withExtension: ".json") else {
+        guard let file = Bundle.main.url(forResource: "large-fact", withExtension: ".json") else {
             return
         }
 
