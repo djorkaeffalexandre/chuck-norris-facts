@@ -8,6 +8,9 @@
 
 import Foundation
 import RxSwift
+import RxDataSources
+
+typealias FactsSectionModel = AnimatableSectionModel<String, FactViewModel>
 
 final class FactsListViewModel {
 
@@ -17,12 +20,12 @@ final class FactsListViewModel {
 
     // MARK: - Outputs
 
-    let facts: Observable<[FactViewModel]>
+    let facts: Observable<[FactsSectionModel]>
 
     let showShareFact: Observable<FactViewModel>
 
     init(factsService: FactsService = FactsService()) {
-        self.facts = factsService.searchFacts(query: "")
+        self.facts = factsService.searchFacts(query: "").map { [FactsSectionModel(model: "", items: $0)] }
 
         let startShareFactSubject = PublishSubject<FactViewModel>()
         self.startShareFact = startShareFactSubject.asObserver()

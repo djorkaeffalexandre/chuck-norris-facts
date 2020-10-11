@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class FactsListViewController: UIViewController {
 
@@ -17,6 +18,24 @@ class FactsListViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let tableView = UITableView()
     private let emptyView = EmptyView()
+
+    private lazy var factsDataSource = RxTableViewSectionedAnimatedDataSource<FactsSectionModel>(
+        configureCell: { [weak self] _, tableView, indexPath, fact -> UITableViewCell in
+
+            guard let viewModel = self?.viewModel, let disposeBag = self?.disposeBag else { return UITableViewCell() }
+            let cell = tableView.dequeueReusableCell(withIdentifier: FactTableViewCell.cellIdentifier, for: indexPath)
+
+            if let cell = cell as? FactTableViewCell {
+                cell.setup(fact)
+                cell.shareButton.rx.tap
+                    .map { fact }
+                    .bind(to: viewModel.startShareFact)
+                    .disposed(by: disposeBag)
+            }
+
+            return cell
+        }
+    )
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,13 +92,7 @@ class FactsListViewController: UIViewController {
 
         viewModel.facts
             .observeOn(MainScheduler.instance)
-            .bind(to: tableView.rx.items(cellIdentifier: FactTableViewCell.cellIdentifier, cellType: FactTableViewCell.self)) { _, fact, cell in
-                cell.setup(fact)
-                cell.shareButton.rx.tap
-                    .map { fact }
-                    .bind(to: self.viewModel.startShareFact)
-                    .disposed(by: self.disposeBag)
-            }
+            .bind(to: tableView.rx.items(dataSource: factsDataSource))
             .disposed(by: disposeBag)
     }
 

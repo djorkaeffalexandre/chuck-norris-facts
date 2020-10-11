@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 enum TextSize: Int {
     case small = 16
@@ -25,4 +26,15 @@ final class FactViewModel {
         }
         self.textSize = fact.value.count > 80 ? .small : .large
     }
+}
+
+extension FactViewModel: IdentifiableType {
+    var identity: String {
+        text
+    }
+}
+
+extension FactViewModel: Equatable { }
+func == (lhs: FactViewModel, rhs: FactViewModel) -> Bool {
+    return lhs.text == rhs.text
 }
