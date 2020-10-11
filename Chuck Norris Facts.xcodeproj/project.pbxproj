@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E32758F2532A2C0007E838A /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32758E2532A2C0007E838A /* EmptyView.swift */; };
+		1E3275922532A2CD007E838A /* empty-box.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E3275912532A2CD007E838A /* empty-box.json */; };
 		1EE0713D25314AF500F6BF6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE0713C25314AF500F6BF6D /* AppDelegate.swift */; };
 		1EE0713F25314AF500F6BF6D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE0713E25314AF500F6BF6D /* SceneDelegate.swift */; };
 		1EE0714625314AF600F6BF6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EE0714525314AF600F6BF6D /* Assets.xcassets */; };
@@ -48,6 +50,8 @@
 
 /* Begin PBXFileReference section */
 		02186229E02F0A408D2EE0C2 /* Pods_Chuck_Norris_Facts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chuck_Norris_Facts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E32758E2532A2C0007E838A /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		1E3275912532A2CD007E838A /* empty-box.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "empty-box.json"; sourceTree = "<group>"; };
 		1EE0713925314AF500F6BF6D /* Chuck Norris Facts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chuck Norris Facts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE0713C25314AF500F6BF6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1EE0713E25314AF500F6BF6D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +113,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E32758D2532A2A3007E838A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1E32758E2532A2C0007E838A /* EmptyView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1E3275902532A2C4007E838A /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				1E3275912532A2CD007E838A /* empty-box.json */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
 		1EE0713025314AF500F6BF6D = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +184,7 @@
 		1EFE286025320614008806B9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1E3275902532A2C4007E838A /* Lottie */,
 				1EFE287C2532105D008806B9 /* Stubs */,
 				1EE0714525314AF600F6BF6D /* Assets.xcassets */,
 				1EE0714725314AF600F6BF6D /* LaunchScreen.storyboard */,
@@ -243,6 +264,7 @@
 		1EFE288C25321337008806B9 /* FactsList */ = {
 			isa = PBXGroup;
 			children = (
+				1E32758D2532A2A3007E838A /* Views */,
 				1EFE289325321CB4008806B9 /* Cells */,
 				1EFE288D2532135B008806B9 /* FactsListViewController.swift */,
 				1EFE288F2532137C008806B9 /* FactsListCoordinator.swift */,
@@ -396,6 +418,7 @@
 				1EFE287E25321071008806B9 /* search-facts.json in Resources */,
 				1EE0714925314AF600F6BF6D /* LaunchScreen.storyboard in Resources */,
 				1EE0714625314AF600F6BF6D /* Assets.xcassets in Resources */,
+				1E3275922532A2CD007E838A /* empty-box.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +565,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1EFE2884253210B2008806B9 /* FactsService.swift in Sources */,
+				1E32758F2532A2C0007E838A /* EmptyView.swift in Sources */,
 				1EFE288925321123008806B9 /* JSON.swift in Sources */,
 				1EFE288725321119008806B9 /* Fact.swift in Sources */,
 				1EFE289725321CE2008806B9 /* FactTableViewCell.swift in Sources */,

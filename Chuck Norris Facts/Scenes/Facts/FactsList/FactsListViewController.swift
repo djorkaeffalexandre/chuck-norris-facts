@@ -16,6 +16,7 @@ class FactsListViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
     private let tableView = UITableView()
+    private let emptyView = EmptyView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,7 @@ class FactsListViewController: UIViewController {
         setupView()
         setupBindings()
         setupTableView()
+        setupEmptyView()
         setupNavigationBar()
     }
 
@@ -44,12 +46,31 @@ class FactsListViewController: UIViewController {
         tableView.register(FactTableViewCell.self, forCellReuseIdentifier: FactTableViewCell.cellIdentifier)
     }
 
+    private func setupEmptyView() {
+        view.addSubview(emptyView)
+
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        emptyView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        emptyView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        emptyView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        emptyView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+
     private func setupNavigationBar() {
         navigationItem.title = "Chuck Norris Facts"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
 
     private func setupBindings() {
+        viewModel.facts
+            .map { $0.isEmpty }
+            .share()
+            .asDriver(onErrorJustReturn: true)
+            .drive(onNext: { [weak self] isEmpty in
+                self?.showEmptyView(isEmpty)
+            })
+            .disposed(by: disposeBag)
+
         viewModel.facts
             .observeOn(MainScheduler.instance)
             .bind(to: tableView.rx.items(cellIdentifier: FactTableViewCell.cellIdentifier, cellType: FactTableViewCell.self)) { _, fact, cell in
@@ -60,5 +81,16 @@ class FactsListViewController: UIViewController {
                     .disposed(by: self.disposeBag)
             }
             .disposed(by: disposeBag)
+    }
+
+    private func showEmptyView(_ isEmpty: Bool) {
+        tableView.isHidden = isEmpty
+        emptyView.isHidden = !isEmpty
+
+        if isEmpty {
+            emptyView.play()
+        } else {
+            emptyView.stop()
+        }
     }
 }

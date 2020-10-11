@@ -10,6 +10,9 @@ target 'Chuck Norris Facts' do
   # Tools
   pod 'SwiftLint'
 
+  # UI
+  pod 'lottie-ios'
+
   target 'Chuck Norris FactsTests' do
     inherit! :search_paths
   end
