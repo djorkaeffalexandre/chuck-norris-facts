@@ -15,16 +15,4 @@ import RxTest
 
 class FactViewModelTests: XCTestCase {
 
-    func test_factTextSize_isAdjustedToContentSize() throws {
-        guard let file = Bundle.main.url(forResource: "large-fact", withExtension: ".json") else {
-            return
-        }
-
-        let data = try Data(contentsOf: file)
-
-        let fact = try JSON.decoder.decode(Fact.self, from: data)
-        let factViewModel = FactViewModel(fact: fact)
-
-        XCTAssertEqual(factViewModel.textSize, TextSize.large)
-    }
 }

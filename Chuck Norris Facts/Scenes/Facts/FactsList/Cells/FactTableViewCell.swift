@@ -42,8 +42,6 @@ class FactTableViewCell: UITableViewCell {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
 
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-
         return label
     }()
 
@@ -83,6 +81,8 @@ class FactTableViewCell: UITableViewCell {
 
     func setup(_ fact: FactViewModel) {
         bodyLabel.text = fact.text
-        bodyLabel.font = .systemFont(ofSize: CGFloat(fact.textSize.rawValue), weight: .bold)
+
+        let fontSize = fact.text.count > 80 ? 16 : 24
+        bodyLabel.font = .systemFont(ofSize: CGFloat(fontSize), weight: .bold)
     }
 }

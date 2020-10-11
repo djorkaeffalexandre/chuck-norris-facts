@@ -9,22 +9,15 @@
 import Foundation
 import RxDataSources
 
-enum TextSize: Int {
-    case small = 16
-    case large = 24
-}
-
 final class FactViewModel {
     let text: String
     var url: URL?
-    let textSize: TextSize
 
     init(fact: Fact) {
         self.text = fact.value
         if let factUrl = fact.url {
             self.url = URL(string: factUrl)
         }
-        self.textSize = fact.value.count > 80 ? .small : .large
     }
 }
 
