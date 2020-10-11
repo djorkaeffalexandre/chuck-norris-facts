@@ -17,7 +17,7 @@ class FactsListViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
     private let tableView = UITableView()
-    private let emptyView = EmptyView()
+    private let emptyListView = EmptyListView()
 
     private lazy var factsDataSource = RxTableViewSectionedAnimatedDataSource<FactsSectionModel>(
         configureCell: { [weak self] _, tableView, indexPath, fact -> UITableViewCell in
@@ -43,7 +43,7 @@ class FactsListViewController: UIViewController {
         setupView()
         setupBindings()
         setupTableView()
-        setupEmptyView()
+        setupEmptyListView()
         setupNavigationBar()
     }
 
@@ -65,14 +65,14 @@ class FactsListViewController: UIViewController {
         tableView.register(FactTableViewCell.self, forCellReuseIdentifier: FactTableViewCell.cellIdentifier)
     }
 
-    private func setupEmptyView() {
-        view.addSubview(emptyView)
+    private func setupEmptyListView() {
+        view.addSubview(emptyListView)
 
-        emptyView.translatesAutoresizingMaskIntoConstraints = false
-        emptyView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        emptyView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        emptyView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        emptyView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        emptyListView.translatesAutoresizingMaskIntoConstraints = false
+        emptyListView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        emptyListView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        emptyListView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        emptyListView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 
     private func setupNavigationBar() {
@@ -98,12 +98,12 @@ class FactsListViewController: UIViewController {
 
     private func showEmptyView(_ isEmpty: Bool) {
         tableView.isHidden = isEmpty
-        emptyView.isHidden = !isEmpty
+        emptyListView.isHidden = !isEmpty
 
         if isEmpty {
-            emptyView.play()
+            emptyListView.play()
         } else {
-            emptyView.stop()
+            emptyListView.stop()
         }
     }
 }

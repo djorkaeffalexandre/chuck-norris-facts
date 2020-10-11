@@ -7,6 +7,8 @@ target 'Chuck Norris Facts' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxDataSources'
+  pod 'RxTest'
+  pod 'RxBlocking'
 
   # Tools
   pod 'SwiftLint'

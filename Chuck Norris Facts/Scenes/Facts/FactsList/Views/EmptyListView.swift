@@ -9,7 +9,7 @@
 import UIKit
 import Lottie
 
-final class EmptyView: UIView {
+final class EmptyListView: UIView {
 
     private lazy var animation: AnimationView = {
         let animation = AnimationView()
