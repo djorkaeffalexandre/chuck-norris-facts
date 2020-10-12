@@ -17,14 +17,13 @@ class FactsListViewControllerTests: XCTestCase {
 
     var factsListViewController: FactsListViewController!
     var factsListViewModel: FactsListViewModel!
-
     var disposeBag: DisposeBag!
 
     override func setUp() {
         disposeBag = DisposeBag()
-
         factsListViewModel = FactsListViewModel()
         factsListViewController = FactsListViewController()
+        factsListViewController.viewModel = factsListViewModel
     }
 
     override func tearDown() {
@@ -33,4 +32,11 @@ class FactsListViewControllerTests: XCTestCase {
         factsListViewController = nil
     }
 
+}
+
+extension FactsListViewControllerTests {
+    func factsListFirstCell() -> FactTableViewCell? {
+        let indexPath = IndexPath(row: 0, section: 0)
+        return factsListViewController.tableView.cellForRow(at: indexPath) as? FactTableViewCell
+    }
 }

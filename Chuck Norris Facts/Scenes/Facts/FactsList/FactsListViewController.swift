@@ -16,8 +16,9 @@ class FactsListViewController: UIViewController {
     var viewModel: FactsListViewModel!
 
     private let disposeBag = DisposeBag()
-    private let tableView = UITableView()
-    private let emptyListView = EmptyListView()
+
+    let tableView = UITableView()
+    let emptyListView = EmptyListView()
 
     private lazy var factsDataSource = RxTableViewSectionedAnimatedDataSource<FactsSectionModel>(
         configureCell: { [weak self] _, tableView, indexPath, fact -> UITableViewCell in

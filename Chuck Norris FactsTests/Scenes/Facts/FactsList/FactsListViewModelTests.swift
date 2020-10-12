@@ -33,14 +33,21 @@ class FactsListViewModelTests: XCTestCase {
         viewModel = nil
     }
 
+    func test_load10RandomFacts() throws {
+        let factsObserver = testScheduler.createObserver([FactsSectionModel].self)
+
+        viewModel.facts
+            .subscribe(factsObserver)
+            .disposed(by: disposeBag)
+
+        testScheduler.start()
+
+        let sectionModels = factsObserver.events.compactMap { $0.value.element }.first
+        XCTAssertEqual(sectionModels?.first?.items.count, 10)
+    }
+
     func test_showShareFact() throws {
-        guard let file = Bundle.main.url(forResource: "large-fact", withExtension: ".json") else {
-            return
-        }
-
-        let data = try Data(contentsOf: file)
-
-        let fact = try JSON.decoder.decode(Fact.self, from: data)
+        let fact = Fact.stub()
         let factObserver = testScheduler.createObserver(FactViewModel.self)
 
         viewModel.showShareFact

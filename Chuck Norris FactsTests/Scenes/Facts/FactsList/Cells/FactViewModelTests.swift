@@ -15,4 +15,18 @@ import RxTest
 
 class FactViewModelTests: XCTestCase {
 
+    func test_factViewModelIsEquatable() throws {
+        let fact = Fact.stub()
+
+        let factViewModelTest = FactViewModel(fact: fact)
+        let factViewModel = FactViewModel(fact: fact)
+        XCTAssertEqual(factViewModelTest, factViewModel)
+    }
+
+    func test_factViewModelIsIdentifiable() throws {
+        let fact = Fact.stub()
+
+        let factViewModelTest = FactViewModel(fact: fact)
+        XCTAssertEqual(factViewModelTest.identity, fact.value)
+    }
 }

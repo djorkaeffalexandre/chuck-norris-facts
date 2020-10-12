@@ -35,7 +35,7 @@ class FactTableViewCell: UITableViewCell {
         return view
     }()
 
-    private lazy var bodyLabel: UILabel = {
+    lazy var bodyLabel: UILabel = {
         let label = UILabel()
 
         label.translatesAutoresizingMaskIntoConstraints = false
