@@ -26,6 +26,7 @@ final class FactsListViewModel {
 
     init(factsService: FactsService = FactsService()) {
         self.facts = factsService.searchFacts(query: "")
+            .map { Array($0.shuffled().prefix(10)) }
             .map { $0.map { FactViewModel(fact: $0) } }
             .map { [FactsSectionModel(model: "", items: $0)] }
 
