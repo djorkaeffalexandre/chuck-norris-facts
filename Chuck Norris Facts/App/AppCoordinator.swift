@@ -18,7 +18,7 @@ class AppCoordinator: BaseCoordinator<Void> {
     }
 
     override func start() -> Observable<Void> {
-        let viewControllerCoordinator = ViewControllerCoordinator(window: window)
-        return coordinate(to: viewControllerCoordinator)
+        let factsListCoordinator = FactsListCoordinator(window: window)
+        return coordinate(to: factsListCoordinator)
     }
 }
