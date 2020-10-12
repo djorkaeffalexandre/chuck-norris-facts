@@ -12,7 +12,12 @@
 		1E7F15BE253324CF0006887B /* FactsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15BD253324CF0006887B /* FactsListViewModelTests.swift */; };
 		1E7F15C0253324FD0006887B /* FactsListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15BF253324FD0006887B /* FactsListViewControllerTests.swift */; };
 		1E7F15C6253329780006887B /* FactViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15C5253329780006887B /* FactViewModelTests.swift */; };
-		1ED5D18D25348FD50035046C /* Fact+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED5D18C25348FD50035046C /* Fact+Stub.swift */; };
+		1ED5D18D25348FD50035046C /* XCTestCase+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED5D18C25348FD50035046C /* XCTestCase+Stub.swift */; };
+		1ED5D19025349E9D0035046C /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED5D18F25349E9D0035046C /* UIViewController+Rx.swift */; };
+		1ED5D1932534A56F0035046C /* FactsServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED5D1922534A56F0035046C /* FactsServiceMock.swift */; };
+		1ED5D1982534AA700035046C /* long-fact.json in Resources */ = {isa = PBXBuildFile; fileRef = 1ED5D1972534AA700035046C /* long-fact.json */; };
+		1ED5D19A2534AA7A0035046C /* facts-list.json in Resources */ = {isa = PBXBuildFile; fileRef = 1ED5D1992534AA7A0035046C /* facts-list.json */; };
+		1ED5D19C2534AAE40035046C /* short-fact.json in Resources */ = {isa = PBXBuildFile; fileRef = 1ED5D19B2534AAE40035046C /* short-fact.json */; };
 		1EE0713D25314AF500F6BF6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE0713C25314AF500F6BF6D /* AppDelegate.swift */; };
 		1EE0713F25314AF500F6BF6D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE0713E25314AF500F6BF6D /* SceneDelegate.swift */; };
 		1EE0714625314AF600F6BF6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EE0714525314AF600F6BF6D /* Assets.xcassets */; };
@@ -58,7 +63,12 @@
 		1E7F15BD253324CF0006887B /* FactsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListViewModelTests.swift; sourceTree = "<group>"; };
 		1E7F15BF253324FD0006887B /* FactsListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListViewControllerTests.swift; sourceTree = "<group>"; };
 		1E7F15C5253329780006887B /* FactViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactViewModelTests.swift; sourceTree = "<group>"; };
-		1ED5D18C25348FD50035046C /* Fact+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fact+Stub.swift"; sourceTree = "<group>"; };
+		1ED5D18C25348FD50035046C /* XCTestCase+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Stub.swift"; sourceTree = "<group>"; };
+		1ED5D18F25349E9D0035046C /* UIViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
+		1ED5D1922534A56F0035046C /* FactsServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsServiceMock.swift; sourceTree = "<group>"; };
+		1ED5D1972534AA700035046C /* long-fact.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "long-fact.json"; sourceTree = "<group>"; };
+		1ED5D1992534AA7A0035046C /* facts-list.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "facts-list.json"; sourceTree = "<group>"; };
+		1ED5D19B2534AAE40035046C /* short-fact.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "short-fact.json"; sourceTree = "<group>"; };
 		1EE0713925314AF500F6BF6D /* Chuck Norris Facts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chuck Norris Facts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE0713C25314AF500F6BF6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1EE0713E25314AF500F6BF6D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -154,6 +164,7 @@
 		1E7F15BC253324BD0006887B /* FactsList */ = {
 			isa = PBXGroup;
 			children = (
+				1ED5D1942534AA460035046C /* Stubs */,
 				1E7F15C4253329600006887B /* Cells */,
 				1E7F15BD253324CF0006887B /* FactsListViewModelTests.swift */,
 				1E7F15BF253324FD0006887B /* FactsListViewControllerTests.swift */,
@@ -172,9 +183,35 @@
 		1ED5D18B25348FC40035046C /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				1ED5D18C25348FD50035046C /* Fact+Stub.swift */,
+				1ED5D18C25348FD50035046C /* XCTestCase+Stub.swift */,
 			);
 			path = Library;
+			sourceTree = "<group>";
+		};
+		1ED5D18E25349E8D0035046C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1ED5D18F25349E9D0035046C /* UIViewController+Rx.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1ED5D1912534A55D0035046C /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				1ED5D1922534A56F0035046C /* FactsServiceMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		1ED5D1942534AA460035046C /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				1ED5D19B2534AAE40035046C /* short-fact.json */,
+				1ED5D1972534AA700035046C /* long-fact.json */,
+				1ED5D1992534AA7A0035046C /* facts-list.json */,
+			);
+			path = Stubs;
 			sourceTree = "<group>";
 		};
 		1EE0713025314AF500F6BF6D = {
@@ -202,6 +239,7 @@
 		1EE0713B25314AF500F6BF6D /* Chuck Norris Facts */ = {
 			isa = PBXGroup;
 			children = (
+				1ED5D18E25349E8D0035046C /* Extensions */,
 				1EFE2881253210A4008806B9 /* Data */,
 				1EFE2865253206C8008806B9 /* Library */,
 				1EFE28632532062A008806B9 /* Scenes */,
@@ -214,6 +252,7 @@
 		1EE0715225314AF600F6BF6D /* Chuck Norris FactsTests */ = {
 			isa = PBXGroup;
 			children = (
+				1ED5D1912534A55D0035046C /* Mocks */,
 				1ED5D18B25348FC40035046C /* Library */,
 				1E7F15BA253324760006887B /* Scenes */,
 				1EE0715525314AF600F6BF6D /* Info.plist */,
@@ -476,6 +515,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ED5D19C2534AAE40035046C /* short-fact.json in Resources */,
+				1ED5D19A2534AA7A0035046C /* facts-list.json in Resources */,
+				1ED5D1982534AA700035046C /* long-fact.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,6 +679,7 @@
 				1EFE288725321119008806B9 /* Fact.swift in Sources */,
 				1EFE289725321CE2008806B9 /* FactTableViewCell.swift in Sources */,
 				1EE0713D25314AF500F6BF6D /* AppDelegate.swift in Sources */,
+				1ED5D19025349E9D0035046C /* UIViewController+Rx.swift in Sources */,
 				1EFE2869253207B2008806B9 /* AppCoordinator.swift in Sources */,
 				1EE0713F25314AF500F6BF6D /* SceneDelegate.swift in Sources */,
 				1EFE288E2532135B008806B9 /* FactsListViewController.swift in Sources */,
@@ -652,7 +695,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E7F15C6253329780006887B /* FactViewModelTests.swift in Sources */,
-				1ED5D18D25348FD50035046C /* Fact+Stub.swift in Sources */,
+				1ED5D18D25348FD50035046C /* XCTestCase+Stub.swift in Sources */,
+				1ED5D1932534A56F0035046C /* FactsServiceMock.swift in Sources */,
 				1E7F15BE253324CF0006887B /* FactsListViewModelTests.swift in Sources */,
 				1E7F15C0253324FD0006887B /* FactsListViewControllerTests.swift in Sources */,
 			);

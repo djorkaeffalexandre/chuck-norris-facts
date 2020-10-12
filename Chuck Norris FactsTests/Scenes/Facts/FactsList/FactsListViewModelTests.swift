@@ -14,31 +14,38 @@ import RxTest
 @testable import Chuck_Norris_Facts
 
 class FactsListViewModelTests: XCTestCase {
-    var viewModel: FactsListViewModel!
+    var factsListViewModel: FactsListViewModel!
+    var factsServiceMock: FactsServiceMock!
     var testScheduler: TestScheduler!
 
     var disposeBag: DisposeBag!
 
     override func setUp() {
         disposeBag = DisposeBag()
-
         testScheduler = TestScheduler(initialClock: 0)
-
-        viewModel = FactsListViewModel()
+        factsServiceMock = FactsServiceMock()
+        factsListViewModel = FactsListViewModel(factsService: factsServiceMock)
     }
 
     override func tearDown() {
         disposeBag = nil
         testScheduler = nil
-        viewModel = nil
+        factsServiceMock = nil
+        factsListViewModel = nil
     }
 
     func test_load10RandomFacts() throws {
+        let factsListStub = try stub("facts-list", type: [Fact].self)
+        let factsList = try XCTUnwrap(factsListStub, "looks like facts-list.json doesn't exists")
+        factsServiceMock.searchFactsReturnValue = .just(factsList)
+
         let factsObserver = testScheduler.createObserver([FactsSectionModel].self)
 
-        viewModel.facts
+        factsListViewModel.facts
             .subscribe(factsObserver)
             .disposed(by: disposeBag)
+
+        factsListViewModel.viewDidAppear.onNext(())
 
         testScheduler.start()
 
@@ -47,15 +54,19 @@ class FactsListViewModelTests: XCTestCase {
     }
 
     func test_showShareFact() throws {
-        let fact = Fact.stub()
+        let factStub = try stub("short-fact", type: Fact.self)
+        let fact = try XCTUnwrap(factStub, "looks like short-fact.json doesn't exists")
+
+        factsListViewModel.viewDidAppear.onNext(())
+
         let factObserver = testScheduler.createObserver(FactViewModel.self)
 
-        viewModel.showShareFact
+        factsListViewModel.showShareFact
             .subscribe(factObserver)
             .disposed(by: disposeBag)
 
         let factViewModel = FactViewModel(fact: fact)
-        viewModel.startShareFact.onNext(factViewModel)
+        factsListViewModel.startShareFact.onNext(factViewModel)
 
         let shareFact = factObserver.events.compactMap { $0.value.element }.first
         XCTAssertEqual(fact.value, shareFact?.text)

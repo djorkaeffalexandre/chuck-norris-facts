@@ -16,7 +16,8 @@ import RxTest
 class FactViewModelTests: XCTestCase {
 
     func test_factViewModelIsEquatable() throws {
-        let fact = Fact.stub()
+        let factStub = try stub("short-fact", type: Fact.self)
+        let fact = try XCTUnwrap(factStub, "looks like short-fact.json doesn't exists")
 
         let factViewModelTest = FactViewModel(fact: fact)
         let factViewModel = FactViewModel(fact: fact)
@@ -24,7 +25,8 @@ class FactViewModelTests: XCTestCase {
     }
 
     func test_factViewModelIsIdentifiable() throws {
-        let fact = Fact.stub()
+        let factStub = try stub("short-fact", type: Fact.self)
+        let fact = try XCTUnwrap(factStub, "looks like short-fact.json doesn't exists")
 
         let factViewModelTest = FactViewModel(fact: fact)
         XCTAssertEqual(factViewModelTest.identity, fact.value)

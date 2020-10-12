@@ -82,9 +82,13 @@ class FactsListViewController: UIViewController {
     }
 
     private func setupBindings() {
+        rx.viewDidAppear
+            .bind(to: viewModel.viewDidAppear)
+            .disposed(by: disposeBag)
+
         viewModel.facts
+            .map { $0.flatMap { $0.items } }
             .map { $0.isEmpty }
-            .share()
             .asDriver(onErrorJustReturn: true)
             .drive(onNext: { [weak self] isEmpty in
                 self?.showEmptyView(isEmpty)

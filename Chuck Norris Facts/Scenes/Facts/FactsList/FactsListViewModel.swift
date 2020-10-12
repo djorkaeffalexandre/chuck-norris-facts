@@ -16,6 +16,8 @@ final class FactsListViewModel {
 
     // MARK: - Inputs
 
+    let viewDidAppear: AnyObserver<Void>
+
     let startShareFact: AnyObserver<FactViewModel>
 
     // MARK: - Outputs
@@ -24,8 +26,12 @@ final class FactsListViewModel {
 
     let showShareFact: Observable<FactViewModel>
 
-    init(factsService: FactsService = FactsService()) {
-        self.facts = factsService.searchFacts(query: "")
+    init(factsService: FactsServiceType = FactsService()) {
+
+        let viewDidAppearSubject = PublishSubject<Void>()
+        self.viewDidAppear = viewDidAppearSubject.asObserver()
+
+        self.facts = viewDidAppearSubject.flatMapLatest { _ in factsService.searchFacts(query: "") }
             .map { Array($0.shuffled().prefix(10)) }
             .map { $0.map { FactViewModel(fact: $0) } }
             .map { [FactsSectionModel(model: "", items: $0)] }
