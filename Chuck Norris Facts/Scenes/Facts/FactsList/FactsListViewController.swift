@@ -64,6 +64,8 @@ class FactsListViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
         tableView.register(FactTableViewCell.self, forCellReuseIdentifier: FactTableViewCell.cellIdentifier)
+
+        tableView.accessibilityIdentifier = "factsTableView"
     }
 
     private func setupEmptyListView() {

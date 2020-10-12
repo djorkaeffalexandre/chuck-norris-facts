@@ -21,6 +21,10 @@ protocol FactsServiceType {
 final class FactsService: FactsServiceType {
 
     func searchFacts(query: String) -> Observable<[Fact]> {
+        if CommandLine.arguments.contains("--empty-facts") {
+            return .just([])
+        }
+
         return Observable<[Fact]>.create { observer in
             do {
                 guard let file = Bundle.main.url(forResource: "search-facts", withExtension: ".json") else {

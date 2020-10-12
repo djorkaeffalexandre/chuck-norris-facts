@@ -48,6 +48,9 @@ final class EmptyListView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.topAnchor.constraint(equalTo: animation.bottomAnchor).isActive = true
         label.centerXAnchor.constraint(equalTo: animation.centerXAnchor).isActive = true
+
+        accessibilityIdentifier = "emptyListView"
+        label.accessibilityIdentifier = "emptyListLabelView"
     }
 
     required init?(coder: NSCoder) {

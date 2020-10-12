@@ -51,6 +51,7 @@ class FactTableViewCell: UITableViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.accessibilityLabel = "Share"
         button.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        button.accessibilityIdentifier = "shareFactButton"
 
         return button
     }()
