@@ -1,5 +1,13 @@
 platform :ios, '11.0'
 
+def test_pods
+
+  # Rx
+  pod 'RxTest'
+  pod 'RxBlocking'
+
+end
+
 target 'Chuck Norris Facts' do
   use_frameworks!
 
@@ -7,8 +15,6 @@ target 'Chuck Norris Facts' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxDataSources'
-  pod 'RxTest'
-  pod 'RxBlocking'
 
   # Tools
   pod 'SwiftLint'
@@ -18,9 +24,11 @@ target 'Chuck Norris Facts' do
 
   target 'Chuck Norris FactsTests' do
     inherit! :search_paths
+    test_pods
   end
 
   target 'Chuck Norris FactsUITests' do
+    test_pods
   end
 
 end
