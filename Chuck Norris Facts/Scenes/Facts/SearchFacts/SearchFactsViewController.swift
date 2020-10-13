@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import RxSwift
 
 final class SearchFactsViewController: UIViewController {
+
+    var viewModel: SearchFactsViewModel!
+
+    let disposeBag = DisposeBag()
 
     let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
 
@@ -27,6 +32,7 @@ final class SearchFactsViewController: UIViewController {
 
         setupView()
         setupNavigationBar()
+        setupBindings()
     }
 
     private func setupView() {
@@ -37,5 +43,11 @@ final class SearchFactsViewController: UIViewController {
         navigationItem.searchController = searchController
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.title = "Search"
+    }
+
+    private func setupBindings() {
+        cancelButton.rx.tap
+            .bind(to: viewModel.cancel)
+            .disposed(by: disposeBag)
     }
 }

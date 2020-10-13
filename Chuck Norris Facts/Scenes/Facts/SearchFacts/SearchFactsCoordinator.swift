@@ -9,7 +9,11 @@
 import UIKit
 import RxSwift
 
-final class SearchFactsCoordinator: BaseCoordinator<Void> {
+enum SearchFactsCoordinationResult {
+    case cancel
+}
+
+class SearchFactsCoordinator: BaseCoordinator<SearchFactsCoordinationResult> {
 
     private let rootViewController: UIViewController
 
@@ -17,12 +21,19 @@ final class SearchFactsCoordinator: BaseCoordinator<Void> {
         self.rootViewController = rootViewController
     }
 
-    override func start() -> Observable<Void> {
-        let searchFactsViewController = SearchFactsViewController()
-        let navigationController = UINavigationController(rootViewController: searchFactsViewController)
+    override func start() -> Observable<CoordinationResult> {
+        let viewController = SearchFactsViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+
+        let viewModel = SearchFactsViewModel()
+        viewController.viewModel = viewModel
+
+        let cancel = viewModel.didCancel.map { _ in CoordinationResult.cancel }
 
         rootViewController.present(navigationController, animated: true)
 
-        return Observable.never()
+        return cancel
+            .take(1)
+            .do(onNext: { [weak self] _ in self?.rootViewController.dismiss(animated: true) })
     }
 }

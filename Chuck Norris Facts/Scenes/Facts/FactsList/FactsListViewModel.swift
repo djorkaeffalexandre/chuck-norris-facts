@@ -22,6 +22,8 @@ final class FactsListViewModel {
 
     let startSearchFacts: AnyObserver<Void>
 
+    let setSearchTerm: AnyObserver<String>
+
     // MARK: - Outputs
 
     let facts: Observable<[FactsSectionModel]>
@@ -47,5 +49,8 @@ final class FactsListViewModel {
         let startSearchFactsSubject = PublishSubject<Void>()
         self.startSearchFacts = startSearchFactsSubject.asObserver()
         self.showSearchFacts = startSearchFactsSubject.asObservable()
+
+        let searchTermSubject = BehaviorSubject<String>(value: "")
+        self.setSearchTerm = searchTermSubject.asObserver()
     }
 }
