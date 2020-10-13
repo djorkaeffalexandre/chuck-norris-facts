@@ -20,11 +20,15 @@ final class FactsListViewModel {
 
     let startShareFact: AnyObserver<FactViewModel>
 
+    let startSearchFacts: AnyObserver<Void>
+
     // MARK: - Outputs
 
     let facts: Observable<[FactsSectionModel]>
 
     let showShareFact: Observable<FactViewModel>
+
+    let showSearchFacts: Observable<Void>
 
     init(factsService: FactsServiceType = FactsService()) {
 
@@ -39,5 +43,9 @@ final class FactsListViewModel {
         let startShareFactSubject = PublishSubject<FactViewModel>()
         self.startShareFact = startShareFactSubject.asObserver()
         self.showShareFact = startShareFactSubject.asObservable()
+
+        let startSearchFactsSubject = PublishSubject<Void>()
+        self.startSearchFacts = startSearchFactsSubject.asObserver()
+        self.showSearchFacts = startSearchFactsSubject.asObservable()
     }
 }

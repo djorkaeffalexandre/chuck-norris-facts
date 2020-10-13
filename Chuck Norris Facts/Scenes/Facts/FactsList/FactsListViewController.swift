@@ -103,6 +103,10 @@ class FactsListViewController: UIViewController {
             .observeOn(MainScheduler.instance)
             .bind(to: tableView.rx.items(dataSource: factsDataSource))
             .disposed(by: disposeBag)
+
+        searchButton.rx.tap
+            .bind(to: viewModel.startSearchFacts)
+            .disposed(by: disposeBag)
     }
 
     private func showEmptyView(_ isEmpty: Bool) {

@@ -30,6 +30,12 @@ final class FactsListCoordinator: BaseCoordinator<Void> {
             })
             .disposed(by: disposeBag)
 
+        factsListViewModel.showSearchFacts
+            .bind(onNext: { [weak self] in
+                self?.showSearchFacts(on: factsListViewController)
+            })
+            .disposed(by: disposeBag)
+
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
 
@@ -45,5 +51,10 @@ final class FactsListCoordinator: BaseCoordinator<Void> {
 
         let shareActivity = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         navigationController.present(shareActivity, animated: true, completion: nil)
+    }
+
+    private func showSearchFacts(on rootViewController: UIViewController) -> Observable<Void> {
+        let searchFactsCoordinator = SearchFactsCoordinator(rootViewController: rootViewController)
+        return coordinate(to: searchFactsCoordinator)
     }
 }

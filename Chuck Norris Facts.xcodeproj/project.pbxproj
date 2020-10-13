@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1E32758F2532A2C0007E838A /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32758E2532A2C0007E838A /* EmptyListView.swift */; };
 		1E3275922532A2CD007E838A /* empty-box.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E3275912532A2CD007E838A /* empty-box.json */; };
+		1E463803253636160079D8E9 /* SearchFactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E463802253636160079D8E9 /* SearchFactsViewController.swift */; };
+		1E463805253636D80079D8E9 /* SearchFactsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E463804253636D80079D8E9 /* SearchFactsCoordinator.swift */; };
 		1E7F15BE253324CF0006887B /* FactsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15BD253324CF0006887B /* FactsListViewModelTests.swift */; };
 		1E7F15C0253324FD0006887B /* FactsListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15BF253324FD0006887B /* FactsListViewControllerTests.swift */; };
 		1E7F15C6253329780006887B /* FactViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15C5253329780006887B /* FactViewModelTests.swift */; };
@@ -61,6 +63,8 @@
 		02186229E02F0A408D2EE0C2 /* Pods_Chuck_Norris_Facts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chuck_Norris_Facts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E32758E2532A2C0007E838A /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
 		1E3275912532A2CD007E838A /* empty-box.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "empty-box.json"; sourceTree = "<group>"; };
+		1E463802253636160079D8E9 /* SearchFactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFactsViewController.swift; sourceTree = "<group>"; };
+		1E463804253636D80079D8E9 /* SearchFactsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFactsCoordinator.swift; sourceTree = "<group>"; };
 		1E7F15BD253324CF0006887B /* FactsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListViewModelTests.swift; sourceTree = "<group>"; };
 		1E7F15BF253324FD0006887B /* FactsListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListViewControllerTests.swift; sourceTree = "<group>"; };
 		1E7F15C5253329780006887B /* FactViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactViewModelTests.swift; sourceTree = "<group>"; };
@@ -145,6 +149,15 @@
 				1E3275912532A2CD007E838A /* empty-box.json */,
 			);
 			path = Lottie;
+			sourceTree = "<group>";
+		};
+		1E463801253636050079D8E9 /* SearchFacts */ = {
+			isa = PBXGroup;
+			children = (
+				1E463802253636160079D8E9 /* SearchFactsViewController.swift */,
+				1E463804253636D80079D8E9 /* SearchFactsCoordinator.swift */,
+			);
+			path = SearchFacts;
 			sourceTree = "<group>";
 		};
 		1E7F15BA253324760006887B /* Scenes */ = {
@@ -363,6 +376,7 @@
 		1EFE288A25321327008806B9 /* Facts */ = {
 			isa = PBXGroup;
 			children = (
+				1E463801253636050079D8E9 /* SearchFacts */,
 				1EFE288C25321337008806B9 /* FactsList */,
 			);
 			path = Facts;
@@ -694,6 +708,7 @@
 			files = (
 				1EFE2884253210B2008806B9 /* FactsService.swift in Sources */,
 				1E32758F2532A2C0007E838A /* EmptyListView.swift in Sources */,
+				1E463805253636D80079D8E9 /* SearchFactsCoordinator.swift in Sources */,
 				1EFE288925321123008806B9 /* JSON.swift in Sources */,
 				1EFE288725321119008806B9 /* Fact.swift in Sources */,
 				1EFE289725321CE2008806B9 /* FactTableViewCell.swift in Sources */,
@@ -703,6 +718,7 @@
 				1EE0713F25314AF500F6BF6D /* SceneDelegate.swift in Sources */,
 				1EFE288E2532135B008806B9 /* FactsListViewController.swift in Sources */,
 				1EFE28902532137C008806B9 /* FactsListCoordinator.swift in Sources */,
+				1E463803253636160079D8E9 /* SearchFactsViewController.swift in Sources */,
 				1EFE289525321CD2008806B9 /* FactViewModel.swift in Sources */,
 				1EFE2892253214DB008806B9 /* FactsListViewModel.swift in Sources */,
 				1EFE2867253206D3008806B9 /* BaseCoordinator.swift in Sources */,
