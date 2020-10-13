@@ -61,6 +61,7 @@ final class FactsListCoordinator: BaseCoordinator<Void> {
             .map { result in
                 switch result {
                 case .cancel: return nil
+                case .search(let searchTerm): return searchTerm
                 }
             }
     }

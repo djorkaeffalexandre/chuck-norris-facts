@@ -11,7 +11,12 @@ import RxSwift
 
 struct SearchFactsResponse: Decodable {
     let total: Int
-    let result: [Fact]
+    let facts: [Fact]
+
+    enum CodingKeys: String, CodingKey {
+        case total
+        case facts = "result"
+    }
 }
 
 protocol FactsServiceType {
@@ -21,25 +26,34 @@ protocol FactsServiceType {
 final class FactsService: FactsServiceType {
 
     func searchFacts(query: String) -> Observable<[Fact]> {
-        if CommandLine.arguments.contains("--empty-facts") {
+        if CommandLine.arguments.contains("--empty-facts") || query.isEmpty {
             return .just([])
         }
 
+        let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        let url = URL(string: "https://api.chucknorris.io/jokes/search?query=\(encodedQuery)")!
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
         return Observable<[Fact]>.create { observer in
-            do {
-                guard let file = Bundle.main.url(forResource: "search-facts", withExtension: ".json") else {
-                    return Disposables.create {}
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                do {
+                    if let data = data {
+                        let response = try JSON.decoder.decode(SearchFactsResponse.self, from: data)
+                        observer.onNext(response.facts)
+                    }
+                } catch let error {
+                    observer.onError(error)
                 }
-
-                let data = try Data(contentsOf: file)
-                let searchFactsResponse = try JSON.decoder.decode(SearchFactsResponse.self, from: data)
-                observer.onNext(searchFactsResponse.result)
-            } catch {
-                observer.onError(error)
+                observer.onCompleted()
             }
-            observer.onCompleted()
+            task.resume()
 
-            return Disposables.create {}
+            return Disposables.create {
+                task.cancel()
+            }
         }
     }
 }

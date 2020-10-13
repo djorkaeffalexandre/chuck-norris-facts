@@ -32,15 +32,12 @@ final class FactsListViewModel {
 
     let showSearchFacts: Observable<Void>
 
+    let searchTerm: Observable<String>
+
     init(factsService: FactsServiceType = FactsService()) {
 
         let viewDidAppearSubject = PublishSubject<Void>()
         self.viewDidAppear = viewDidAppearSubject.asObserver()
-
-        self.facts = viewDidAppearSubject.flatMapLatest { _ in factsService.searchFacts(query: "") }
-            .map { Array($0.shuffled().prefix(10)) }
-            .map { $0.map { FactViewModel(fact: $0) } }
-            .map { [FactsSectionModel(model: "", items: $0)] }
 
         let startShareFactSubject = PublishSubject<FactViewModel>()
         self.startShareFact = startShareFactSubject.asObserver()
@@ -52,5 +49,12 @@ final class FactsListViewModel {
 
         let searchTermSubject = BehaviorSubject<String>(value: "")
         self.setSearchTerm = searchTermSubject.asObserver()
+        self.searchTerm = searchTermSubject.asObservable()
+
+        self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
+            .flatMapLatest { _, searchTerm in factsService.searchFacts(query: searchTerm) }
+            .map { Array($0.shuffled().prefix(10)) }
+            .map { $0.map { FactViewModel(fact: $0) } }
+            .map { [FactsSectionModel(model: "", items: $0)] }
     }
 }

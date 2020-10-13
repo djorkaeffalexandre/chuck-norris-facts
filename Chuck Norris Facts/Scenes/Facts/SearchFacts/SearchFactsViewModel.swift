@@ -14,13 +14,29 @@ class SearchFactsViewModel {
 
     let cancel: AnyObserver<Void>
 
+    let searchTerm: AnyObserver<String>
+
+    let searchAction: AnyObserver<Void>
+
     // MARK: - Outputs
 
     let didCancel: Observable<Void>
+
+    let didSearchFacts: Observable<String>
 
     init(factsService: FactsService = FactsService()) {
         let cancelSubject = PublishSubject<Void>()
         self.cancel = cancelSubject.asObserver()
         self.didCancel = cancelSubject.asObservable()
+
+        let searchTermSubject = BehaviorSubject<String>(value: "")
+        self.searchTerm = searchTermSubject.asObserver()
+
+        let searchActionSubject = PublishSubject<Void>()
+        self.searchAction = searchActionSubject.asObserver()
+
+        self.didSearchFacts = searchActionSubject
+            .withLatestFrom(searchTermSubject)
+            .filter { !$0.isEmpty }
     }
 }

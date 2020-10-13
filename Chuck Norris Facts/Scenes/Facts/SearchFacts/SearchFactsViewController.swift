@@ -49,5 +49,14 @@ final class SearchFactsViewController: UIViewController {
         cancelButton.rx.tap
             .bind(to: viewModel.cancel)
             .disposed(by: disposeBag)
+
+        searchController.searchBar.rx.text
+            .compactMap { $0 }
+            .bind(to: viewModel.searchTerm)
+            .disposed(by: disposeBag)
+
+        searchController.searchBar.rx.textDidEndEditing
+            .bind(to: viewModel.searchAction)
+            .disposed(by: disposeBag)
     }
 }

@@ -11,6 +11,7 @@ import RxSwift
 
 enum SearchFactsCoordinationResult {
     case cancel
+    case search(String)
 }
 
 class SearchFactsCoordinator: BaseCoordinator<SearchFactsCoordinationResult> {
@@ -22,17 +23,18 @@ class SearchFactsCoordinator: BaseCoordinator<SearchFactsCoordinationResult> {
     }
 
     override func start() -> Observable<CoordinationResult> {
-        let viewController = SearchFactsViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let searchFactsViewController = SearchFactsViewController()
+        let navigationController = UINavigationController(rootViewController: searchFactsViewController)
 
-        let viewModel = SearchFactsViewModel()
-        viewController.viewModel = viewModel
+        let searchFactsViewModel = SearchFactsViewModel()
+        searchFactsViewController.viewModel = searchFactsViewModel
 
-        let cancel = viewModel.didCancel.map { _ in CoordinationResult.cancel }
+        let cancel = searchFactsViewModel.didCancel.map { _ in CoordinationResult.cancel }
+        let search = searchFactsViewModel.didSearchFacts.map { CoordinationResult.search($0) }
 
         rootViewController.present(navigationController, animated: true)
 
-        return cancel
+        return Observable.merge(cancel, search)
             .take(1)
             .do(onNext: { [weak self] _ in self?.rootViewController.dismiss(animated: true) })
     }
