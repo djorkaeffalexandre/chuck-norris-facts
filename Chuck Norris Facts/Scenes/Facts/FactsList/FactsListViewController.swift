@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import Lottie
 
 class FactsListViewController: UIViewController {
 
@@ -39,12 +40,22 @@ class FactsListViewController: UIViewController {
         }
     )
 
+    private lazy var loadingView: AnimationView = {
+        let loading = AnimationView()
+
+        loading.animation = Animation.named("loading")
+        loading.loopMode = .loop
+
+        return loading
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
         setupBindings()
         setupTableView()
+        setupLoadingView()
         setupEmptyListView()
         setupNavigationBar()
     }
@@ -69,6 +80,16 @@ class FactsListViewController: UIViewController {
         tableView.accessibilityIdentifier = "factsTableView"
     }
 
+    private func setupLoadingView() {
+        view.addSubview(loadingView)
+
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        loadingView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        loadingView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
+    }
+
     private func setupEmptyListView() {
         view.addSubview(emptyListView)
 
@@ -88,6 +109,12 @@ class FactsListViewController: UIViewController {
     private func setupBindings() {
         rx.viewDidAppear
             .bind(to: viewModel.viewDidAppear)
+            .disposed(by: disposeBag)
+
+        viewModel.isLoading
+            .drive(onNext: { [weak self] isLoading in
+                self?.showLoadingView(isLoading)
+            })
             .disposed(by: disposeBag)
 
         viewModel.facts
@@ -117,6 +144,18 @@ class FactsListViewController: UIViewController {
             emptyListView.play()
         } else {
             emptyListView.stop()
+        }
+    }
+
+    private func showLoadingView(_ isLoading: Bool) {
+        tableView.isHidden = isLoading
+        loadingView.isHidden = !isLoading
+
+        if isLoading {
+            emptyListView.isHidden = isLoading
+            loadingView.play()
+        } else {
+            loadingView.stop()
         }
     }
 }

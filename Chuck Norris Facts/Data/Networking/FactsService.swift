@@ -26,7 +26,7 @@ protocol FactsServiceType {
 final class FactsService: FactsServiceType {
 
     func searchFacts(query: String) -> Observable<[Fact]> {
-        if CommandLine.arguments.contains("--empty-facts") || query.isEmpty {
+        if CommandLine.arguments.contains("--empty-facts") {
             return .just([])
         }
 

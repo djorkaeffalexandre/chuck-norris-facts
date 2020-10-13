@@ -34,7 +34,12 @@ final class FactsListViewModel {
 
     let searchTerm: Observable<String>
 
+    let isLoading: ActivityIndicator
+
     init(factsService: FactsServiceType = FactsService()) {
+
+        let loadingIndicator = ActivityIndicator()
+        self.isLoading = loadingIndicator
 
         let viewDidAppearSubject = PublishSubject<Void>()
         self.viewDidAppear = viewDidAppearSubject.asObserver()
@@ -52,7 +57,13 @@ final class FactsListViewModel {
         self.searchTerm = searchTermSubject.asObservable()
 
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
-            .flatMapLatest { _, searchTerm in factsService.searchFacts(query: searchTerm) }
+            .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
+                if !searchTerm.isEmpty {
+                    return factsService.searchFacts(query: searchTerm)
+                        .trackActivity(loadingIndicator)
+                }
+                return .just([])
+            }
             .map { Array($0.shuffled().prefix(10)) }
             .map { $0.map { FactViewModel(fact: $0) } }
             .map { [FactsSectionModel(model: "", items: $0)] }
