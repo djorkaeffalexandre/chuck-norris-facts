@@ -19,6 +19,7 @@ class FactsListViewController: UIViewController {
 
     let tableView = UITableView()
     let emptyListView = EmptyListView()
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: nil)
 
     private lazy var factsDataSource = RxTableViewSectionedAnimatedDataSource<FactsSectionModel>(
         configureCell: { [weak self] _, tableView, indexPath, fact -> UITableViewCell in
@@ -80,6 +81,7 @@ class FactsListViewController: UIViewController {
 
     private func setupNavigationBar() {
         navigationItem.title = "Chuck Norris Facts"
+        navigationItem.rightBarButtonItem = searchButton
         navigationController?.navigationBar.prefersLargeTitles = true
     }
 
