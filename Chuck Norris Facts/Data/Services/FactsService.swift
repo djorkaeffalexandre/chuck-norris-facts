@@ -29,14 +29,19 @@ struct FactsService: FactsServiceType {
     }
 
     func syncCategories() -> Observable<Void> {
-        provider.rx
+        _ = provider.rx
             .request(.getCategories)
-            .asObservable()
-            .map([FactCategory].self, using: JSON.decoder)
-            .do(onNext: {
-                self.storage.storeCategories($0)
-            })
-            .map { _ in () }
+            .subscribe { event in
+                switch event {
+                case .success(let response):
+                    if let categories = try? response.map([FactCategory].self, using: JSON.decoder) {
+                        self.storage.storeCategories(categories)
+                    }
+                case .error(let error):
+                    print(error)
+                }
+            }
+        return .just(())
     }
 
     func retrieveCategories() -> Observable<[FactCategory]> {

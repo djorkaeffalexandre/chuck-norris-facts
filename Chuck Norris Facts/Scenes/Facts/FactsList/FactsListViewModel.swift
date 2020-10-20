@@ -56,6 +56,10 @@ final class FactsListViewModel {
         self.setSearchTerm = searchTermSubject.asObserver()
         self.searchTerm = searchTermSubject.asObservable()
 
+        _ = viewDidAppearSubject.subscribe(onNext: {
+            _ = factsService.syncCategories()
+        })
+
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
                 if CommandLine.arguments.contains("--search-facts") {
