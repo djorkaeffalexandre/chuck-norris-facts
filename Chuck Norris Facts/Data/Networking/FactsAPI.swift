@@ -25,13 +25,6 @@ extension FactsAPI: TargetType {
         }
     }
 
-    var parameterEncoding: ParameterEncoding {
-        switch self {
-        case .searchFacts:
-            return URLEncoding.queryString
-        }
-    }
-
     var method: Method {
         switch self {
         case .searchFacts:
