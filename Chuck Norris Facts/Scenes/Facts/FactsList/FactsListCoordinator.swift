@@ -30,6 +30,14 @@ final class FactsListCoordinator: BaseCoordinator<Void> {
             })
             .disposed(by: disposeBag)
 
+        factsListViewModel.showSearchFacts
+            .flatMap { [weak self] _ -> Observable<String?> in
+                self?.showSearchFacts(on: factsListViewController) ?? .empty()
+            }
+            .compactMap { $0 }
+            .bind(to: factsListViewModel.setSearchTerm)
+            .disposed(by: disposeBag)
+
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
 
@@ -45,5 +53,16 @@ final class FactsListCoordinator: BaseCoordinator<Void> {
 
         let shareActivity = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         navigationController.present(shareActivity, animated: true, completion: nil)
+    }
+
+    private func showSearchFacts(on rootViewController: UIViewController) -> Observable<String?> {
+        let searchFactsCoordinator = SearchFactsCoordinator(rootViewController: rootViewController)
+        return coordinate(to: searchFactsCoordinator)
+            .map { result in
+                switch result {
+                case .cancel: return nil
+                case .search(let searchTerm): return searchTerm
+                }
+            }
     }
 }

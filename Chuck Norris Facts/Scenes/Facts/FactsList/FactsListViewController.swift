@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import Lottie
 
 class FactsListViewController: UIViewController {
 
@@ -19,6 +20,7 @@ class FactsListViewController: UIViewController {
 
     let tableView = UITableView()
     let emptyListView = EmptyListView()
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: nil)
 
     private lazy var factsDataSource = RxTableViewSectionedAnimatedDataSource<FactsSectionModel>(
         configureCell: { [weak self] _, tableView, indexPath, fact -> UITableViewCell in
@@ -38,12 +40,22 @@ class FactsListViewController: UIViewController {
         }
     )
 
+    private lazy var loadingView: AnimationView = {
+        let loading = AnimationView()
+
+        loading.animation = Animation.named("loading")
+        loading.loopMode = .loop
+
+        return loading
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
         setupBindings()
         setupTableView()
+        setupLoadingView()
         setupEmptyListView()
         setupNavigationBar()
     }
@@ -68,6 +80,16 @@ class FactsListViewController: UIViewController {
         tableView.accessibilityIdentifier = "factsTableView"
     }
 
+    private func setupLoadingView() {
+        view.addSubview(loadingView)
+
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        loadingView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        loadingView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
+    }
+
     private func setupEmptyListView() {
         view.addSubview(emptyListView)
 
@@ -80,12 +102,21 @@ class FactsListViewController: UIViewController {
 
     private func setupNavigationBar() {
         navigationItem.title = "Chuck Norris Facts"
+        navigationItem.rightBarButtonItem = searchButton
         navigationController?.navigationBar.prefersLargeTitles = true
+
+        searchButton.accessibilityIdentifier = "searchButton"
     }
 
     private func setupBindings() {
         rx.viewDidAppear
             .bind(to: viewModel.viewDidAppear)
+            .disposed(by: disposeBag)
+
+        viewModel.isLoading
+            .drive(onNext: { [weak self] isLoading in
+                self?.showLoadingView(isLoading)
+            })
             .disposed(by: disposeBag)
 
         viewModel.facts
@@ -101,6 +132,10 @@ class FactsListViewController: UIViewController {
             .observeOn(MainScheduler.instance)
             .bind(to: tableView.rx.items(dataSource: factsDataSource))
             .disposed(by: disposeBag)
+
+        searchButton.rx.tap
+            .bind(to: viewModel.startSearchFacts)
+            .disposed(by: disposeBag)
     }
 
     private func showEmptyView(_ isEmpty: Bool) {
@@ -111,6 +146,18 @@ class FactsListViewController: UIViewController {
             emptyListView.play()
         } else {
             emptyListView.stop()
+        }
+    }
+
+    private func showLoadingView(_ isLoading: Bool) {
+        tableView.isHidden = isLoading
+        loadingView.isHidden = !isLoading
+
+        if isLoading {
+            emptyListView.isHidden = isLoading
+            loadingView.play()
+        } else {
+            loadingView.stop()
         }
     }
 }

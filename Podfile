@@ -22,6 +22,9 @@ target 'Chuck Norris Facts' do
   # UI
   pod 'lottie-ios'
 
+  # Networking
+  pod 'Moya/RxSwift'
+
   target 'Chuck Norris FactsTests' do
     inherit! :search_paths
     test_pods

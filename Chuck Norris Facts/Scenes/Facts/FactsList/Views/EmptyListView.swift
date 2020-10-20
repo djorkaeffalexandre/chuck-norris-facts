@@ -36,8 +36,17 @@ final class EmptyListView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        setupView()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupView() {
+        backgroundColor = .systemBackground
+
         addSubview(animation)
-        addSubview(label)
 
         animation.translatesAutoresizingMaskIntoConstraints = false
         animation.widthAnchor.constraint(equalToConstant: 200).isActive = true
@@ -45,16 +54,14 @@ final class EmptyListView: UIView {
         animation.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         animation.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
+        addSubview(label)
+
         label.translatesAutoresizingMaskIntoConstraints = false
         label.topAnchor.constraint(equalTo: animation.bottomAnchor).isActive = true
         label.centerXAnchor.constraint(equalTo: animation.centerXAnchor).isActive = true
 
         accessibilityIdentifier = "emptyListView"
         label.accessibilityIdentifier = "emptyListLabelView"
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     func play() {

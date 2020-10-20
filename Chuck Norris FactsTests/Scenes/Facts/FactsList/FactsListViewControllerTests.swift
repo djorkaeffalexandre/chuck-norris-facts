@@ -52,6 +52,7 @@ class FactsListViewControllerTests: XCTestCase {
 
         factsServiceMock.searchFactsReturnValue = .just([fact])
 
+        factsListViewModel.setSearchTerm.onNext("games")
         factsListViewModel.viewDidAppear.onNext(())
 
         let factCell = factsListFirstCell()
@@ -65,6 +66,7 @@ class FactsListViewControllerTests: XCTestCase {
 
         factsServiceMock.searchFactsReturnValue = .just([fact])
 
+        factsListViewModel.setSearchTerm.onNext("games")
         factsListViewModel.viewDidAppear.onNext(())
 
         let factCell = factsListFirstCell()
@@ -81,8 +83,8 @@ class FactsListViewControllerTests: XCTestCase {
         let testScheduler = TestScheduler(initialClock: 0)
         let shareFactObserver = testScheduler.createObserver(FactViewModel.self)
 
-        factsListViewModel.viewDidAppear
-            .onNext(())
+        factsListViewModel.setSearchTerm.onNext("games")
+        factsListViewModel.viewDidAppear.onNext(())
 
         factsListViewModel.showShareFact
             .subscribe(shareFactObserver)

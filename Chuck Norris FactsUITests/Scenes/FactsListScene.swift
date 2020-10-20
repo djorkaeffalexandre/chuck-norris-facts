@@ -14,6 +14,7 @@ struct FactsListScene {
     let factsTableView: XCUIElement
     let emptyListView: XCUIElement
     let emptyListLabelView: XCUIElement
+    let searchButton: XCUIElement
 
     init() {
         let app = XCUIApplication()
@@ -21,6 +22,7 @@ struct FactsListScene {
         factsTableView = app.tables["factsTableView"]
         emptyListView = app.otherElements["emptyListView"]
         emptyListLabelView = app.staticTexts["emptyListLabelView"]
+        searchButton = app.navigationBars.buttons["searchButton"]
     }
 
 }
