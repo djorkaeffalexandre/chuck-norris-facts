@@ -10,7 +10,7 @@ import Foundation
 
 struct FactCategory: Decodable {
     let text: String
-    
+
     init(text: String) {
         self.text = text
     }

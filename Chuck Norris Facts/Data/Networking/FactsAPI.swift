@@ -10,6 +10,7 @@ import Moya
 
 enum FactsAPI {
     case searchFacts(searchTerm: String)
+    case getCategories
 }
 
 extension FactsAPI: TargetType {
@@ -22,12 +23,14 @@ extension FactsAPI: TargetType {
         switch self {
         case .searchFacts:
             return "/search"
+        case .getCategories:
+            return "/categories"
         }
     }
 
     var method: Method {
         switch self {
-        case .searchFacts:
+        case .searchFacts, .getCategories:
             return .get
         }
     }
@@ -36,6 +39,8 @@ extension FactsAPI: TargetType {
         switch self {
         case .searchFacts(let searchTerm):
             return .requestParameters(parameters: ["query": searchTerm], encoding: URLEncoding.queryString)
+        case .getCategories:
+            return .requestPlain
         }
     }
 
