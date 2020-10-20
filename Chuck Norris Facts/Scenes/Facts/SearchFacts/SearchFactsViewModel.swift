@@ -24,7 +24,7 @@ class SearchFactsViewModel {
 
     let didSearchFacts: Observable<String>
 
-    init(factsService: FactsService = FactsService()) {
+    init() {
         let cancelSubject = PublishSubject<Void>()
         self.cancel = cancelSubject.asObserver()
         self.didCancel = cancelSubject.asObservable()
