@@ -34,4 +34,16 @@ final class SearchFactsUITests: XCTestCase {
 
         XCTAssertEqual(factsListScene.factsTableView.cells.count, 10)
     }
+
+    func test_cancelSearchFacts() throws {
+        app.launch()
+
+        let factsListScene = FactsListScene()
+        factsListScene.searchButton.tap()
+
+        let searchFactsScene = SearchFactsScene()
+        searchFactsScene.cancelButton.tap()
+
+        XCTAssertFalse(searchFactsScene.searchFactsView.exists)
+    }
 }

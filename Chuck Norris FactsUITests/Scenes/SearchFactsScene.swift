@@ -13,12 +13,14 @@ struct SearchFactsScene {
 
     let searchFactsView: XCUIElement
     let searchBarField: XCUIElement
+    let cancelButton: XCUIElement
 
     init() {
         let app = XCUIApplication()
 
         searchFactsView = app.otherElements["searchFactsView"]
         searchBarField = app.searchFields["Search"]
+        cancelButton = app.navigationBars.buttons["cancelButton"]
     }
 
 }

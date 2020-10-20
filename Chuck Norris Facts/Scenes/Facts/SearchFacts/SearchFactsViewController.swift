@@ -15,7 +15,11 @@ final class SearchFactsViewController: UIViewController {
 
     let disposeBag = DisposeBag()
 
-    let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+    lazy var cancelButton: UIBarButtonItem = {
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+        cancelButton.accessibilityIdentifier = "cancelButton"
+        return cancelButton
+    }()
 
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
