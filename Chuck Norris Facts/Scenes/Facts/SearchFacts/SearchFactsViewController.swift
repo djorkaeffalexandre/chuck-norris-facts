@@ -37,6 +37,7 @@ final class SearchFactsViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .systemBackground
+        view.accessibilityIdentifier = "searchFactsView"
     }
 
     private func setupNavigationBar() {

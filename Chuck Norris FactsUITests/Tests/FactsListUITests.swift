@@ -29,6 +29,7 @@ final class FactsListUITests: XCTestCase {
     }
 
     func test_show10RandomFacts() {
+        app.launchArguments = ["--search-facts"]
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -37,6 +38,7 @@ final class FactsListUITests: XCTestCase {
     }
 
     func test_shareFact() {
+        app.launchArguments = ["--search-facts"]
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -53,5 +55,21 @@ final class FactsListUITests: XCTestCase {
         shareActivityClose.tap()
 
         XCTAssertFalse(shareActivity.waitForExistence(timeout: 1))
+    }
+
+    func test_searchFacts() {
+        app.launch()
+
+        let factsListScene = FactsListScene()
+        let searchFactsButton = factsListScene.searchButton
+
+        let searchFactsScene = SearchFactsScene()
+        let searchFactsView = searchFactsScene.searchFactsView
+
+        XCTAssertTrue(searchFactsButton.exists)
+
+        searchFactsButton.firstMatch.tap()
+
+        XCTAssertTrue(searchFactsView.exists)
     }
 }

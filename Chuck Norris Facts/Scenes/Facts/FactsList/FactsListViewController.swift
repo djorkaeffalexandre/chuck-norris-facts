@@ -104,6 +104,8 @@ class FactsListViewController: UIViewController {
         navigationItem.title = "Chuck Norris Facts"
         navigationItem.rightBarButtonItem = searchButton
         navigationController?.navigationBar.prefersLargeTitles = true
+
+        searchButton.accessibilityIdentifier = "searchButton"
     }
 
     private func setupBindings() {

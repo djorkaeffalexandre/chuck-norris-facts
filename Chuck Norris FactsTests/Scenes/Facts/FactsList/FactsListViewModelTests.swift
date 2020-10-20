@@ -45,6 +45,7 @@ class FactsListViewModelTests: XCTestCase {
             .subscribe(factsObserver)
             .disposed(by: disposeBag)
 
+        factsListViewModel.setSearchTerm.onNext("games")
         factsListViewModel.viewDidAppear.onNext(())
 
         testScheduler.start()
