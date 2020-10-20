@@ -59,7 +59,7 @@ final class FactsListViewModel {
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
                 if !searchTerm.isEmpty {
-                    return factsService.searchFacts(query: searchTerm)
+                    return factsService.searchFacts(searchTerm: searchTerm)
                         .trackActivity(loadingIndicator)
                 }
                 return .just([])

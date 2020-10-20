@@ -14,7 +14,7 @@ import RxSwift
 final class FactsServiceMock: FactsServiceType {
 
     var searchFactsReturnValue: Observable<[Fact]> = .just([])
-    func searchFacts(query: String) -> Observable<[Fact]> {
+    func searchFacts(searchTerm: String) -> Observable<[Fact]> {
         return searchFactsReturnValue
     }
 }
