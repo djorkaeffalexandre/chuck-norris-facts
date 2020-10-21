@@ -36,6 +36,8 @@ final class FactsListViewModel {
 
     let isLoading: ActivityIndicator
 
+    let syncCategories: Observable<Void>
+
     init(factsService: FactsServiceType = FactsService()) {
 
         let loadingIndicator = ActivityIndicator()
@@ -56,9 +58,10 @@ final class FactsListViewModel {
         self.setSearchTerm = searchTermSubject.asObserver()
         self.searchTerm = searchTermSubject.asObservable()
 
-        _ = viewDidAppearSubject.subscribe(onNext: {
-            _ = factsService.syncCategories().subscribe(onNext: {})
-        })
+        self.syncCategories = viewDidAppearSubject.asObservable()
+            .flatMapLatest { _ -> Observable<Void> in
+                factsService.syncCategories()
+            }
 
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
