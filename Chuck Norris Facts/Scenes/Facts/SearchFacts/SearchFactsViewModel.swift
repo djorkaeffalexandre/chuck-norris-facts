@@ -10,22 +10,6 @@ import Foundation
 import RxDataSources
 import RxSwift
 
-class FactCategoryViewModel: IdentifiableType, Equatable {
-    let text: String
-
-    init(category: FactCategory) {
-        self.text = category.text
-    }
-
-    var identity: String {
-        text
-    }
-
-    static func == (lhs: FactCategoryViewModel, rhs: FactCategoryViewModel) -> Bool {
-        return lhs.text == rhs.text
-    }
-}
-
 typealias FactCategoriesSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
 
 class SearchFactsViewModel {

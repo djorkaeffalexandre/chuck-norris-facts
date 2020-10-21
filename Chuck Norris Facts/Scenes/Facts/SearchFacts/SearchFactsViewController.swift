@@ -16,16 +16,28 @@ final class SearchFactsViewController: UIViewController {
 
     let disposeBag = DisposeBag()
 
-    let tableView = UITableView()
+    private lazy var collectionView: UICollectionView = {
+        let layout = LeftAlignedCollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return UICollectionView(
+            frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 300),
+            collectionViewLayout: layout
+        )
+    }()
 
-    private lazy var categoriesDataSource = RxTableViewSectionedAnimatedDataSource<FactCategoriesSectionModel>(
-        configureCell: { [weak self] _, tableView, indexPath, category -> UITableViewCell in
-
-            guard let viewModel = self?.viewModel, let disposeBag = self?.disposeBag else { return UITableViewCell() }
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath)
-
-            cell.textLabel?.text = category.text
-
+    private lazy var categoriesDataSource = RxCollectionViewSectionedReloadDataSource<FactCategoriesSectionModel>(
+        configureCell: { _, collectionView, indexPath, category -> UICollectionViewCell in
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: FactCategoryCell.cellIdentifier,
+                for: indexPath
+            )
+            if let cell = cell as? FactCategoryCell {
+                cell.setup(category)
+            }
             return cell
         }
     )
@@ -52,7 +64,7 @@ final class SearchFactsViewController: UIViewController {
         setupView()
         setupNavigationBar()
         setupBindings()
-        setupTableView()
+        setupCollectionView()
     }
 
     private func setupView() {
@@ -60,18 +72,18 @@ final class SearchFactsViewController: UIViewController {
         view.accessibilityIdentifier = "searchFactsView"
     }
 
-    private func setupTableView() {
-        view.addSubview(tableView)
+    private func setupCollectionView() {
+        view.addSubview(collectionView)
 
-        tableView.separatorStyle = .none
+        collectionView.backgroundColor = .systemBackground
 
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellIdentifier")
+        collectionView.register(FactCategoryCell.self, forCellWithReuseIdentifier: FactCategoryCell.cellIdentifier)
     }
 
     private func setupNavigationBar() {
@@ -100,10 +112,10 @@ final class SearchFactsViewController: UIViewController {
 
         viewModel.categories
             .observeOn(MainScheduler.instance)
-            .bind(to: tableView.rx.items(dataSource: categoriesDataSource))
+            .bind(to: collectionView.rx.items(dataSource: categoriesDataSource))
             .disposed(by: disposeBag)
 
-        let categorySelected = tableView.rx
+        let categorySelected = collectionView.rx
             .modelSelected(FactCategoryViewModel.self)
             .asObservable()
 
@@ -117,4 +129,25 @@ final class SearchFactsViewController: UIViewController {
             .bind(to: viewModel.searchAction)
             .disposed(by: disposeBag)
     }
+}
+
+class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        let attributes = super.layoutAttributesForElements(in: rect)
+
+        var leftMargin = sectionInset.left
+        var maxY: CGFloat = -1.0
+        attributes?.forEach { layoutAttribute in
+            if layoutAttribute.representedElementCategory == .cell {
+                if layoutAttribute.frame.origin.y >= maxY {
+                    leftMargin = sectionInset.left
+                }
+                layoutAttribute.frame.origin.x = leftMargin
+                leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
+                maxY = max(layoutAttribute.frame.maxY, maxY)
+            }
+        }
+        return attributes
+    }
+
 }
