@@ -81,6 +81,8 @@ final class SearchFactsViewController: UIViewController {
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
         collectionView.register(FactCategoryCell.self, forCellWithReuseIdentifier: FactCategoryCell.cellIdentifier)
+
+        collectionView.accessibilityIdentifier = "factCategoriesCollectionView"
     }
 
     private func setupNavigationBar() {

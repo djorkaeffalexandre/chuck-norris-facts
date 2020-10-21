@@ -46,4 +46,36 @@ final class SearchFactsUITests: XCTestCase {
 
         XCTAssertFalse(searchFactsScene.searchFactsView.exists)
     }
+    
+    func test_shouldShow8FactCategories() {
+        app.launch()
+
+        let factsListScene = FactsListScene()
+        factsListScene.searchButton.tap()
+
+        let searchFactsScene = SearchFactsScene()
+        XCTAssertTrue(searchFactsScene.searchFactsView.exists)
+
+        XCTAssertEqual(searchFactsScene.factsCategoriesCollection.cells.count, 8)
+    }
+
+    func test_tapFactCategoryShouldSearchByTerm() {
+        app.launch()
+
+        let factsListScene = FactsListScene()
+        factsListScene.searchButton.tap()
+
+        let searchFactsScene = SearchFactsScene()
+        XCTAssertTrue(searchFactsScene.searchFactsView.exists)
+
+        let firstFactCategory = searchFactsScene.factsCategoriesCollection.cells.firstMatch
+        XCTAssertTrue(firstFactCategory.exists)
+
+        firstFactCategory.tap()
+        XCTAssertFalse(searchFactsScene.searchFactsView.exists)
+
+        sleep(5)
+
+        XCTAssertEqual(factsListScene.factsTableView.cells.count, 10)
+    }
 }
