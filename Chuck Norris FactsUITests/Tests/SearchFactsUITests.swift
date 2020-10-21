@@ -46,7 +46,7 @@ final class SearchFactsUITests: XCTestCase {
 
         XCTAssertFalse(searchFactsScene.searchFactsView.exists)
     }
-    
+
     func test_shouldShow8FactCategories() {
         app.launch()
 

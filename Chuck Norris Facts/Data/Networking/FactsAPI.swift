@@ -49,6 +49,15 @@ extension FactsAPI: TargetType {
     }
 
     var sampleData: Data {
+        switch self {
+        case .getCategories:
+            if let data = try? Data.stub("get-categories") {
+                return data
+            }
+        default:
+            break
+        }
+
         return Data()
     }
 

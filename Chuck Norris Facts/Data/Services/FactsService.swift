@@ -17,8 +17,13 @@ protocol FactsServiceType {
 
 struct FactsService: FactsServiceType {
 
-    private let provider = MoyaProvider<FactsAPI>()
-    private let storage = FactsStorage()
+    private var provider: MoyaProvider<FactsAPI>
+    private var storage: FactsStorageType
+
+    init(provider: MoyaProvider<FactsAPI> = MoyaProvider<FactsAPI>(), storage: FactsStorageType = FactsStorage()) {
+        self.provider = provider
+        self.storage = storage
+    }
 
     func searchFacts(searchTerm: String) -> Observable<[Fact]> {
         provider.rx
