@@ -17,16 +17,13 @@ final class SearchFactsViewController: UIViewController {
     let disposeBag = DisposeBag()
 
     private lazy var collectionView: UICollectionView = {
-        let layout = LeftAlignedCollectionViewFlowLayout()
+        let layout = FactCategoryViewFlowLayout()
+
         layout.scrollDirection = .vertical
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        return UICollectionView(
-            frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 300),
-            collectionViewLayout: layout
-        )
+
+        return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
 
     private lazy var categoriesDataSource = RxCollectionViewSectionedReloadDataSource<FactCategoriesSectionModel>(
@@ -129,25 +126,4 @@ final class SearchFactsViewController: UIViewController {
             .bind(to: viewModel.searchAction)
             .disposed(by: disposeBag)
     }
-}
-
-class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let attributes = super.layoutAttributesForElements(in: rect)
-
-        var leftMargin = sectionInset.left
-        var maxY: CGFloat = -1.0
-        attributes?.forEach { layoutAttribute in
-            if layoutAttribute.representedElementCategory == .cell {
-                if layoutAttribute.frame.origin.y >= maxY {
-                    leftMargin = sectionInset.left
-                }
-                layoutAttribute.frame.origin.x = leftMargin
-                leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
-                maxY = max(layoutAttribute.frame.maxY, maxY)
-            }
-        }
-        return attributes
-    }
-
 }

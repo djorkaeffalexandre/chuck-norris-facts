@@ -56,9 +56,7 @@ final class FactsListViewModel {
         self.setSearchTerm = searchTermSubject.asObserver()
         self.searchTerm = searchTermSubject.asObservable()
 
-        _ = factsService.syncCategories().subscribe(onNext: {
-            print("eu aqui")
-        })
+        _ = factsService.syncCategories().subscribe(onNext: {})
 
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
