@@ -14,6 +14,7 @@ struct SearchFactsScene {
     let searchFactsView: XCUIElement
     let searchBarField: XCUIElement
     let cancelButton: XCUIElement
+    let factsCategoriesCollection: XCUIElement
 
     init() {
         let app = XCUIApplication()
@@ -21,6 +22,7 @@ struct SearchFactsScene {
         searchFactsView = app.otherElements["searchFactsView"]
         searchBarField = app.searchFields["Search"]
         cancelButton = app.navigationBars.buttons["cancelButton"]
+        factsCategoriesCollection = app.collectionViews["factCategoriesCollectionView"]
     }
 
 }

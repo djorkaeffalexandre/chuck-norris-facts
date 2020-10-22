@@ -11,11 +11,19 @@ import Moya
 
 protocol FactsServiceType {
     func searchFacts(searchTerm: String) -> Observable<[Fact]>
+    func syncCategories() -> Observable<Void>
+    func retrieveCategories() -> Observable<[FactCategory]>
 }
 
 struct FactsService: FactsServiceType {
 
-    private let provider = MoyaProvider<FactsAPI>()
+    private var provider: MoyaProvider<FactsAPI>
+    private var storage: FactsStorageType
+
+    init(provider: MoyaProvider<FactsAPI> = MoyaProvider<FactsAPI>(), storage: FactsStorageType = FactsStorage()) {
+        self.provider = provider
+        self.storage = storage
+    }
 
     func searchFacts(searchTerm: String) -> Observable<[Fact]> {
         provider.rx
@@ -23,6 +31,19 @@ struct FactsService: FactsServiceType {
             .asObservable()
             .map(SearchFactsResponse.self, using: JSON.decoder)
             .map { $0.facts }
+    }
+
+    func syncCategories() -> Observable<Void> {
+        provider.rx
+            .request(.getCategories)
+            .asObservable()
+            .map([FactCategory].self, using: JSON.decoder)
+            .map { self.storage.storeCategories($0) }
+            .map { () }
+    }
+
+    func retrieveCategories() -> Observable<[FactCategory]> {
+        storage.retrieveCategories()
     }
 
 }

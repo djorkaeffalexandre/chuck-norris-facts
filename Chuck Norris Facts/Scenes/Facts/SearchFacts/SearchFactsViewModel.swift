@@ -6,7 +6,11 @@
 //  Copyright © 2020 Djorkaeff Alexandre Vilela Pereira. All rights reserved.
 //
 
+import Foundation
+import RxDataSources
 import RxSwift
+
+typealias FactCategoriesSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
 
 class SearchFactsViewModel {
 
@@ -18,13 +22,17 @@ class SearchFactsViewModel {
 
     let searchAction: AnyObserver<Void>
 
+    let viewWillAppear: AnyObserver<Void>
+
     // MARK: - Outputs
+
+    let categories: Observable<[FactCategoriesSectionModel]>
 
     let didCancel: Observable<Void>
 
     let didSearchFacts: Observable<String>
 
-    init() {
+    init(factsService: FactsServiceType = FactsService()) {
         let cancelSubject = PublishSubject<Void>()
         self.cancel = cancelSubject.asObserver()
         self.didCancel = cancelSubject.asObservable()
@@ -38,5 +46,14 @@ class SearchFactsViewModel {
         self.didSearchFacts = searchActionSubject
             .withLatestFrom(searchTermSubject)
             .filter { !$0.isEmpty }
+
+        let viewWillAppearSubject = PublishSubject<Void>()
+        self.viewWillAppear = viewWillAppearSubject.asObserver()
+
+        self.categories = viewWillAppearSubject
+            .flatMapLatest { factsService.retrieveCategories() }
+            .map { Array($0.shuffled().prefix(8)) }
+            .map { $0.map { FactCategoryViewModel(category: $0) } }
+            .map { [FactCategoriesSectionModel(model: "", items: $0)] }
     }
 }

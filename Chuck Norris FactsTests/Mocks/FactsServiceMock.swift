@@ -13,6 +13,16 @@ import RxSwift
 
 final class FactsServiceMock: FactsServiceType {
 
+    var syncCategoriesReturnValue: Observable<Void> = .just(())
+    func syncCategories() -> Observable<Void> {
+        return syncCategoriesReturnValue
+    }
+
+    var retrieveCategoriesReturnValue: Observable<[FactCategory]> = .just([])
+    func retrieveCategories() -> Observable<[FactCategory]> {
+        return retrieveCategoriesReturnValue
+    }
+
     var searchFactsReturnValue: Observable<[Fact]> = .just([])
     func searchFacts(searchTerm: String) -> Observable<[Fact]> {
         return searchFactsReturnValue
