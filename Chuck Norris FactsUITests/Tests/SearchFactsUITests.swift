@@ -76,6 +76,6 @@ final class SearchFactsUITests: XCTestCase {
 
         sleep(5)
 
-        XCTAssertEqual(factsListScene.factsTableView.cells.count, 10)
+        XCTAssertGreaterThan(factsListScene.factsTableView.cells.count, 0)
     }
 }
