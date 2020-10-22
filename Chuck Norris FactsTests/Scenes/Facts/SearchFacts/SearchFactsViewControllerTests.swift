@@ -25,7 +25,7 @@ class SearchFactsViewControllerTests: XCTestCase {
         disposeBag = DisposeBag()
         testScheduler = TestScheduler(initialClock: 0)
         factsServiceMock = FactsServiceMock()
-        searchFactsViewModel = SearchFactsViewModel()
+        searchFactsViewModel = SearchFactsViewModel(factsService: factsServiceMock)
         searchFactsViewController = SearchFactsViewController()
         searchFactsViewController.viewModel = searchFactsViewModel
 

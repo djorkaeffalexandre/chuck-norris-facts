@@ -23,8 +23,8 @@ class SearchFactsViewModelTests: XCTestCase {
     override func setUp() {
         disposeBag = DisposeBag()
         testScheduler = TestScheduler(initialClock: 0)
-        searchFactsViewModel = SearchFactsViewModel()
         factsServiceMock = FactsServiceMock()
+        searchFactsViewModel = SearchFactsViewModel(factsService: factsServiceMock)
     }
 
     override func tearDown() {
