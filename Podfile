@@ -15,6 +15,7 @@ target 'Chuck Norris Facts' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxDataSources'
+  pod 'RxRealm'
 
   # Tools
   pod 'SwiftLint'
@@ -24,6 +25,9 @@ target 'Chuck Norris Facts' do
 
   # Networking
   pod 'Moya/RxSwift'
+
+  # Storage
+  pod 'RealmSwift'
 
   target 'Chuck Norris FactsTests' do
     inherit! :search_paths
