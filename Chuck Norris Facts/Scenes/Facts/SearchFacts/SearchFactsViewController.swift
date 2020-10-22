@@ -16,7 +16,7 @@ final class SearchFactsViewController: UIViewController {
 
     let disposeBag = DisposeBag()
 
-    private lazy var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let layout = FactCategoryViewFlowLayout()
 
         layout.scrollDirection = .vertical
