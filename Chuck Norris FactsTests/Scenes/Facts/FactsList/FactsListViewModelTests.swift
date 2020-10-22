@@ -72,4 +72,22 @@ class FactsListViewModelTests: XCTestCase {
         let shareFact = factObserver.events.compactMap { $0.value.element }.first
         XCTAssertEqual(fact.value, shareFact?.text)
     }
+
+    func test_categoriesShouldSyncWhenViewDidAppear() throws {
+        let stubCategories = try stub("get-categories", type: [FactCategory].self) ?? []
+        let categories = try XCTUnwrap(stubCategories, "looks like get-categories.json doesn't exists")
+        factsServiceMock.retrieveCategoriesReturnValue = .just(categories)
+
+        let syncCategoriesObserver = testScheduler.createObserver(Void.self)
+
+        factsListViewModel.syncCategories
+            .subscribe(syncCategoriesObserver)
+            .disposed(by: disposeBag)
+
+        factsListViewModel.viewDidAppear.onNext(())
+
+        testScheduler.start()
+
+        XCTAssertEqual(syncCategoriesObserver.events.count, 1)
+    }
 }
