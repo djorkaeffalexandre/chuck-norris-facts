@@ -4,7 +4,7 @@ platform :ios do
   desc "Run Tests"
   lane :tests do
 
-    cocoapods(verbose: true)
+    cocoapods(verbose: true, clean_install: true)
     scan(workspace: "Chuck Norris Facts.xcworkspace", code_coverage: true)
 
   end
