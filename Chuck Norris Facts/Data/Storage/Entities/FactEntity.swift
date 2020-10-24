@@ -15,6 +15,8 @@ class FactEntity: Object {
     @objc dynamic var value = ""
     @objc dynamic var iconUrl = ""
 
+    let categories = List<FactCategoryEntity>()
+
     override static func primaryKey() -> String? {
         "id"
     }
@@ -22,13 +24,14 @@ class FactEntity: Object {
     convenience init(fact: Fact) {
         self.init(value: [
             "id": fact.id,
-            "url": fact.url,
+            "url": fact.url ?? "",
             "value": fact.value,
-            "iconUrl": fact.iconUrl
+            "iconUrl": fact.iconUrl,
+            "categories": fact.categories.map(FactCategoryEntity.init)
         ])
     }
 
     var item: Fact {
-        Fact(id: id, value: value, url: url, iconUrl: iconUrl)
+        Fact(id: id, value: value, url: url, iconUrl: iconUrl, categories: categories.map { $0.item })
     }
 }

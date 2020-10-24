@@ -13,11 +13,13 @@ struct Fact: Decodable {
     let value: String
     let url: String?
     let iconUrl: String
+    let categories: [FactCategory]
 
-    init(id: String, value: String, url: String?, iconUrl: String) {
+    init(id: String, value: String, url: String?, iconUrl: String, categories: [FactCategory]) {
         self.id = id
         self.value = value
         self.url = url
         self.iconUrl = iconUrl
+        self.categories = categories
     }
 }
