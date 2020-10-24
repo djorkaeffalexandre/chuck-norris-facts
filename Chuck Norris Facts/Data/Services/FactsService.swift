@@ -58,12 +58,6 @@ struct FactsService: FactsServiceType {
     }
 
     func retrieveFacts(searchTerm: String) -> Observable<[Fact]> {
-        let facts = storage.retrieveFacts(searchTerm: searchTerm)
-
-        if searchTerm.isEmpty {
-            return facts.map { Array($0.shuffled().prefix(10)) }
-        }
-
-        return facts
+        storage.retrieveFacts(searchTerm: searchTerm)
     }
 }

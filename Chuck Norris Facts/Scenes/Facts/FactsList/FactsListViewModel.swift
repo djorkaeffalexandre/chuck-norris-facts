@@ -82,9 +82,19 @@ final class FactsListViewModel {
 
                     let data = try Data(contentsOf: url)
                     let stub = try JSON.decoder.decode(SearchFactsResponse.self, from: data)
-                    return .just(stub.facts)
+                    let facts = stub.facts.shuffled().prefix(10)
+                    return .just(Array(facts))
                 }
-                return factsService.retrieveFacts(searchTerm: searchTerm)
+
+                if CommandLine.arguments.contains("--empty-facts") {
+                    return .just([])
+                }
+
+                let facts = factsService.retrieveFacts(searchTerm: searchTerm)
+                if searchTerm.isEmpty {
+                    return facts.map { Array($0.shuffled().prefix(10)) }
+                }
+                return facts
             }
             .map { $0.map { FactViewModel(fact: $0) } }
             .map { [FactsSectionModel(model: "", items: $0)] }
