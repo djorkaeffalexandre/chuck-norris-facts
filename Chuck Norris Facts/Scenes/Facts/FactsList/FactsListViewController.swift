@@ -43,6 +43,7 @@ class FactsListViewController: UIViewController {
     private lazy var loadingView: AnimationView = {
         let loading = AnimationView()
 
+        loading.backgroundColor = .systemBackground
         loading.animation = Animation.named("loading")
         loading.loopMode = .loop
 
@@ -55,8 +56,8 @@ class FactsListViewController: UIViewController {
         setupView()
         setupBindings()
         setupTableView()
-        setupLoadingView()
         setupEmptyListView()
+        setupLoadingView()
         setupNavigationBar()
     }
 
@@ -84,10 +85,10 @@ class FactsListViewController: UIViewController {
         view.addSubview(loadingView)
 
         loadingView.translatesAutoresizingMaskIntoConstraints = false
-        loadingView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        loadingView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        loadingView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
-        loadingView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
+        loadingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 
     private func setupEmptyListView() {
