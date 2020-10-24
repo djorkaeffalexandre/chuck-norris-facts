@@ -37,7 +37,7 @@ class FactsListViewModelTests: XCTestCase {
     func test_load10RandomFacts() throws {
         let factsListStub = try stub("facts-list", type: [Fact].self)
         let factsList = try XCTUnwrap(factsListStub, "looks like facts-list.json doesn't exists")
-        factsServiceMock.searchFactsReturnValue = .just(factsList)
+        factsServiceMock.retrieveFactsReturnValue = .just(factsList)
 
         let factsObserver = testScheduler.createObserver([FactsSectionModel].self)
 
@@ -45,7 +45,6 @@ class FactsListViewModelTests: XCTestCase {
             .subscribe(factsObserver)
             .disposed(by: disposeBag)
 
-        factsListViewModel.setSearchTerm.onNext("games")
         factsListViewModel.viewDidAppear.onNext(())
 
         testScheduler.start()

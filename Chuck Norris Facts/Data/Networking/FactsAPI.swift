@@ -54,8 +54,10 @@ extension FactsAPI: TargetType {
             if let data = try? Data.stub("get-categories") {
                 return data
             }
-        default:
-            break
+        case .searchFacts:
+            if let data = try? Data.stub("search-facts") {
+                return data
+            }
         }
 
         return Data()

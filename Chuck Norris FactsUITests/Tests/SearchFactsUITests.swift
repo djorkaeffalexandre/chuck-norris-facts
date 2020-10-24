@@ -32,7 +32,7 @@ final class SearchFactsUITests: XCTestCase {
 
         sleep(5)
 
-        XCTAssertEqual(factsListScene.factsTableView.cells.count, 10)
+        XCTAssertEqual(factsListScene.factsTableView.cells.count, 15)
     }
 
     func test_cancelSearchFacts() throws {

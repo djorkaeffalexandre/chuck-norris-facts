@@ -15,6 +15,10 @@ protocol FactsStorageType {
     func storeCategories(_ categories: [FactCategory])
 
     func retrieveCategories() -> Observable<[FactCategory]>
+
+    func storeFacts(_ facts: [Fact])
+
+    func retrieveFacts(searchTerm: String) -> Observable<[Fact]>
 }
 
 final class FactsStorage: FactsStorageType {
@@ -34,5 +38,22 @@ final class FactsStorage: FactsStorageType {
     func retrieveCategories() -> Observable<[FactCategory]> {
         let entities = realm.objects(FactCategoryEntity.self)
         return Observable.collection(from: entities).map { $0.map { $0.item } }
+    }
+
+    func storeFacts(_ facts: [Fact]) {
+        try? realm.write {
+            let entities = facts.map(FactEntity.init)
+            self.realm.add(entities, update: .modified)
+        }
+    }
+
+    func retrieveFacts(searchTerm: String) -> Observable<[Fact]> {
+        var entities = realm.objects(FactEntity.self)
+
+        if !searchTerm.isEmpty {
+            entities = entities.filter("value CONTAINS %@", searchTerm)
+        }
+
+        return Observable.collection(from: entities).map { $0.map { $0.item }}
     }
 }

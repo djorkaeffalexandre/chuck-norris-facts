@@ -12,6 +12,8 @@ class FactTableViewCell: UITableViewCell {
 
     static let cellIdentifier = "FactTableViewCell"
 
+    private let categoryView = CategoryView()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -65,6 +67,7 @@ class FactTableViewCell: UITableViewCell {
 
         shadowView.addSubview(bodyLabel)
         shadowView.addSubview(shareButton)
+        shadowView.addSubview(categoryView)
 
         shadowView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
         shadowView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
@@ -75,9 +78,13 @@ class FactTableViewCell: UITableViewCell {
         bodyLabel.leadingAnchor.constraint(equalTo: shadowView.leadingAnchor, constant: 16).isActive = true
         bodyLabel.trailingAnchor.constraint(equalTo: shadowView.trailingAnchor, constant: -16).isActive = true
 
-        shareButton.topAnchor.constraint(equalTo: bodyLabel.bottomAnchor).isActive = true
+        shareButton.topAnchor.constraint(equalTo: bodyLabel.bottomAnchor, constant: 16).isActive = true
         shareButton.trailingAnchor.constraint(equalTo: shadowView.trailingAnchor, constant: -16).isActive = true
         shareButton.bottomAnchor.constraint(equalTo: shadowView.bottomAnchor, constant: -16).isActive = true
+
+        categoryView.translatesAutoresizingMaskIntoConstraints = false
+        categoryView.centerYAnchor.constraint(equalTo: shareButton.centerYAnchor).isActive = true
+        categoryView.leftAnchor.constraint(equalTo: shadowView.leftAnchor, constant: 16).isActive = true
     }
 
     func setup(_ fact: FactViewModel) {
@@ -85,5 +92,7 @@ class FactTableViewCell: UITableViewCell {
 
         let fontSize = fact.text.count > 80 ? 16 : 24
         bodyLabel.font = .systemFont(ofSize: CGFloat(fontSize), weight: .bold)
+
+        categoryView.label.text = fact.category
     }
 }

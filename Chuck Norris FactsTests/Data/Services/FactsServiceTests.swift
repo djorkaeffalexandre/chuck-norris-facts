@@ -69,4 +69,29 @@ final class FactsServiceTests: XCTestCase {
         let savedCategories = try storedCategories.toBlocking().first()
         XCTAssertEqual(savedCategories?.count, stubCategories.count)
     }
+
+    func test_searchFactsShouldSaveFactsOnStorage() throws {
+        let storedFacts = factsStorage.retrieveFacts(searchTerm: "")
+        let facts = try storedFacts.toBlocking().first() ?? []
+        XCTAssertTrue(facts.isEmpty)
+
+        factsService.searchFacts(searchTerm: "")
+            .subscribe()
+            .disposed(by: disposeBag)
+
+        let savedFacts = try storedFacts.toBlocking().first()
+        XCTAssertEqual(savedFacts?.count, 16)
+    }
+
+    func test_retrieveFactsShouldReturnFactsOnStorage() throws {
+        let storedFacts = factsStorage.retrieveFacts(searchTerm: "")
+        let facts = try storedFacts.toBlocking().first() ?? []
+        XCTAssertTrue(facts.isEmpty)
+
+        let stubFacts = try stub("facts-list", type: [Fact].self) ?? []
+        factsStorage.storeFacts(stubFacts)
+
+        let savedFacts = try storedFacts.toBlocking().first()
+        XCTAssertEqual(savedFacts?.count, stubFacts.count)
+    }
 }
