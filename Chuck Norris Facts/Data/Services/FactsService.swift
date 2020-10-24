@@ -10,9 +10,18 @@ import RxSwift
 import Moya
 
 protocol FactsServiceType {
-    func searchFacts(searchTerm: String) -> Observable<[Fact]>
+
+    // Search Facts on Chuck Norris API
+    func searchFacts(searchTerm: String) -> Observable<Void>
+
+    // Sync local stored Categories with Chuck Norris API Categories
     func syncCategories() -> Observable<Void>
+
+    // Retrieve local stored Categories
     func retrieveCategories() -> Observable<[FactCategory]>
+
+    // Retrieve local stored Facts
+    func retrieveFacts(searchTerm: String) -> Observable<[Fact]>
 }
 
 struct FactsService: FactsServiceType {
@@ -25,12 +34,14 @@ struct FactsService: FactsServiceType {
         self.storage = storage
     }
 
-    func searchFacts(searchTerm: String) -> Observable<[Fact]> {
+    func searchFacts(searchTerm: String) -> Observable<Void> {
         provider.rx
             .request(.searchFacts(searchTerm: searchTerm))
             .asObservable()
             .map(SearchFactsResponse.self, using: JSON.decoder)
             .map { $0.facts }
+            .map { self.storage.storeFacts($0) }
+            .map { () }
     }
 
     func syncCategories() -> Observable<Void> {
@@ -46,4 +57,13 @@ struct FactsService: FactsServiceType {
         storage.retrieveCategories()
     }
 
+    func retrieveFacts(searchTerm: String) -> Observable<[Fact]> {
+        let facts = storage.retrieveFacts(searchTerm: searchTerm)
+
+        if searchTerm.isEmpty {
+            return facts.map { Array($0.shuffled().prefix(10)) }
+        }
+
+        return facts
+    }
 }

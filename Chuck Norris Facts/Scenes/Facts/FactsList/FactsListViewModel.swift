@@ -63,6 +63,14 @@ final class FactsListViewModel {
                 factsService.syncCategories()
             }
 
+        _ = searchTermSubject.asObservable()
+            .filter { !$0.isEmpty }
+            .flatMapLatest { searchTerm -> Observable<Void> in
+                return factsService.searchFacts(searchTerm: searchTerm)
+                    .trackActivity(loadingIndicator)
+            }
+            .subscribe(onNext: {})
+
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
                 if CommandLine.arguments.contains("--search-facts") {
@@ -76,13 +84,8 @@ final class FactsListViewModel {
                     let stub = try JSON.decoder.decode(SearchFactsResponse.self, from: data)
                     return .just(stub.facts)
                 }
-                if !searchTerm.isEmpty {
-                    return factsService.searchFacts(searchTerm: searchTerm)
-                        .trackActivity(loadingIndicator)
-                }
-                return .just([])
+                return factsService.retrieveFacts(searchTerm: searchTerm)
             }
-            .map { Array($0.shuffled().prefix(10)) }
             .map { $0.map { FactViewModel(fact: $0) } }
             .map { [FactsSectionModel(model: "", items: $0)] }
     }

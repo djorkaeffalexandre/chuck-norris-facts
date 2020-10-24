@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0C7B402543A4E8002D5C47 /* FactEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0C7B3F2543A4E8002D5C47 /* FactEntity.swift */; };
 		1E23683E253FB07200BE17F3 /* FactCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E23683D253FB07200BE17F3 /* FactCategoryCell.swift */; };
 		1E236840253FB13A00BE17F3 /* FactCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E23683F253FB13A00BE17F3 /* FactCategoryViewModel.swift */; };
 		1E32758F2532A2C0007E838A /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32758E2532A2C0007E838A /* EmptyListView.swift */; };
@@ -80,6 +81,7 @@
 
 /* Begin PBXFileReference section */
 		02186229E02F0A408D2EE0C2 /* Pods_Chuck_Norris_Facts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chuck_Norris_Facts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E0C7B3F2543A4E8002D5C47 /* FactEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactEntity.swift; sourceTree = "<group>"; };
 		1E23683D253FB07200BE17F3 /* FactCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCategoryCell.swift; sourceTree = "<group>"; };
 		1E23683F253FB13A00BE17F3 /* FactCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCategoryViewModel.swift; sourceTree = "<group>"; };
 		1E32758E2532A2C0007E838A /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				1E92113D253F915100DB340B /* FactCategoryEntity.swift */,
+				1E0C7B3F2543A4E8002D5C47 /* FactEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -848,6 +851,7 @@
 				1E463803253636160079D8E9 /* SearchFactsViewController.swift in Sources */,
 				1EFE289525321CD2008806B9 /* FactViewModel.swift in Sources */,
 				1E46380B25363FF40079D8E9 /* SearchFactsViewModel.swift in Sources */,
+				1E0C7B402543A4E8002D5C47 /* FactEntity.swift in Sources */,
 				1E921139253F909700DB340B /* FactsStorage.swift in Sources */,
 				1E23683E253FB07200BE17F3 /* FactCategoryCell.swift in Sources */,
 				1E92113E253F915100DB340B /* FactCategoryEntity.swift in Sources */,
