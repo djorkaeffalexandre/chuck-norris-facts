@@ -19,6 +19,10 @@ protocol FactsStorageType {
     func storeFacts(_ facts: [Fact])
 
     func retrieveFacts(searchTerm: String) -> Observable<[Fact]>
+
+    func storeSearch(searchTerm: String)
+
+    func retrieveSearches() -> Observable<[String]>
 }
 
 final class FactsStorage: FactsStorageType {
@@ -55,5 +59,17 @@ final class FactsStorage: FactsStorageType {
         }
 
         return Observable.collection(from: entities).map { $0.map { $0.item }}
+    }
+
+    func storeSearch(searchTerm: String) {
+        try? realm.write {
+            let entity = SearchEntity(searchTerm: searchTerm)
+            self.realm.add(entity, update: .modified)
+        }
+    }
+
+    func retrieveSearches() -> Observable<[String]> {
+        let entities = realm.objects(SearchEntity.self).sorted(byKeyPath: "updatedAt", ascending: false)
+        return Observable.collection(from: entities).map { $0.map { $0.searchTerm } }
     }
 }

@@ -60,12 +60,9 @@ class SearchFactsViewModel {
             .map { $0.map { FactCategoryViewModel(category: $0) } }
             .map { [FactCategoriesSectionModel(model: "", items: $0)] }
 
-        self.pastSearches = .just([
-            PastSearchesSectionModel(model: "", items: [
-                PastSearchViewModel(text: "Djorkaeff"),
-                PastSearchViewModel(text: "Izabella"),
-                PastSearchViewModel(text: "Valéria")
-            ])
-        ])
+        self.pastSearches = viewWillAppearSubject
+            .flatMapLatest { factsService.retrievePastSearches() }
+            .map { $0.map { PastSearchViewModel(text: $0) } }
+            .map { [PastSearchesSectionModel(model: "", items: $0)] }
     }
 }
