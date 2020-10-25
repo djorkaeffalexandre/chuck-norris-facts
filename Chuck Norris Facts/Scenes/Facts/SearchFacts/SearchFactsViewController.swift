@@ -18,12 +18,24 @@ final class SearchFactsViewController: UIViewController {
 
     lazy var collectionView: UICollectionView = {
         let layout = FactCategoryViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
         layout.scrollDirection = .vertical
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 
-        return UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        return collectionView
+    }()
+
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.tableFooterView = UIView()
+
+        return tableView
     }()
 
     private lazy var categoriesDataSource = RxCollectionViewSectionedReloadDataSource<FactCategoriesSectionModel>(
@@ -36,6 +48,18 @@ final class SearchFactsViewController: UIViewController {
                 cell.setup(category)
             }
             return cell
+        }
+    )
+
+    private lazy var pastSearchesDataSource = RxTableViewSectionedReloadDataSource<PastSearchesSectionModel>(
+        configureCell: { _, tableView, indexPath, pastSearch -> UITableViewCell in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "identifier", for: indexPath)
+            cell.textLabel?.text = pastSearch.text
+            cell.imageView?.image = UIImage(systemName: "magnifyingglass")
+            return cell
+        },
+        titleForHeaderInSection: { _, _ in
+            "Past Searches"
         }
     )
 
@@ -62,11 +86,16 @@ final class SearchFactsViewController: UIViewController {
         setupNavigationBar()
         setupBindings()
         setupCollectionView()
+        setupTableView()
     }
 
     private func setupView() {
         view.backgroundColor = .systemBackground
         view.accessibilityIdentifier = "searchFactsView"
+
+        rx.viewWillAppear
+            .bind(to: viewModel.viewWillAppear)
+            .disposed(by: disposeBag)
     }
 
     private func setupCollectionView() {
@@ -74,15 +103,28 @@ final class SearchFactsViewController: UIViewController {
 
         collectionView.backgroundColor = .systemBackground
 
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        collectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        collectionView.isScrollEnabled = false
 
         collectionView.register(FactCategoryCell.self, forCellWithReuseIdentifier: FactCategoryCell.cellIdentifier)
 
         collectionView.accessibilityIdentifier = "factCategoriesCollectionView"
+    }
+
+    private func setupTableView() {
+        view.addSubview(tableView)
+
+        tableView.backgroundColor = .systemBackground
+
+        tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "identifier")
     }
 
     private func setupNavigationBar() {
@@ -92,10 +134,6 @@ final class SearchFactsViewController: UIViewController {
     }
 
     private func setupBindings() {
-        rx.viewWillAppear
-            .bind(to: viewModel.viewWillAppear)
-            .disposed(by: disposeBag)
-
         cancelButton.rx.tap
             .bind(to: viewModel.cancel)
             .disposed(by: disposeBag)
@@ -114,6 +152,11 @@ final class SearchFactsViewController: UIViewController {
             .bind(to: collectionView.rx.items(dataSource: categoriesDataSource))
             .disposed(by: disposeBag)
 
+        viewModel.pastSearches
+            .observeOn(MainScheduler.instance)
+            .bind(to: tableView.rx.items(dataSource: pastSearchesDataSource))
+            .disposed(by: disposeBag)
+
         let categorySelected = collectionView.rx
             .modelSelected(FactCategoryViewModel.self)
             .asObservable()
@@ -124,6 +167,20 @@ final class SearchFactsViewController: UIViewController {
             .disposed(by: disposeBag)
 
         categorySelected
+            .map { _ in () }
+            .bind(to: viewModel.searchAction)
+            .disposed(by: disposeBag)
+
+        let pastSearchSelected = tableView.rx
+            .modelSelected(PastSearchViewModel.self)
+            .asObservable()
+
+        pastSearchSelected
+            .compactMap { $0.text }
+            .bind(to: viewModel.searchTerm)
+            .disposed(by: disposeBag)
+
+        pastSearchSelected
             .map { _ in () }
             .bind(to: viewModel.searchAction)
             .disposed(by: disposeBag)

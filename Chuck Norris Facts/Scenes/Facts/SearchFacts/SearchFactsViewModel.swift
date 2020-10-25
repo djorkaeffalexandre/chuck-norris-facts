@@ -12,6 +12,8 @@ import RxSwift
 
 typealias FactCategoriesSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
 
+typealias PastSearchesSectionModel = AnimatableSectionModel<String, PastSearchViewModel>
+
 class SearchFactsViewModel {
 
     // MARK: - Inputs
@@ -27,6 +29,8 @@ class SearchFactsViewModel {
     // MARK: - Outputs
 
     let categories: Observable<[FactCategoriesSectionModel]>
+
+    let pastSearches: Observable<[PastSearchesSectionModel]>
 
     let didCancel: Observable<Void>
 
@@ -55,5 +59,13 @@ class SearchFactsViewModel {
             .map { Array($0.shuffled().prefix(8)) }
             .map { $0.map { FactCategoryViewModel(category: $0) } }
             .map { [FactCategoriesSectionModel(model: "", items: $0)] }
+
+        self.pastSearches = .just([
+            PastSearchesSectionModel(model: "", items: [
+                PastSearchViewModel(text: "Djorkaeff"),
+                PastSearchViewModel(text: "Izabella"),
+                PastSearchViewModel(text: "Valéria")
+            ])
+        ])
     }
 }
