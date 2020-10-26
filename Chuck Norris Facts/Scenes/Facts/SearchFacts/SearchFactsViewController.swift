@@ -20,22 +20,23 @@ final class SearchFactsViewController: UIViewController {
         configureCell: { dataSource, tableView, indexPath, _ -> UITableViewCell in
 
             switch dataSource[indexPath] {
-            case .CategoryTableViewItem(let categories):
-                let cell = FactCategoriesCell()
-                let viewModel = FactCategoriesViewModel(categories: categories)
+            case .SuggestionsTableViewItem(let suggestions):
+                let cell = tableView.dequeueReusableCell(withIdentifier: SuggestionsCell.identifier) as? SuggestionsCell
+                    ?? SuggestionsCell(style: .default, reuseIdentifier: SuggestionsCell.identifier)
+                let viewModel = SuggestionsViewModel(suggestions: suggestions)
                 cell.viewModel = viewModel
-                viewModel.didSelectCategory
+                viewModel.didSelectSuggestion
                     .bind(to: self.viewModel.searchTerm)
                     .disposed(by: self.disposeBag)
-                viewModel.didSelectCategory
+                viewModel.didSelectSuggestion
                     .map { _ in () }
                     .bind(to: self.viewModel.searchAction)
                     .disposed(by: self.disposeBag)
                 return cell
             case .PastSearchTableViewItem(let model):
-                let cell = tableView.dequeueReusableCell(withIdentifier: "identifier", for: indexPath)
-                cell.textLabel?.text = model.text
-                cell.imageView?.image = UIImage(systemName: "magnifyingglass")
+                let cell = tableView.dequeueReusableCell(withIdentifier: PastSearchCell.identifier) as? PastSearchCell
+                    ?? PastSearchCell(style: .default, reuseIdentifier: PastSearchCell.identifier)
+                cell.setup(model)
                 return cell
             }
 
@@ -94,7 +95,8 @@ final class SearchFactsViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "identifier")
+        tableView.register(SuggestionsCell.self, forCellReuseIdentifier: SuggestionsCell.identifier)
+        tableView.register(PastSearchCell.self, forCellReuseIdentifier: PastSearchCell.identifier)
     }
 
     private func setupNavigationBar() {

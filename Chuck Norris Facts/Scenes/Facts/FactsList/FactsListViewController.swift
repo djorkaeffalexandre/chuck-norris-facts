@@ -26,9 +26,9 @@ class FactsListViewController: UIViewController {
         configureCell: { [weak self] _, tableView, indexPath, fact -> UITableViewCell in
 
             guard let viewModel = self?.viewModel, let disposeBag = self?.disposeBag else { return UITableViewCell() }
-            let cell = tableView.dequeueReusableCell(withIdentifier: FactTableViewCell.cellIdentifier, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: FactCell.cellIdentifier, for: indexPath)
 
-            if let cell = cell as? FactTableViewCell {
+            if let cell = cell as? FactCell {
                 cell.setup(fact)
                 cell.shareButton.rx.tap
                     .map { fact }
@@ -76,7 +76,7 @@ class FactsListViewController: UIViewController {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
-        tableView.register(FactTableViewCell.self, forCellReuseIdentifier: FactTableViewCell.cellIdentifier)
+        tableView.register(FactCell.self, forCellReuseIdentifier: FactCell.cellIdentifier)
 
         tableView.accessibilityIdentifier = "factsTableView"
     }

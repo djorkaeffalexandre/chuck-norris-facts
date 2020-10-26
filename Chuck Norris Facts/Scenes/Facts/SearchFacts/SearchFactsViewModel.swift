@@ -10,7 +10,7 @@ import Foundation
 import RxDataSources
 import RxSwift
 
-typealias FactCategoriesSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
+typealias SuggestionsSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
 
 typealias PastSearchesSectionModel = AnimatableSectionModel<String, PastSearchViewModel>
 
@@ -56,8 +56,8 @@ class SearchFactsViewModel {
             .flatMapLatest { factsService.retrieveCategories() }
             .map { Array($0.shuffled().prefix(8)) }
             .map { $0.map { FactCategoryViewModel(category: $0) } }
-            .map { [FactCategoriesSectionModel(model: "", items: $0)] }
-            .map { [SearchFactsTableViewItem.CategoryTableViewItem(categories: $0)] }
+            .map { [SuggestionsSectionModel(model: "", items: $0)] }
+            .map { [SearchFactsTableViewItem.SuggestionsTableViewItem(suggestions: $0)] }
 
         let pastSearches = viewWillAppearSubject
             .flatMapLatest { factsService.retrievePastSearches() }
@@ -67,7 +67,7 @@ class SearchFactsViewModel {
         self.items = Observable.combineLatest(categories, pastSearches)
             .flatMapLatest { (data) -> Observable<[SearchFactsTableViewSection]> in
                 let (categories, pastSearches) = data
-                return .just([.CategoriesSection(items: categories), .PastSearchesSection(items: pastSearches)])
+                return .just([.SuggestionsSection(items: categories), .PastSearchesSection(items: pastSearches)])
             }
     }
 }

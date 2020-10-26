@@ -1,5 +1,5 @@
 //
-//  FactCategoriesCell.swift
+//  SuggestionsCell.swift
 //  Chuck Norris Facts
 //
 //  Created by Djorkaeff Alexandre Vilela Pereira on 10/26/20.
@@ -11,7 +11,9 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class FactCategoriesCell: UITableViewCell {
+class SuggestionsCell: UITableViewCell {
+
+    static let identifier = "SuggestionsCell"
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,7 +26,7 @@ class FactCategoriesCell: UITableViewCell {
 
     private let disposeBag = DisposeBag()
 
-    private lazy var categoriesDataSource = RxCollectionViewSectionedReloadDataSource<FactCategoriesSectionModel>(
+    private lazy var suggestionsDataSource = RxCollectionViewSectionedReloadDataSource<SuggestionsSectionModel>(
         configureCell: { _, collectionView, indexPath, category -> UICollectionViewCell in
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: FactCategoryCell.cellIdentifier,
@@ -37,14 +39,14 @@ class FactCategoriesCell: UITableViewCell {
     }
     )
 
-    var viewModel: FactCategoriesViewModel! {
+    var viewModel: SuggestionsViewModel! {
         didSet {
             self.setupBindings()
         }
     }
 
     lazy var collectionView: DynamicHeightCollectionView = {
-        let layout = FactCategoryViewFlowLayout()
+        let layout = SuggestionsViewFlowLayout()
         let collectionView = DynamicHeightCollectionView(frame: .zero, collectionViewLayout: layout)
 
         layout.scrollDirection = .vertical
@@ -69,9 +71,9 @@ class FactCategoriesCell: UITableViewCell {
     }
 
     private func setupBindings() {
-        viewModel.categories
+        viewModel.suggestions
             .observeOn(MainScheduler.instance)
-            .bind(to: collectionView.rx.items(dataSource: categoriesDataSource))
+            .bind(to: collectionView.rx.items(dataSource: suggestionsDataSource))
             .disposed(by: disposeBag)
 
         let categorySelected = collectionView.rx
@@ -80,7 +82,7 @@ class FactCategoriesCell: UITableViewCell {
 
         categorySelected
             .compactMap { $0.text }
-            .bind(to: viewModel.category)
+            .bind(to: viewModel.suggestion)
             .disposed(by: disposeBag)
 
         categorySelected
@@ -90,12 +92,12 @@ class FactCategoriesCell: UITableViewCell {
     }
 }
 
-extension FactCategoriesCell: UICollectionViewDelegateFlowLayout {
+extension SuggestionsCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cell = FactCategoryCell()
-        let item = categoriesDataSource.sectionModels[indexPath.section].items[indexPath.row]
+        let item = suggestionsDataSource.sectionModels[indexPath.section].items[indexPath.row]
         cell.setup(item)
         return cell.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
     }

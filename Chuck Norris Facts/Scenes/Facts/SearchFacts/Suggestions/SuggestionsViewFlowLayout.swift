@@ -1,5 +1,5 @@
 //
-//  FactCategoryViewFlowLayout.swift
+//  SuggestionsViewFlowLayout.swift
 //  Chuck Norris Facts
 //
 //  Created by Djorkaeff Alexandre Vilela Pereira on 10/21/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class FactCategoryViewFlowLayout: UICollectionViewFlowLayout {
+final class SuggestionsViewFlowLayout: UICollectionViewFlowLayout {
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         let attributes = super.layoutAttributesForElements(in: rect)

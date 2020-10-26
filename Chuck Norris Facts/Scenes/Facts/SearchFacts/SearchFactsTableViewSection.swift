@@ -9,12 +9,12 @@
 import RxDataSources
 
 enum SearchFactsTableViewItem {
-    case CategoryTableViewItem(categories: [FactCategoriesSectionModel])
+    case SuggestionsTableViewItem(suggestions: [SuggestionsSectionModel])
     case PastSearchTableViewItem(model: PastSearchViewModel)
 }
 
 enum SearchFactsTableViewSection {
-    case CategoriesSection(items: [SearchFactsTableViewItem])
+    case SuggestionsSection(items: [SearchFactsTableViewItem])
     case PastSearchesSection(items: [SearchFactsTableViewItem])
 }
 
@@ -23,7 +23,7 @@ extension SearchFactsTableViewSection: SectionModelType {
 
     var header: String {
         switch self {
-        case .CategoriesSection:
+        case .SuggestionsSection:
             return "Suggestions"
         case .PastSearchesSection:
             return "Past Searches"
@@ -32,7 +32,7 @@ extension SearchFactsTableViewSection: SectionModelType {
 
     var items: [SearchFactsTableViewItem] {
         switch self {
-        case .CategoriesSection(let items):
+        case .SuggestionsSection(let items):
             return items
         case .PastSearchesSection(let items):
             return items

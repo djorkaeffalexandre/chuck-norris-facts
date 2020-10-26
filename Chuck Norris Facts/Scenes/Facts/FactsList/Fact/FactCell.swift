@@ -1,6 +1,6 @@
 //
-//  FactTableViewCell.swift
-//  Chuck
+//  FactCell.swift
+//  Chuck Norris Facts
 //
 //  Created by Djorkaeff Alexandre Vilela Pereira on 10/10/20.
 //  Copyright © 2020 Djorkaeff Alexandre Vilela Pereira. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FactTableViewCell: UITableViewCell {
+class FactCell: UITableViewCell {
 
     static let cellIdentifier = "FactTableViewCell"
 
