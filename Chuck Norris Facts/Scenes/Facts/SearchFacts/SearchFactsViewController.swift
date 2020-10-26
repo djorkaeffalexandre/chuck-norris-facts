@@ -16,6 +16,26 @@ final class SearchFactsViewController: UIViewController {
 
     let disposeBag = DisposeBag()
 
+    private lazy var itemsDataSource = RxTableViewSectionedReloadDataSource<SearchFactsTableViewSection>(
+        configureCell: { dataSource, tableView, indexPath, _ -> UITableViewCell in
+
+            switch dataSource[indexPath] {
+            case .CategoryTableViewItem(let categories):
+                let cell = FactCategoriesCell()
+                cell.viewModel = FactCategoriesViewModel(categories: categories)
+                return cell
+            case .PastSearchTableViewItem(let model):
+                let cell = tableView.dequeueReusableCell(withIdentifier: "identifier", for: indexPath)
+                cell.textLabel?.text = model.text
+                cell.imageView?.image = UIImage(systemName: "magnifyingglass")
+                return cell
+            }
+
+        }, titleForHeaderInSection: { dataSource, index in
+            return dataSource.sectionModels[index].header
+        }
+    )
+
     lazy var tableView: UITableView = {
         let tableView = UITableView()
 
@@ -94,7 +114,7 @@ final class SearchFactsViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.items
-            .bind(to: tableView.rx.items(dataSource: SearchFactsDataSource.dataSource()))
+            .bind(to: tableView.rx.items(dataSource: itemsDataSource))
             .disposed(by: disposeBag)
 
         let pastSearchSelected = tableView.rx
