@@ -31,10 +31,9 @@ class SuggestionsCell: UITableViewCell {
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: FactCategoryCell.cellIdentifier,
                 for: indexPath
-            )
-            if let cell = cell as? FactCategoryCell {
-                cell.setup(category)
-            }
+            ) as? FactCategoryCell ?? FactCategoryCell()
+
+            cell.setup(category)
             return cell
     }
     )
