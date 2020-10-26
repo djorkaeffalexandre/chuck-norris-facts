@@ -28,13 +28,11 @@ class SearchFactsViewModel {
 
     // MARK: - Outputs
 
-    let categories: Observable<[FactCategoriesSectionModel]>
-
-    let pastSearches: Observable<[PastSearchesSectionModel]>
-
     let didCancel: Observable<Void>
 
     let didSearchFacts: Observable<String>
+
+    let items: Observable<[SearchFactsTableViewSection]>
 
     init(factsService: FactsServiceType = FactsService()) {
         let cancelSubject = PublishSubject<Void>()
@@ -54,15 +52,22 @@ class SearchFactsViewModel {
         let viewWillAppearSubject = PublishSubject<Void>()
         self.viewWillAppear = viewWillAppearSubject.asObserver()
 
-        self.categories = viewWillAppearSubject
+        let categories = viewWillAppearSubject
             .flatMapLatest { factsService.retrieveCategories() }
             .map { Array($0.shuffled().prefix(8)) }
             .map { $0.map { FactCategoryViewModel(category: $0) } }
             .map { [FactCategoriesSectionModel(model: "", items: $0)] }
+            .map { [SearchFactsTableViewItem.CategoryTableViewItem(categories: $0)] }
 
-        self.pastSearches = viewWillAppearSubject
+        let pastSearches = viewWillAppearSubject
             .flatMapLatest { factsService.retrievePastSearches() }
             .map { $0.map { PastSearchViewModel(text: $0) } }
-            .map { [PastSearchesSectionModel(model: "", items: $0)] }
+            .map { $0.map { SearchFactsTableViewItem.PastSearchTableViewItem(model: $0) } }
+
+        self.items = Observable.combineLatest(categories, pastSearches)
+            .flatMapLatest { (data) -> Observable<[SearchFactsTableViewSection]> in
+                let (categories, pastSearches) = data
+                return .just([.CategoriesSection(items: categories), .PastSearchesSection(items: pastSearches)])
+            }
     }
 }
