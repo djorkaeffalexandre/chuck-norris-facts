@@ -22,7 +22,15 @@ final class SearchFactsViewController: UIViewController {
             switch dataSource[indexPath] {
             case .CategoryTableViewItem(let categories):
                 let cell = FactCategoriesCell()
-                cell.viewModel = FactCategoriesViewModel(categories: categories)
+                let viewModel = FactCategoriesViewModel(categories: categories)
+                cell.viewModel = viewModel
+                viewModel.didSelectCategory
+                    .bind(to: self.viewModel.searchTerm)
+                    .disposed(by: self.disposeBag)
+                viewModel.didSelectCategory
+                    .map { _ in () }
+                    .bind(to: self.viewModel.searchAction)
+                    .disposed(by: self.disposeBag)
                 return cell
             case .PastSearchTableViewItem(let model):
                 let cell = tableView.dequeueReusableCell(withIdentifier: "identifier", for: indexPath)

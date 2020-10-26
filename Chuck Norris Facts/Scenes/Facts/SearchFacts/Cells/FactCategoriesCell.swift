@@ -73,6 +73,20 @@ class FactCategoriesCell: UITableViewCell {
             .observeOn(MainScheduler.instance)
             .bind(to: collectionView.rx.items(dataSource: categoriesDataSource))
             .disposed(by: disposeBag)
+
+        let categorySelected = collectionView.rx
+            .modelSelected(FactCategoryViewModel.self)
+            .asObservable()
+
+        categorySelected
+            .compactMap { $0.text }
+            .bind(to: viewModel.category)
+            .disposed(by: disposeBag)
+
+        categorySelected
+            .map { _ in () }
+            .bind(to: viewModel.selectAction)
+            .disposed(by: disposeBag)
     }
 }
 
