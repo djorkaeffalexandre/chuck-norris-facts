@@ -57,7 +57,12 @@ class SearchFactsViewModel {
             .map { Array($0.shuffled().prefix(8)) }
             .map { $0.map { FactCategoryViewModel(category: $0) } }
             .map { [SuggestionsSectionModel(model: "", items: $0)] }
-            .map { [SearchFactsTableViewItem.SuggestionsTableViewItem(suggestions: $0)] }
+            .map { suggestions -> [SearchFactsTableViewItem] in
+                if let firstSection = suggestions.first, firstSection.items.isEmpty {
+                    return []
+                }
+                return [SearchFactsTableViewItem.SuggestionsTableViewItem(suggestions: suggestions)]
+            }
 
         let pastSearches = viewWillAppearSubject
             .flatMapLatest { factsService.retrievePastSearches() }
@@ -65,9 +70,9 @@ class SearchFactsViewModel {
             .map { $0.map { SearchFactsTableViewItem.PastSearchTableViewItem(model: $0) } }
 
         self.items = Observable.combineLatest(categories, pastSearches)
-            .flatMapLatest { (data) -> Observable<[SearchFactsTableViewSection]> in
-                let (categories, pastSearches) = data
-                return .just([.SuggestionsSection(items: categories), .PastSearchesSection(items: pastSearches)])
+            .map { categories, pastSearches -> [SearchFactsTableViewSection] in
+                [.SuggestionsSection(items: categories), .PastSearchesSection(items: pastSearches)]
             }
+            .map { $0.filter { !$0.items.isEmpty } }
     }
 }
