@@ -19,6 +19,7 @@ class FactsListViewController: UIViewController {
     private let disposeBag = DisposeBag()
 
     let tableView = UITableView()
+    let loadingView = LoadingView()
     let emptyListView = EmptyListView()
     let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: nil)
 
@@ -39,16 +40,6 @@ class FactsListViewController: UIViewController {
             return cell
         }
     )
-
-    private lazy var loadingView: AnimationView = {
-        let loading = AnimationView()
-
-        loading.backgroundColor = .systemBackground
-        loading.animation = Animation.named("loading")
-        loading.loopMode = .loop
-
-        return loading
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
