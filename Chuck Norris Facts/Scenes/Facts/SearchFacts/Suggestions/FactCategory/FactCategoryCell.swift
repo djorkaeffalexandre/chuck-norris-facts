@@ -18,7 +18,6 @@ class FactCategoryCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.textColor = .white
-        label.numberOfLines = 0
 
         return label
     }()
