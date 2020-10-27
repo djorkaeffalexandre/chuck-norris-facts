@@ -82,4 +82,23 @@ class SearchFactsViewModelTests: XCTestCase {
         let searchFactsViewModelEvents = searchFactsItemsObserver.events.compactMap { $0.value.element }.first
         XCTAssertEqual(searchFactsViewModelEvents?.first?.items.first?.quantity, 8)
     }
+
+    func test_shouldLoadPastSearches() {
+        let searchFactsItemsObserver = testScheduler.createObserver([SearchFactsTableViewSection].self)
+
+        let pastSearches = ["fashion", "games", "food"]
+        factsServiceMock.retrievePastSearchesReturnValue = .just(pastSearches)
+
+        searchFactsViewModel.items
+            .subscribe(searchFactsItemsObserver)
+            .disposed(by: disposeBag)
+
+        searchFactsViewModel.viewWillAppear.onNext(())
+
+        testScheduler.start()
+
+        let searchFactsViewModelEvents = searchFactsItemsObserver.events.compactMap { $0.value.element }.first
+        XCTAssertEqual(searchFactsViewModelEvents?.count, 1)
+        XCTAssertEqual(searchFactsViewModelEvents?.first?.items.count, 3)
+    }
 }
