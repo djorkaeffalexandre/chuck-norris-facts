@@ -66,20 +66,20 @@ class SearchFactsViewModelTests: XCTestCase {
     }
 
     func test_shouldLoad8RandomFactCategories() throws {
-        let factCategoriesObserver = testScheduler.createObserver([FactCategoriesSectionModel].self)
+        let searchFactsItemsObserver = testScheduler.createObserver([SearchFactsTableViewSection].self)
 
         let testCategories = try stub("get-categories", type: [FactCategory].self) ?? []
         factsServiceMock.retrieveCategoriesReturnValue = .just(testCategories)
 
-        searchFactsViewModel.categories
-            .subscribe(factCategoriesObserver)
+        searchFactsViewModel.items
+            .subscribe(searchFactsItemsObserver)
             .disposed(by: disposeBag)
 
         searchFactsViewModel.viewWillAppear.onNext(())
 
         testScheduler.start()
 
-        let factCategoriesViewModel = factCategoriesObserver.events.compactMap { $0.value.element }.first
-        XCTAssertEqual(factCategoriesViewModel?.first?.items.count, 8)
+        let searchFactsViewModelEvents = searchFactsItemsObserver.events.compactMap { $0.value.element }.first
+        XCTAssertEqual(searchFactsViewModelEvents?.first?.items.first?.quantity, 8)
     }
 }

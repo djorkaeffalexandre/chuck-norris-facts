@@ -26,6 +26,9 @@ class FactCategoryCell: UICollectionViewCell {
         super.init(frame: frame)
 
         setupView()
+
+        isAccessibilityElement = true
+        accessibilityIdentifier = "factCategoryCell"
     }
 
     required init?(coder: NSCoder) {

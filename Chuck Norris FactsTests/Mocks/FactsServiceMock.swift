@@ -32,4 +32,9 @@ final class FactsServiceMock: FactsServiceType {
     func retrieveFacts(searchTerm: String) -> Observable<[Fact]> {
         return retrieveFactsReturnValue
     }
+
+    var retrievePastSearchesReturnValue: Observable<[String]> = .just([])
+    func retrievePastSearches() -> Observable<[String]> {
+        return retrievePastSearchesReturnValue
+    }
 }

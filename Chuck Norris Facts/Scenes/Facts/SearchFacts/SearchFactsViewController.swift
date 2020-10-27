@@ -49,6 +49,7 @@ final class SearchFactsViewController: UIViewController {
         let tableView = UITableView()
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.accessibilityIdentifier = "itemsTableView"
         tableView.tableFooterView = UIView()
 
         return tableView

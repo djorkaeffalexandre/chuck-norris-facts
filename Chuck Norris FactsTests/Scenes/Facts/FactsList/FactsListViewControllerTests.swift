@@ -27,8 +27,7 @@ class FactsListViewControllerTests: XCTestCase {
         factsListViewController = FactsListViewController()
         factsListViewController.viewModel = factsListViewModel
 
-        factsListViewController.loadView()
-        factsListViewController.viewDidLoad()
+        factsListViewController.loadViewIfNeeded()
     }
 
     override func tearDown() {
@@ -100,8 +99,8 @@ class FactsListViewControllerTests: XCTestCase {
 }
 
 extension FactsListViewControllerTests {
-    func factsListFirstCell() -> FactTableViewCell? {
+    func factsListFirstCell() -> FactCell? {
         let indexPath = IndexPath(row: 0, section: 0)
-        return factsListViewController.tableView.cellForRow(at: indexPath) as? FactTableViewCell
+        return factsListViewController.tableView.cellForRow(at: indexPath) as? FactCell
     }
 }

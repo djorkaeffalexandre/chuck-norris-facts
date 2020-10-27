@@ -29,8 +29,7 @@ class SearchFactsViewControllerTests: XCTestCase {
         searchFactsViewController = SearchFactsViewController()
         searchFactsViewController.viewModel = searchFactsViewModel
 
-        searchFactsViewController.loadView()
-        searchFactsViewController.viewDidLoad()
+        searchFactsViewController.loadViewIfNeeded()
     }
 
     override func tearDown() {
@@ -46,6 +45,11 @@ class SearchFactsViewControllerTests: XCTestCase {
 
         searchFactsViewModel.viewWillAppear.onNext(())
 
-        XCTAssertEqual(searchFactsViewController.collectionView.numberOfItems(inSection: 0), 8)
+        let tableView = searchFactsViewController.tableView
+        let searchFactsDataSource = tableView.dataSource
+        let indexPath = IndexPath(row: 0, section: 0)
+        let suggestionsCell = searchFactsDataSource?.tableView(tableView, cellForRowAt: indexPath) as? SuggestionsCell
+
+        XCTAssertEqual(suggestionsCell?.collectionView.numberOfItems(inSection: 0), 8)
     }
 }

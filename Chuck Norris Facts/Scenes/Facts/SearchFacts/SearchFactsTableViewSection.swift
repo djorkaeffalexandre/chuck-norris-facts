@@ -13,6 +13,17 @@ enum SearchFactsTableViewItem {
     case PastSearchTableViewItem(model: PastSearchViewModel)
 }
 
+extension SearchFactsTableViewItem {
+    var quantity: Int {
+        switch self {
+        case .SuggestionsTableViewItem(let suggestions):
+            return suggestions.first?.items.count ?? 0
+        default:
+            return 0
+        }
+    }
+}
+
 enum SearchFactsTableViewSection {
     case SuggestionsSection(items: [SearchFactsTableViewItem])
     case PastSearchesSection(items: [SearchFactsTableViewItem])
