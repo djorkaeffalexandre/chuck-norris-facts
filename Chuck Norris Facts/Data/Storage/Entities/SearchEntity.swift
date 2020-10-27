@@ -13,11 +13,16 @@ class SearchEntity: Object {
     @objc dynamic var searchTerm = ""
     @objc dynamic var updatedAt = Date()
 
+    let facts = List<FactEntity>()
+
     override static func primaryKey() -> String? {
         "searchTerm"
     }
 
-    convenience init(searchTerm: String) {
-        self.init(value: ["searchTerm": searchTerm])
+    convenience init(searchTerm: String, facts: [Fact]) {
+        self.init(value: [
+            "searchTerm": searchTerm,
+            "facts": facts.map(FactEntity.init)
+        ])
     }
 }

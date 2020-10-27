@@ -38,14 +38,12 @@ struct FactsService: FactsServiceType {
     }
 
     func searchFacts(searchTerm: String) -> Observable<Void> {
-        self.storage.storeSearch(searchTerm: searchTerm)
-
-        return provider.rx
+        provider.rx
             .request(.searchFacts(searchTerm: searchTerm))
             .asObservable()
             .map(SearchFactsResponse.self, using: JSON.decoder)
             .map { $0.facts }
-            .map { self.storage.storeFacts($0) }
+            .map { self.storage.storeSearch(searchTerm: searchTerm, facts: $0) }
             .map { () }
     }
 
