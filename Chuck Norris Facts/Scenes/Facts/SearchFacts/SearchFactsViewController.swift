@@ -100,6 +100,7 @@ final class SearchFactsViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
+        navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.title = "Search"
