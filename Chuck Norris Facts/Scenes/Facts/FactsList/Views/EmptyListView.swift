@@ -28,9 +28,21 @@ final class EmptyListView: UIView {
         label.numberOfLines = 0
 
         label.text = "Looks like there are no Facts"
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
 
         return label
+    }()
+
+    lazy var searchButton: UIButton = {
+        let button = UIButton(type: .system)
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = "Search"
+        button.setTitle("Search", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .regular)
+        button.accessibilityIdentifier = "searchButton"
+
+        return button
     }()
 
     override init(frame: CGRect) {
@@ -59,6 +71,11 @@ final class EmptyListView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.topAnchor.constraint(equalTo: animation.bottomAnchor).isActive = true
         label.centerXAnchor.constraint(equalTo: animation.centerXAnchor).isActive = true
+
+        addSubview(searchButton)
+        searchButton.translatesAutoresizingMaskIntoConstraints = false
+        searchButton.topAnchor.constraint(equalTo: label.bottomAnchor).isActive = true
+        searchButton.centerXAnchor.constraint(equalTo: label.centerXAnchor).isActive = true
 
         accessibilityIdentifier = "emptyListView"
         label.accessibilityIdentifier = "emptyListLabelView"

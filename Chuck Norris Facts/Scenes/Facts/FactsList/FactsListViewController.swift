@@ -133,6 +133,10 @@ class FactsListViewController: UIViewController {
             .asDriver(onErrorJustReturn: ())
             .drive()
             .disposed(by: disposeBag)
+
+        emptyListView.searchButton.rx.tap
+            .bind(to: viewModel.startSearchFacts)
+            .disposed(by: disposeBag)
     }
 
     private func showEmptyView(_ isEmpty: Bool) {
