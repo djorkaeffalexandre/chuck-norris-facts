@@ -52,7 +52,6 @@ class SuggestionsCell: UITableViewCell {
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
 
-        collectionView.delegate = self
         collectionView.isScrollEnabled = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(FactCategoryCell.self, forCellWithReuseIdentifier: FactCategoryCell.cellIdentifier)
@@ -63,13 +62,17 @@ class SuggestionsCell: UITableViewCell {
     private func setupView() {
         contentView.addSubview(collectionView)
 
+        collectionView.delegate = nil
         collectionView.backgroundColor = .systemBackground
-
         collectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         collectionView.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
     }
 
     private func setupBindings() {
+        collectionView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
+
         viewModel.suggestions
             .observeOn(MainScheduler.instance)
             .bind(to: collectionView.rx.items(dataSource: suggestionsDataSource))
