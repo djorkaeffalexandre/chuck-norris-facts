@@ -62,13 +62,15 @@ class SuggestionsCell: UITableViewCell {
     private func setupView() {
         contentView.addSubview(collectionView)
 
-        collectionView.delegate = nil
         collectionView.backgroundColor = .systemBackground
         collectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         collectionView.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
     }
 
     private func setupBindings() {
+        collectionView
+            .delegate = nil
+
         collectionView.rx
             .setDelegate(self)
             .disposed(by: disposeBag)
