@@ -94,4 +94,24 @@ final class FactsServiceTests: XCTestCase {
         let savedFacts = try storedFacts.toBlocking().first()
         XCTAssertEqual(savedFacts?.count, stubFacts.count)
     }
+
+    func test_retrievePastSearchesShouldReturnDistinctSortedByDateSearchesOnStorage() throws {
+        let storedSearches = factsStorage.retrieveSearches()
+        let searches = try storedSearches.toBlocking().first() ?? []
+        XCTAssertTrue(searches.isEmpty)
+
+        let stubShortFact = try stub("short-fact", type: Fact.self)
+        let shortFact = try XCTUnwrap(stubShortFact)
+
+        let stubLongFact = try stub("long-fact", type: Fact.self)
+        let longFact = try XCTUnwrap(stubLongFact)
+
+        factsStorage.storeSearch(searchTerm: "games", facts: [shortFact])
+        factsStorage.storeSearch(searchTerm: "explicit", facts: [longFact])
+        factsStorage.storeSearch(searchTerm: "explicit", facts: [longFact])
+        factsStorage.storeSearch(searchTerm: "fashion", facts: [shortFact])
+
+        let savedSearches = try storedSearches.toBlocking().first()
+        XCTAssertEqual(savedSearches, ["fashion", "explicit", "games"])
+    }
 }

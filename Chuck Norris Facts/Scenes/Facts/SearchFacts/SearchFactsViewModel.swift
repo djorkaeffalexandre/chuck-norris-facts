@@ -10,7 +10,9 @@ import Foundation
 import RxDataSources
 import RxSwift
 
-typealias FactCategoriesSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
+typealias SuggestionsSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
+
+typealias PastSearchesSectionModel = AnimatableSectionModel<String, PastSearchViewModel>
 
 class SearchFactsViewModel {
 
@@ -26,11 +28,11 @@ class SearchFactsViewModel {
 
     // MARK: - Outputs
 
-    let categories: Observable<[FactCategoriesSectionModel]>
-
     let didCancel: Observable<Void>
 
     let didSearchFacts: Observable<String>
+
+    let items: Observable<[SearchFactsTableViewSection]>
 
     init(factsService: FactsServiceType = FactsService()) {
         let cancelSubject = PublishSubject<Void>()
@@ -50,10 +52,27 @@ class SearchFactsViewModel {
         let viewWillAppearSubject = PublishSubject<Void>()
         self.viewWillAppear = viewWillAppearSubject.asObserver()
 
-        self.categories = viewWillAppearSubject
+        let categories = viewWillAppearSubject
             .flatMapLatest { factsService.retrieveCategories() }
             .map { Array($0.shuffled().prefix(8)) }
             .map { $0.map { FactCategoryViewModel(category: $0) } }
-            .map { [FactCategoriesSectionModel(model: "", items: $0)] }
+            .map { [SuggestionsSectionModel(model: "", items: $0)] }
+            .map { suggestions -> [SearchFactsTableViewItem] in
+                if let firstSection = suggestions.first, firstSection.items.isEmpty {
+                    return []
+                }
+                return [SearchFactsTableViewItem.SuggestionsTableViewItem(suggestions: suggestions)]
+            }
+
+        let pastSearches = viewWillAppearSubject
+            .flatMapLatest { factsService.retrievePastSearches() }
+            .map { $0.map { PastSearchViewModel(text: $0) } }
+            .map { $0.map { SearchFactsTableViewItem.PastSearchTableViewItem(model: $0) } }
+
+        self.items = Observable.combineLatest(categories, pastSearches)
+            .map { categories, pastSearches -> [SearchFactsTableViewSection] in
+                [.SuggestionsSection(items: categories), .PastSearchesSection(items: pastSearches)]
+            }
+            .map { $0.filter { !$0.items.isEmpty } }
     }
 }

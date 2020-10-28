@@ -17,6 +17,8 @@ class FactEntity: Object {
 
     let categories = List<FactCategoryEntity>()
 
+    let search = LinkingObjects(fromType: SearchEntity.self, property: "facts")
+
     override static func primaryKey() -> String? {
         "id"
     }

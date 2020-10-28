@@ -32,7 +32,7 @@ final class SearchFactsUITests: XCTestCase {
 
         sleep(5)
 
-        XCTAssertEqual(factsListScene.factsTableView.cells.count, 15)
+        XCTAssertEqual(factsListScene.factsTableView.cells.count, 16)
     }
 
     func test_cancelSearchFacts() throws {
@@ -56,7 +56,9 @@ final class SearchFactsUITests: XCTestCase {
         let searchFactsScene = SearchFactsScene()
         XCTAssertTrue(searchFactsScene.searchFactsView.exists)
 
-        XCTAssertEqual(searchFactsScene.factsCategoriesCollection.cells.count, 8)
+        let suggestionsCells = searchFactsScene.factCategoryCells
+
+        XCTAssertEqual(suggestionsCells.count, 8)
     }
 
     func test_tapFactCategoryShouldSearchByTerm() {
@@ -68,14 +70,75 @@ final class SearchFactsUITests: XCTestCase {
         let searchFactsScene = SearchFactsScene()
         XCTAssertTrue(searchFactsScene.searchFactsView.exists)
 
-        let firstFactCategory = searchFactsScene.factsCategoriesCollection.cells.firstMatch
-        XCTAssertTrue(firstFactCategory.exists)
+        let suggestionsCells = searchFactsScene.factCategoryCells
 
-        firstFactCategory.tap()
-        XCTAssertFalse(searchFactsScene.searchFactsView.exists)
+        let suggestion = suggestionsCells.firstMatch
+        XCTAssertTrue(suggestion.exists)
+
+        suggestion.tap()
 
         sleep(5)
 
+        XCTAssertFalse(searchFactsScene.searchFactsView.exists)
         XCTAssertGreaterThan(factsListScene.factsTableView.cells.count, 0)
+    }
+
+    func test_tapPastSearchShouldSearchByTerm() {
+        app.launch()
+
+        let factsListScene = FactsListScene()
+        factsListScene.searchButton.tap()
+
+        let searchFactsScene = SearchFactsScene()
+        XCTAssertTrue(searchFactsScene.searchFactsView.exists)
+
+        let searchFactsCells = searchFactsScene.itemsTableView.cells
+
+        let pastSearchCell = searchFactsCells.element(boundBy: 1)
+        XCTAssertTrue(pastSearchCell.exists)
+
+        pastSearchCell.tap()
+
+        sleep(5)
+
+        XCTAssertFalse(searchFactsScene.searchFactsView.exists)
+        XCTAssertGreaterThan(factsListScene.factsTableView.cells.count, 0)
+    }
+
+    func test_tapPastSearchShouldOrderByDate() {
+        app.launch()
+
+        let factsListScene = FactsListScene()
+        factsListScene.searchButton.tap()
+
+        let searchFactsScene = SearchFactsScene()
+        XCTAssertTrue(searchFactsScene.searchFactsView.exists)
+
+        let searchFactsCells = searchFactsScene.itemsTableView.cells
+
+        let secondItem = searchFactsCells.element(boundBy: 2)
+        XCTAssertTrue(secondItem.exists)
+
+        secondItem.tap()
+
+        let firstItem = searchFactsCells.element(boundBy: 1)
+        XCTAssertTrue(firstItem.exists)
+
+        XCTAssertEqual(firstItem.label, secondItem.label)
+    }
+
+    func test_pastSearchShouldBeHiddenOnFirstAccess() {
+        app.launchArguments = ["--reset-storage"]
+        app.launch()
+
+        let factsListScene = FactsListScene()
+        factsListScene.searchButton.tap()
+
+        let searchFactsScene = SearchFactsScene()
+        XCTAssertTrue(searchFactsScene.searchFactsView.exists)
+
+        let searchFactsCells = searchFactsScene.itemsTableView.cells
+
+        XCTAssertEqual(searchFactsCells.count, 1)
     }
 }

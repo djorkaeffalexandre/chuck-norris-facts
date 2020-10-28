@@ -18,7 +18,6 @@ class FactCategoryCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.textColor = .white
-        label.numberOfLines = 0
 
         return label
     }()
@@ -27,6 +26,9 @@ class FactCategoryCell: UICollectionViewCell {
         super.init(frame: frame)
 
         setupView()
+
+        isAccessibilityElement = true
+        accessibilityIdentifier = "factCategoryCell"
     }
 
     required init?(coder: NSCoder) {

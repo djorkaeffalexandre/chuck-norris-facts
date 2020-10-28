@@ -29,8 +29,7 @@ class SearchFactsViewControllerTests: XCTestCase {
         searchFactsViewController = SearchFactsViewController()
         searchFactsViewController.viewModel = searchFactsViewModel
 
-        searchFactsViewController.loadView()
-        searchFactsViewController.viewDidLoad()
+        searchFactsViewController.loadViewIfNeeded()
     }
 
     override func tearDown() {
@@ -40,12 +39,39 @@ class SearchFactsViewControllerTests: XCTestCase {
         factsServiceMock = nil
     }
 
-    func test_factCategoriesViewShouldShow8Categories() throws {
+    func test_searchFactsViewShouldShow8Categories() throws {
         let stubFactCategories = try stub("get-categories", type: [FactCategory].self) ?? []
         factsServiceMock.retrieveCategoriesReturnValue = .just(stubFactCategories)
 
         searchFactsViewModel.viewWillAppear.onNext(())
 
-        XCTAssertEqual(searchFactsViewController.collectionView.numberOfItems(inSection: 0), 8)
+        let tableView = searchFactsViewController.tableView
+        let searchFactsDataSource = tableView.dataSource
+        let indexPath = IndexPath(row: 0, section: 0)
+        let suggestionsCell = searchFactsDataSource?.tableView(tableView, cellForRowAt: indexPath) as? SuggestionsCell
+
+        XCTAssertEqual(searchFactsDataSource?.numberOfSections?(in: tableView), 1)
+        XCTAssertEqual(suggestionsCell?.collectionView.numberOfItems(inSection: 0), 8)
+    }
+
+    func test_searchFactsViewShouldShowOnlyPastSearches() {
+        factsServiceMock.retrievePastSearchesReturnValue = .just(["fashion", "games", "explicit"])
+
+        searchFactsViewModel.viewWillAppear.onNext(())
+
+        let tableView = searchFactsViewController.tableView
+        let searchFactsDataSource = tableView.dataSource
+
+        XCTAssertEqual(searchFactsDataSource?.numberOfSections?(in: tableView), 1)
+        XCTAssertEqual(searchFactsDataSource?.tableView(tableView, numberOfRowsInSection: 0), 3)
+    }
+
+    func test_searchFactsViewShouldBeEmptyWhenThereIsNoSuggestionsOrPastSearches() {
+        searchFactsViewModel.viewWillAppear.onNext(())
+
+        let tableView = searchFactsViewController.tableView
+        let searchFactsDataSource = tableView.dataSource
+
+        XCTAssertEqual(searchFactsDataSource?.numberOfSections?(in: tableView), 0)
     }
 }

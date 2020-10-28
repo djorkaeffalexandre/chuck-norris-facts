@@ -12,13 +12,23 @@ import RealmSwift
 import RxRealm
 
 protocol FactsStorageType {
+    // Store a list of categories
     func storeCategories(_ categories: [FactCategory])
 
+    // Retrieve all local stored categories
     func retrieveCategories() -> Observable<[FactCategory]>
 
+    // Store a list of facts
     func storeFacts(_ facts: [Fact])
 
+    // Retrieve local stored facts filtered by a search term
     func retrieveFacts(searchTerm: String) -> Observable<[Fact]>
+
+    // Store a search and it's result
+    func storeSearch(searchTerm: String, facts: [Fact])
+
+    // Retrieve all past searches terms
+    func retrieveSearches() -> Observable<[String]>
 }
 
 final class FactsStorage: FactsStorageType {
@@ -51,9 +61,21 @@ final class FactsStorage: FactsStorageType {
         var entities = realm.objects(FactEntity.self)
 
         if !searchTerm.isEmpty {
-            entities = entities.filter("value CONTAINS %@", searchTerm)
+            entities = entities.filter("ANY search.searchTerm = %@", searchTerm)
         }
 
         return Observable.collection(from: entities).map { $0.map { $0.item }}
+    }
+
+    func storeSearch(searchTerm: String, facts: [Fact]) {
+        try? realm.write {
+            let entity = SearchEntity(searchTerm: searchTerm, facts: facts)
+            self.realm.add(entity, update: .modified)
+        }
+    }
+
+    func retrieveSearches() -> Observable<[String]> {
+        let entities = realm.objects(SearchEntity.self).sorted(byKeyPath: "updatedAt", ascending: false)
+        return Observable.collection(from: entities).map { $0.map { $0.searchTerm } }
     }
 }

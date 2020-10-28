@@ -22,6 +22,9 @@ protocol FactsServiceType {
 
     // Retrieve local stored Facts
     func retrieveFacts(searchTerm: String) -> Observable<[Fact]>
+
+    // Retrieve local stored Past Searches
+    func retrievePastSearches() -> Observable<[String]>
 }
 
 struct FactsService: FactsServiceType {
@@ -40,7 +43,7 @@ struct FactsService: FactsServiceType {
             .asObservable()
             .map(SearchFactsResponse.self, using: JSON.decoder)
             .map { $0.facts }
-            .map { self.storage.storeFacts($0) }
+            .map { self.storage.storeSearch(searchTerm: searchTerm, facts: $0) }
             .map { () }
     }
 
@@ -59,5 +62,9 @@ struct FactsService: FactsServiceType {
 
     func retrieveFacts(searchTerm: String) -> Observable<[Fact]> {
         storage.retrieveFacts(searchTerm: searchTerm)
+    }
+
+    func retrievePastSearches() -> Observable<[String]> {
+        storage.retrieveSearches()
     }
 }

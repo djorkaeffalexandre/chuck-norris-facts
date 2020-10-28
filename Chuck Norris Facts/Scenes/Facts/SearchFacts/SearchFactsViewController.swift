@@ -16,28 +16,43 @@ final class SearchFactsViewController: UIViewController {
 
     let disposeBag = DisposeBag()
 
-    lazy var collectionView: UICollectionView = {
-        let layout = FactCategoryViewFlowLayout()
+    private lazy var itemsDataSource = RxTableViewSectionedReloadDataSource<SearchFactsTableViewSection>(
+        configureCell: { dataSource, tableView, indexPath, _ -> UITableViewCell in
 
-        layout.scrollDirection = .vertical
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-
-        return UICollectionView(frame: .zero, collectionViewLayout: layout)
-    }()
-
-    private lazy var categoriesDataSource = RxCollectionViewSectionedReloadDataSource<FactCategoriesSectionModel>(
-        configureCell: { _, collectionView, indexPath, category -> UICollectionViewCell in
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: FactCategoryCell.cellIdentifier,
-                for: indexPath
-            )
-            if let cell = cell as? FactCategoryCell {
-                cell.setup(category)
+            switch dataSource[indexPath] {
+            case .SuggestionsTableViewItem(let suggestions):
+                let cell = SuggestionsCell(style: .default, reuseIdentifier: SuggestionsCell.identifier)
+                let viewModel = SuggestionsViewModel(suggestions: suggestions)
+                cell.viewModel = viewModel
+                viewModel.didSelectSuggestion
+                    .bind(to: self.viewModel.searchTerm)
+                    .disposed(by: self.disposeBag)
+                viewModel.didSelectSuggestion
+                    .map { _ in () }
+                    .bind(to: self.viewModel.searchAction)
+                    .disposed(by: self.disposeBag)
+                return cell
+            case .PastSearchTableViewItem(let model):
+                let cell = tableView.dequeueReusableCell(withIdentifier: PastSearchCell.identifier) as? PastSearchCell
+                    ?? PastSearchCell(style: .default, reuseIdentifier: PastSearchCell.identifier)
+                cell.setup(model)
+                return cell
             }
-            return cell
+
+        }, titleForHeaderInSection: { dataSource, index in
+            return dataSource.sectionModels[index].header
         }
     )
+
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.accessibilityIdentifier = "itemsTableView"
+        tableView.tableFooterView = UIView()
+
+        return tableView
+    }()
 
     lazy var cancelButton: UIBarButtonItem = {
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
@@ -61,7 +76,7 @@ final class SearchFactsViewController: UIViewController {
         setupView()
         setupNavigationBar()
         setupBindings()
-        setupCollectionView()
+        setupTableView()
     }
 
     private func setupView() {
@@ -69,23 +84,23 @@ final class SearchFactsViewController: UIViewController {
         view.accessibilityIdentifier = "searchFactsView"
     }
 
-    private func setupCollectionView() {
-        view.addSubview(collectionView)
+    private func setupTableView() {
+        view.addSubview(tableView)
 
-        collectionView.backgroundColor = .systemBackground
+        tableView.backgroundColor = .systemBackground
+        tableView.rowHeight = UITableView.automaticDimension
 
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
-        collectionView.register(FactCategoryCell.self, forCellWithReuseIdentifier: FactCategoryCell.cellIdentifier)
-
-        collectionView.accessibilityIdentifier = "factCategoriesCollectionView"
+        tableView.register(SuggestionsCell.self, forCellReuseIdentifier: SuggestionsCell.identifier)
+        tableView.register(PastSearchCell.self, forCellReuseIdentifier: PastSearchCell.identifier)
     }
 
     private func setupNavigationBar() {
+        navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.title = "Search"
@@ -109,21 +124,29 @@ final class SearchFactsViewController: UIViewController {
             .bind(to: viewModel.searchAction)
             .disposed(by: disposeBag)
 
-        viewModel.categories
-            .observeOn(MainScheduler.instance)
-            .bind(to: collectionView.rx.items(dataSource: categoriesDataSource))
+        viewModel.items
+            .bind(to: tableView.rx.items(dataSource: itemsDataSource))
             .disposed(by: disposeBag)
 
-        let categorySelected = collectionView.rx
-            .modelSelected(FactCategoryViewModel.self)
+        let pastSearchSelected = tableView.rx
+            .modelSelected(SearchFactsTableViewItem.self)
             .asObservable()
 
-        categorySelected
-            .compactMap { $0.text }
+        pastSearchSelected
+            .compactMap {
+                switch $0 {
+                case .PastSearchTableViewItem(let model):
+                    return model.text
+                default:
+                    break
+                }
+                return ""
+            }
+            .filter { !$0.isEmpty }
             .bind(to: viewModel.searchTerm)
             .disposed(by: disposeBag)
 
-        categorySelected
+        pastSearchSelected
             .map { _ in () }
             .bind(to: viewModel.searchAction)
             .disposed(by: disposeBag)
