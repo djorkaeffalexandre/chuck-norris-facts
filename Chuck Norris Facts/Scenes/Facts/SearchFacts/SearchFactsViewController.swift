@@ -21,8 +21,7 @@ final class SearchFactsViewController: UIViewController {
 
             switch dataSource[indexPath] {
             case .SuggestionsTableViewItem(let suggestions):
-                let cell = tableView.dequeueReusableCell(withIdentifier: SuggestionsCell.identifier) as? SuggestionsCell
-                    ?? SuggestionsCell(style: .default, reuseIdentifier: SuggestionsCell.identifier)
+                let cell = SuggestionsCell(style: .default, reuseIdentifier: SuggestionsCell.identifier)
                 let viewModel = SuggestionsViewModel(suggestions: suggestions)
                 cell.viewModel = viewModel
                 viewModel.didSelectSuggestion

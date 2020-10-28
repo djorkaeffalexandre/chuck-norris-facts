@@ -68,9 +68,6 @@ class SuggestionsCell: UITableViewCell {
     }
 
     private func setupBindings() {
-        collectionView
-            .delegate = nil
-
         collectionView.rx
             .setDelegate(self)
             .disposed(by: disposeBag)
