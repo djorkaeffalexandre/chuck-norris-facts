@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E0C7B402543A4E8002D5C47 /* FactEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0C7B3F2543A4E8002D5C47 /* FactEntity.swift */; };
+		1E0E4BA22549F7E30030BC49 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E0E4BA12549F7E30030BC49 /* error.json */; };
 		1E23683E253FB07200BE17F3 /* FactCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E23683D253FB07200BE17F3 /* FactCategoryCell.swift */; };
 		1E236840253FB13A00BE17F3 /* FactCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E23683F253FB13A00BE17F3 /* FactCategoryViewModel.swift */; };
 		1E32758F2532A2C0007E838A /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32758E2532A2C0007E838A /* EmptyListView.swift */; };
@@ -91,6 +92,7 @@
 /* Begin PBXFileReference section */
 		02186229E02F0A408D2EE0C2 /* Pods_Chuck_Norris_Facts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chuck_Norris_Facts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E0C7B3F2543A4E8002D5C47 /* FactEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactEntity.swift; sourceTree = "<group>"; };
+		1E0E4BA12549F7E30030BC49 /* error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = error.json; sourceTree = "<group>"; };
 		1E23683D253FB07200BE17F3 /* FactCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCategoryCell.swift; sourceTree = "<group>"; };
 		1E23683F253FB13A00BE17F3 /* FactCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCategoryViewModel.swift; sourceTree = "<group>"; };
 		1E32758E2532A2C0007E838A /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 		1E3275902532A2C4007E838A /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				1E0E4BA12549F7E30030BC49 /* error.json */,
 				1EACEC98253649BD0006B36D /* loading.json */,
 				1E3275912532A2CD007E838A /* empty-box.json */,
 			);
@@ -705,6 +708,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1EFE287E25321071008806B9 /* search-facts.json in Resources */,
+				1E0E4BA22549F7E30030BC49 /* error.json in Resources */,
 				1EE0714925314AF600F6BF6D /* LaunchScreen.storyboard in Resources */,
 				1E5617282540FAF200BF26A0 /* get-categories.json in Resources */,
 				1EE0714625314AF600F6BF6D /* Assets.xcassets in Resources */,
