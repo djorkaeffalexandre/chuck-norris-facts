@@ -142,17 +142,18 @@ class FactsListViewController: UIViewController {
             .bind(to: viewModel.startSearchFacts)
             .disposed(by: disposeBag)
 
-        viewModel.syncCategories
-            .asDriver(onErrorJustReturn: ())
-            .drive()
-            .disposed(by: disposeBag)
-
         emptyListView.searchButton.rx.tap
             .bind(to: viewModel.startSearchFacts)
             .disposed(by: disposeBag)
 
         errorView.retryButton.rx.tap
             .bind(to: viewModel.retryError)
+            .disposed(by: disposeBag)
+
+        viewModel.errors
+            .bind(onNext: { [weak self] error in
+                self?.showErrorView(error)
+            })
             .disposed(by: disposeBag)
     }
 
@@ -177,5 +178,12 @@ class FactsListViewController: UIViewController {
         } else {
             loadingView.stop()
         }
+    }
+
+    private func showErrorView(_ error: FactsListError) {
+        errorView.label.text = error.message
+        errorView.retryButton.isHidden = !error.retry
+        errorView.isHidden = false
+        errorView.play()
     }
 }

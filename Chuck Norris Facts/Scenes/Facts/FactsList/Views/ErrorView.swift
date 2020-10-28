@@ -14,19 +14,19 @@ final class ErrorView: UIView {
     private lazy var animation: AnimationView = {
         let loading = AnimationView()
 
+        loading.translatesAutoresizingMaskIntoConstraints = false
         loading.animation = Animation.named("error")
 
         return loading
     }()
 
-    private lazy var label: UILabel = {
+    lazy var label: UILabel = {
         let label = UILabel()
 
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-
-        label.text = "Something goes wrong"
+        label.textAlignment = .center
         label.font = .systemFont(ofSize: 16, weight: .semibold)
 
         return label
@@ -58,21 +58,17 @@ final class ErrorView: UIView {
         backgroundColor = .systemBackground
 
         addSubview(animation)
-        animation.translatesAutoresizingMaskIntoConstraints = false
         animation.widthAnchor.constraint(equalToConstant: 200).isActive = true
         animation.heightAnchor.constraint(equalToConstant: 200).isActive = true
         animation.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         animation.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
         addSubview(label)
-
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.topAnchor.constraint(equalTo: animation.bottomAnchor).isActive = true
+        label.widthAnchor.constraint(equalTo: widthAnchor, constant: -16).isActive = true
         label.centerXAnchor.constraint(equalTo: animation.centerXAnchor).isActive = true
 
         addSubview(retryButton)
-
-        retryButton.translatesAutoresizingMaskIntoConstraints = false
         retryButton.topAnchor.constraint(equalTo: label.bottomAnchor).isActive = true
         retryButton.centerXAnchor.constraint(equalTo: label.centerXAnchor).isActive = true
     }

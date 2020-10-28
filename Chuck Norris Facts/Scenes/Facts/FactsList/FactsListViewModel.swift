@@ -38,7 +38,7 @@ final class FactsListViewModel {
 
     let isLoading: ActivityIndicator
 
-    let syncCategories: Observable<Void>
+    let errors: Observable<FactsListError>
 
     init(factsService: FactsServiceType = FactsService()) {
         let loadingIndicator = ActivityIndicator()
@@ -62,18 +62,20 @@ final class FactsListViewModel {
         self.setSearchTerm = searchTermSubject.asObserver()
         self.searchTerm = searchTermSubject.asObservable()
 
-        self.syncCategories = Observable.combineLatest(viewDidAppearSubject, retryErrorSubject)
-            .flatMapLatest { _, _ -> Observable<Void> in
-                factsService.syncCategories()
-            }
+        let syncCategoriesError = Observable.combineLatest(viewDidAppearSubject, retryErrorSubject)
+            .flatMapLatest { _, _ in factsService.syncCategories().materialize() }
+            .compactMap { $0.event.error }
+            .map { FactsListError.syncCategories($0) }
 
-        _ = searchTermSubject.asObservable()
+        let searchFactsError = searchTermSubject.asObservable()
             .filter { !$0.isEmpty }
-            .flatMapLatest { searchTerm -> Observable<Void> in
-                return factsService.searchFacts(searchTerm: searchTerm)
+            .flatMapLatest { searchTerm in
+                factsService.searchFacts(searchTerm: searchTerm)
                     .trackActivity(loadingIndicator)
+                    .materialize()
             }
-            .subscribe(onNext: {})
+            .compactMap { $0.event.error }
+            .map { FactsListError.loadFacts($0) }
 
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
@@ -98,5 +100,7 @@ final class FactsListViewModel {
             }
             .map { $0.map { FactViewModel(fact: $0) } }
             .map { [FactsSectionModel(model: "", items: $0)] }
+
+        self.errors = Observable.merge(searchFactsError, syncCategoriesError)
     }
 }

@@ -10,6 +10,7 @@
 		1E0C7B402543A4E8002D5C47 /* FactEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0C7B3F2543A4E8002D5C47 /* FactEntity.swift */; };
 		1E0E4BA22549F7E30030BC49 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E0E4BA12549F7E30030BC49 /* error.json */; };
 		1E15408F2549FA6200675DC4 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15408E2549FA6200675DC4 /* ErrorView.swift */; };
+		1E154091254A08B100675DC4 /* FactsListError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E154090254A08B100675DC4 /* FactsListError.swift */; };
 		1E23683E253FB07200BE17F3 /* FactCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E23683D253FB07200BE17F3 /* FactCategoryCell.swift */; };
 		1E236840253FB13A00BE17F3 /* FactCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E23683F253FB13A00BE17F3 /* FactCategoryViewModel.swift */; };
 		1E32758F2532A2C0007E838A /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32758E2532A2C0007E838A /* EmptyListView.swift */; };
@@ -95,6 +96,7 @@
 		1E0C7B3F2543A4E8002D5C47 /* FactEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactEntity.swift; sourceTree = "<group>"; };
 		1E0E4BA12549F7E30030BC49 /* error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = error.json; sourceTree = "<group>"; };
 		1E15408E2549FA6200675DC4 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		1E154090254A08B100675DC4 /* FactsListError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListError.swift; sourceTree = "<group>"; };
 		1E23683D253FB07200BE17F3 /* FactCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCategoryCell.swift; sourceTree = "<group>"; };
 		1E23683F253FB13A00BE17F3 /* FactCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCategoryViewModel.swift; sourceTree = "<group>"; };
 		1E32758E2532A2C0007E838A /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 				1EFE288D2532135B008806B9 /* FactsListViewController.swift */,
 				1EFE288F2532137C008806B9 /* FactsListCoordinator.swift */,
 				1EFE2891253214DB008806B9 /* FactsListViewModel.swift */,
+				1E154090254A08B100675DC4 /* FactsListError.swift */,
 			);
 			path = FactsList;
 			sourceTree = "<group>";
@@ -911,6 +914,7 @@
 				1EFE289525321CD2008806B9 /* FactViewModel.swift in Sources */,
 				1E46380B25363FF40079D8E9 /* SearchFactsViewModel.swift in Sources */,
 				1E0C7B402543A4E8002D5C47 /* FactEntity.swift in Sources */,
+				1E154091254A08B100675DC4 /* FactsListError.swift in Sources */,
 				1E921139253F909700DB340B /* FactsStorage.swift in Sources */,
 				1E23683E253FB07200BE17F3 /* FactCategoryCell.swift in Sources */,
 				1E92113E253F915100DB340B /* FactCategoryEntity.swift in Sources */,
