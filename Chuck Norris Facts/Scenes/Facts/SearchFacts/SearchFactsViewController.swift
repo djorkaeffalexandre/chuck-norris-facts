@@ -21,20 +21,19 @@ final class SearchFactsViewController: UIViewController {
 
             switch dataSource[indexPath] {
             case .SuggestionsTableViewItem(let suggestions):
-                let cell = SuggestionsCell(style: .default, reuseIdentifier: SuggestionsCell.identifier)
+                let cell = tableView.dequeueReusableCell(cell: SuggestionsCell.self, indexPath: indexPath)
                 let viewModel = SuggestionsViewModel(suggestions: suggestions)
                 cell.viewModel = viewModel
                 viewModel.didSelectSuggestion
                     .bind(to: self.viewModel.searchTerm)
-                    .disposed(by: self.disposeBag)
+                    .disposed(by: cell.disposeBag)
                 viewModel.didSelectSuggestion
                     .map { _ in () }
                     .bind(to: self.viewModel.searchAction)
-                    .disposed(by: self.disposeBag)
+                    .disposed(by: cell.disposeBag)
                 return cell
             case .PastSearchTableViewItem(let model):
-                let cell = tableView.dequeueReusableCell(withIdentifier: PastSearchCell.identifier) as? PastSearchCell
-                    ?? PastSearchCell(style: .default, reuseIdentifier: PastSearchCell.identifier)
+                let cell = tableView.dequeueReusableCell(cell: PastSearchCell.self, indexPath: indexPath)
                 cell.setup(model)
                 return cell
             }
@@ -95,8 +94,8 @@ final class SearchFactsViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
-        tableView.register(SuggestionsCell.self, forCellReuseIdentifier: SuggestionsCell.identifier)
-        tableView.register(PastSearchCell.self, forCellReuseIdentifier: PastSearchCell.identifier)
+        tableView.register(SuggestionsCell.self)
+        tableView.register(PastSearchCell.self)
     }
 
     private func setupNavigationBar() {

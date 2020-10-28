@@ -28,15 +28,13 @@ class FactsListViewController: UIViewController {
         configureCell: { [weak self] _, tableView, indexPath, fact -> UITableViewCell in
 
             guard let viewModel = self?.viewModel, let disposeBag = self?.disposeBag else { return UITableViewCell() }
-            let cell = tableView.dequeueReusableCell(withIdentifier: FactCell.cellIdentifier, for: indexPath)
+            let cell = tableView.dequeueReusableCell(cell: FactCell.self, indexPath: indexPath)
 
-            if let cell = cell as? FactCell {
-                cell.setup(fact)
-                cell.shareButton.rx.tap
-                    .map { fact }
-                    .bind(to: viewModel.startShareFact)
-                    .disposed(by: disposeBag)
-            }
+            cell.setup(fact)
+            cell.shareButton.rx.tap
+                .map { fact }
+                .bind(to: viewModel.startShareFact)
+                .disposed(by: cell.disposeBag)
 
             return cell
         }
@@ -63,13 +61,12 @@ class FactsListViewController: UIViewController {
 
         tableView.separatorStyle = .none
 
+        tableView.register(FactCell.self)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-
-        tableView.register(FactCell.self, forCellReuseIdentifier: FactCell.cellIdentifier)
 
         tableView.accessibilityIdentifier = "factsTableView"
     }
