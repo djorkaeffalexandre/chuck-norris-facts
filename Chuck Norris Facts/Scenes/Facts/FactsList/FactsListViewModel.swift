@@ -24,6 +24,8 @@ final class FactsListViewModel {
 
     let setSearchTerm: AnyObserver<String>
 
+    let retryError: AnyObserver<Void>
+
     // MARK: - Outputs
 
     let facts: Observable<[FactsSectionModel]>
@@ -39,12 +41,14 @@ final class FactsListViewModel {
     let syncCategories: Observable<Void>
 
     init(factsService: FactsServiceType = FactsService()) {
-
         let loadingIndicator = ActivityIndicator()
         self.isLoading = loadingIndicator
 
         let viewDidAppearSubject = PublishSubject<Void>()
         self.viewDidAppear = viewDidAppearSubject.asObserver()
+
+        let retryErrorSubject = PublishSubject<Void>()
+        self.retryError = retryErrorSubject.asObserver()
 
         let startShareFactSubject = PublishSubject<FactViewModel>()
         self.startShareFact = startShareFactSubject.asObserver()
@@ -58,8 +62,8 @@ final class FactsListViewModel {
         self.setSearchTerm = searchTermSubject.asObserver()
         self.searchTerm = searchTermSubject.asObservable()
 
-        self.syncCategories = viewDidAppearSubject.asObservable()
-            .flatMapLatest { _ -> Observable<Void> in
+        self.syncCategories = Observable.combineLatest(viewDidAppearSubject, retryErrorSubject)
+            .flatMapLatest { _, _ -> Observable<Void> in
                 factsService.syncCategories()
             }
 
@@ -75,21 +79,17 @@ final class FactsListViewModel {
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
                 if CommandLine.arguments.contains("--search-facts") {
                     let bundle = Bundle(for: Self.self)
-
                     guard let url = bundle.url(forResource: "search-facts", withExtension: ".json") else {
                         return .just([])
                     }
-
                     let data = try Data(contentsOf: url)
                     let stub = try JSON.decoder.decode(SearchFactsResponse.self, from: data)
                     let facts = stub.facts.shuffled().prefix(10)
                     return .just(Array(facts))
                 }
-
                 if CommandLine.arguments.contains("--empty-facts") {
                     return .just([])
                 }
-
                 let facts = factsService.retrieveFacts(searchTerm: searchTerm)
                 if searchTerm.isEmpty {
                     return facts.map { Array($0.shuffled().prefix(10)) }

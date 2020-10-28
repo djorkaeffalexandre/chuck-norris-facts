@@ -19,6 +19,7 @@ class FactsListViewController: UIViewController {
     private let disposeBag = DisposeBag()
 
     let tableView = UITableView()
+    let errorView = ErrorView()
     let loadingView = LoadingView()
     let emptyListView = EmptyListView()
     let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: nil)
@@ -47,6 +48,7 @@ class FactsListViewController: UIViewController {
         setupView()
         setupBindings()
         setupTableView()
+        setupErrorView()
         setupEmptyListView()
         setupLoadingView()
         setupNavigationBar()
@@ -80,6 +82,17 @@ class FactsListViewController: UIViewController {
         loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+
+    private func setupErrorView() {
+        view.addSubview(errorView)
+
+        errorView.isHidden = true
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 
     private func setupEmptyListView() {
@@ -136,6 +149,10 @@ class FactsListViewController: UIViewController {
 
         emptyListView.searchButton.rx.tap
             .bind(to: viewModel.startSearchFacts)
+            .disposed(by: disposeBag)
+
+        errorView.retryButton.rx.tap
+            .bind(to: viewModel.retryError)
             .disposed(by: disposeBag)
     }
 
