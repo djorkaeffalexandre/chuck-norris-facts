@@ -20,15 +20,13 @@ final class EmptyListView: UIView {
         return animation
     }()
 
-    private lazy var label: UILabel = {
+    lazy var label: UILabel = {
         let label = UILabel()
 
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-
-        label.text = "Looks like there are no Facts"
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
 
         return label
     }()

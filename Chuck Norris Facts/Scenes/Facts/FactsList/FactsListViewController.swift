@@ -124,12 +124,19 @@ class FactsListViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
-        viewModel.facts
+        let factsIsEmpty = viewModel.facts
             .map { $0.flatMap { $0.items } }
             .map { $0.isEmpty }
-            .asDriver(onErrorJustReturn: true)
-            .drive(onNext: { [weak self] isEmpty in
-                self?.showEmptyView(isEmpty)
+            .share()
+
+        let searchIsEmpty = viewModel.searchTerm
+            .map { $0.isEmpty }
+            .share()
+
+        Observable.combineLatest(factsIsEmpty, searchIsEmpty)
+            .asDriver(onErrorJustReturn: (true, true))
+            .drive(onNext: { [weak self] listEmpty, searchEmpty in
+                self?.showEmptyView(listEmpty, searchEmpty)
             })
             .disposed(by: disposeBag)
 
@@ -157,11 +164,19 @@ class FactsListViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func showEmptyView(_ isEmpty: Bool) {
-        tableView.isHidden = isEmpty
-        emptyListView.isHidden = !isEmpty
+    private func showEmptyView(_ listEmpty: Bool, _ searchEmpty: Bool) {
+        tableView.isHidden = listEmpty
+        emptyListView.isHidden = !listEmpty
 
-        if isEmpty {
+        if searchEmpty {
+            emptyListView.label.text = "Looks like there are no facts"
+            emptyListView.searchButton.isHidden = false
+        } else {
+            emptyListView.label.text = "There are no facts to your search"
+            emptyListView.searchButton.isHidden = true
+        }
+
+        if listEmpty {
             emptyListView.play()
         } else {
             emptyListView.stop()
@@ -173,7 +188,6 @@ class FactsListViewController: UIViewController {
         loadingView.isHidden = !isLoading
 
         if isLoading {
-            emptyListView.isHidden = isLoading
             loadingView.play()
         } else {
             loadingView.stop()
