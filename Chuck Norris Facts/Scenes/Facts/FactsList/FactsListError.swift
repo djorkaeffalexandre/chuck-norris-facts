@@ -6,26 +6,35 @@
 //  Copyright © 2020 Djorkaeff Alexandre Vilela Pereira. All rights reserved.
 //
 
+import Moya
 import Foundation
 
-enum FactsListError: Error {
+struct FactsListError {
 
-    case syncCategories(Error)
-    case loadFacts(Error)
+    enum ErrorType {
+        case syncCategories
+        case searchFacts
+    }
+
+    let error: MoyaError?
+
+    let type: ErrorType
 
     var message: String {
-        switch self {
-        case .syncCategories: return "Error while trying to sync fact categories"
-        case .loadFacts: return "Error while trying to load facts"
+        switch error?.code {
+        case .noConnection:
+            return "Internet Connection appears to be offline."
+        default:
+            return "Looks like the Chuck Norris Service is unavailable."
         }
     }
 
-    var retry: Bool {
-        switch self {
-        case .syncCategories:
-            return true
-        default:
+    var retryEnabled: Bool {
+        switch error?.code {
+        case .noConnection:
             return false
+        default:
+            return true
         }
     }
 }

@@ -151,7 +151,7 @@ class FactsListViewController: UIViewController {
             .disposed(by: disposeBag)
 
         errorView.retryButton.rx.tap
-            .bind(to: viewModel.retryError)
+            .bind(to: viewModel.retryAction)
             .disposed(by: disposeBag)
 
         viewModel.errors
@@ -181,7 +181,6 @@ class FactsListViewController: UIViewController {
     }
 
     private func showLoadingView(_ isLoading: Bool) {
-        tableView.isHidden = isLoading
         loadingView.isHidden = !isLoading
 
         if isLoading {
@@ -192,8 +191,10 @@ class FactsListViewController: UIViewController {
     }
 
     private func showErrorView(_ error: FactsListError) {
+        emptyListView.isHidden = true
+
         errorView.label.text = error.message
-        errorView.retryButton.isHidden = !error.retry
+        errorView.retryButton.isHidden = !error.retryEnabled
         errorView.isHidden = false
         errorView.play()
     }

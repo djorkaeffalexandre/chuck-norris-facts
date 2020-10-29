@@ -8,6 +8,7 @@
 
 import RxSwift
 import Moya
+import Alamofire
 
 protocol FactsServiceType {
 

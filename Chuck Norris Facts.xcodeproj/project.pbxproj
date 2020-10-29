@@ -10,7 +10,6 @@
 		1E0C7B402543A4E8002D5C47 /* FactEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0C7B3F2543A4E8002D5C47 /* FactEntity.swift */; };
 		1E0E4BA22549F7E30030BC49 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E0E4BA12549F7E30030BC49 /* error.json */; };
 		1E15408F2549FA6200675DC4 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15408E2549FA6200675DC4 /* ErrorView.swift */; };
-		1E154091254A08B100675DC4 /* FactsListError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E154090254A08B100675DC4 /* FactsListError.swift */; };
 		1E23683E253FB07200BE17F3 /* FactCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E23683D253FB07200BE17F3 /* FactCategoryCell.swift */; };
 		1E236840253FB13A00BE17F3 /* FactCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E23683F253FB13A00BE17F3 /* FactCategoryViewModel.swift */; };
 		1E32758F2532A2C0007E838A /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32758E2532A2C0007E838A /* EmptyListView.swift */; };
@@ -57,6 +56,8 @@
 		1EE0714925314AF600F6BF6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EE0714725314AF600F6BF6D /* LaunchScreen.storyboard */; };
 		1EEDC69F254A301D00D75F3E /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEDC69E254A301D00D75F3E /* UITableView+Extensions.swift */; };
 		1EEDC6A1254A331500D75F3E /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEDC6A0254A331500D75F3E /* UICollectionView+Extensions.swift */; };
+		1EEDC6A3254A38B800D75F3E /* MoyaError+Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEDC6A2254A38B800D75F3E /* MoyaError+Code.swift */; };
+		1EEDC6A5254A408B00D75F3E /* FactsListError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEDC6A4254A408B00D75F3E /* FactsListError.swift */; };
 		1EF066E32545CE1D00ECF611 /* PastSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF066E22545CE1D00ECF611 /* PastSearchViewModel.swift */; };
 		1EF066E52545CEC200ECF611 /* SearchEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF066E42545CEC200ECF611 /* SearchEntity.swift */; };
 		1EF0DA1425449898005CF7E2 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF0DA1325449898005CF7E2 /* CategoryView.swift */; };
@@ -98,7 +99,6 @@
 		1E0C7B3F2543A4E8002D5C47 /* FactEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactEntity.swift; sourceTree = "<group>"; };
 		1E0E4BA12549F7E30030BC49 /* error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = error.json; sourceTree = "<group>"; };
 		1E15408E2549FA6200675DC4 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
-		1E154090254A08B100675DC4 /* FactsListError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListError.swift; sourceTree = "<group>"; };
 		1E23683D253FB07200BE17F3 /* FactCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCategoryCell.swift; sourceTree = "<group>"; };
 		1E23683F253FB13A00BE17F3 /* FactCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCategoryViewModel.swift; sourceTree = "<group>"; };
 		1E32758E2532A2C0007E838A /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
@@ -151,6 +151,8 @@
 		1EE0716025314AF600F6BF6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EEDC69E254A301D00D75F3E /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		1EEDC6A0254A331500D75F3E /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
+		1EEDC6A2254A38B800D75F3E /* MoyaError+Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaError+Code.swift"; sourceTree = "<group>"; };
+		1EEDC6A4254A408B00D75F3E /* FactsListError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListError.swift; sourceTree = "<group>"; };
 		1EF066E22545CE1D00ECF611 /* PastSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastSearchViewModel.swift; sourceTree = "<group>"; };
 		1EF066E42545CEC200ECF611 /* SearchEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEntity.swift; sourceTree = "<group>"; };
 		1EF0DA1325449898005CF7E2 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				1E56172B2541007500BF26A0 /* Data+Stub.swift */,
 				1EEDC69E254A301D00D75F3E /* UITableView+Extensions.swift */,
 				1EEDC6A0254A331500D75F3E /* UICollectionView+Extensions.swift */,
+				1EEDC6A2254A38B800D75F3E /* MoyaError+Code.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -571,7 +574,7 @@
 				1EFE288D2532135B008806B9 /* FactsListViewController.swift */,
 				1EFE288F2532137C008806B9 /* FactsListCoordinator.swift */,
 				1EFE2891253214DB008806B9 /* FactsListViewModel.swift */,
-				1E154090254A08B100675DC4 /* FactsListError.swift */,
+				1EEDC6A4254A408B00D75F3E /* FactsListError.swift */,
 			);
 			path = FactsList;
 			sourceTree = "<group>";
@@ -910,6 +913,7 @@
 				1E236840253FB13A00BE17F3 /* FactCategoryViewModel.swift in Sources */,
 				1EFE2869253207B2008806B9 /* AppCoordinator.swift in Sources */,
 				1E92112A253F6BB700DB340B /* SearchFactsResponse.swift in Sources */,
+				1EEDC6A5254A408B00D75F3E /* FactsListError.swift in Sources */,
 				1EE0713F25314AF500F6BF6D /* SceneDelegate.swift in Sources */,
 				1E8A0FF42547768500565A86 /* DynamicHeightCollectionView.swift in Sources */,
 				1EFE288E2532135B008806B9 /* FactsListViewController.swift in Sources */,
@@ -921,8 +925,8 @@
 				1EEDC69F254A301D00D75F3E /* UITableView+Extensions.swift in Sources */,
 				1EFE289525321CD2008806B9 /* FactViewModel.swift in Sources */,
 				1E46380B25363FF40079D8E9 /* SearchFactsViewModel.swift in Sources */,
+				1EEDC6A3254A38B800D75F3E /* MoyaError+Code.swift in Sources */,
 				1E0C7B402543A4E8002D5C47 /* FactEntity.swift in Sources */,
-				1E154091254A08B100675DC4 /* FactsListError.swift in Sources */,
 				1E921139253F909700DB340B /* FactsStorage.swift in Sources */,
 				1E23683E253FB07200BE17F3 /* FactCategoryCell.swift in Sources */,
 				1E92113E253F915100DB340B /* FactCategoryEntity.swift in Sources */,

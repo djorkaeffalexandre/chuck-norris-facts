@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxDataSources
+import Moya
 
 typealias FactsSectionModel = AnimatableSectionModel<String, FactViewModel>
 
@@ -24,7 +25,7 @@ final class FactsListViewModel {
 
     let setSearchTerm: AnyObserver<String>
 
-    let retryError: AnyObserver<Void>
+    let retryAction: AnyObserver<Void>
 
     // MARK: - Outputs
 
@@ -47,9 +48,6 @@ final class FactsListViewModel {
         let viewDidAppearSubject = PublishSubject<Void>()
         self.viewDidAppear = viewDidAppearSubject.asObserver()
 
-        let retryErrorSubject = PublishSubject<Void>()
-        self.retryError = retryErrorSubject.asObserver()
-
         let startShareFactSubject = PublishSubject<FactViewModel>()
         self.startShareFact = startShareFactSubject.asObserver()
         self.showShareFact = startShareFactSubject.asObservable()
@@ -62,12 +60,26 @@ final class FactsListViewModel {
         self.setSearchTerm = searchTermSubject.asObserver()
         self.searchTerm = searchTermSubject.asObservable()
 
-        let syncCategoriesError = Observable.combineLatest(viewDidAppearSubject, retryErrorSubject)
-            .flatMapLatest { _, _ in factsService.syncCategories().materialize() }
-            .compactMap { $0.event.error }
-            .map { FactsListError.syncCategories($0) }
+        let retryActionSubject = PublishSubject<Void>()
+        self.retryAction = retryActionSubject.asObserver()
 
-        let searchFactsError = searchTermSubject.asObservable()
+        let currentErrorSubject = BehaviorSubject<FactsListError?>(value: nil)
+
+        let retrySyncCategories = retryActionSubject
+            .withLatestFrom(currentErrorSubject)
+            .compactMap { $0 }
+            .filter { $0.type == .syncCategories }
+            .map { _ in () }
+
+        let syncCategoriesError = Observable.merge(viewDidAppearSubject, retrySyncCategories)
+            .flatMapLatest { _ in
+                factsService.syncCategories()
+                    .materialize()
+            }
+            .compactMap { $0.event.error }
+            .map { FactsListError(error: $0 as? MoyaError, type: .syncCategories) }
+
+        let searchFactsError = Observable.combineLatest(viewDidAppearSubject, searchTerm) { _, term in term }
             .filter { !$0.isEmpty }
             .flatMapLatest { searchTerm in
                 factsService.searchFacts(searchTerm: searchTerm)
@@ -75,7 +87,7 @@ final class FactsListViewModel {
                     .materialize()
             }
             .compactMap { $0.event.error }
-            .map { FactsListError.loadFacts($0) }
+            .map { FactsListError(error: $0 as? MoyaError, type: .searchFacts) }
 
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
@@ -102,5 +114,6 @@ final class FactsListViewModel {
             .map { [FactsSectionModel(model: "", items: $0)] }
 
         self.errors = Observable.merge(searchFactsError, syncCategoriesError)
+            .do(onNext: currentErrorSubject.onNext)
     }
 }
