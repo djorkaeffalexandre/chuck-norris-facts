@@ -51,16 +51,10 @@ extension FactsAPI: TargetType {
     var sampleData: Data {
         switch self {
         case .getCategories:
-            if let data = try? Data.stub("get-categories") {
-                return data
-            }
+            return Data.stub("get-categories") ?? Data()
         case .searchFacts:
-            if let data = try? Data.stub("search-facts") {
-                return data
-            }
+            return Data.stub("search-facts") ?? Data()
         }
-
-        return Data()
     }
 
 }

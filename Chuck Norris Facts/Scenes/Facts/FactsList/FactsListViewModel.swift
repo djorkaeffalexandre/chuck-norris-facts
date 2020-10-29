@@ -90,19 +90,6 @@ final class FactsListViewModel {
 
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
-                if CommandLine.arguments.contains("--search-facts") {
-                    let bundle = Bundle(for: Self.self)
-                    guard let url = bundle.url(forResource: "search-facts", withExtension: ".json") else {
-                        return .just([])
-                    }
-                    let data = try Data(contentsOf: url)
-                    let stub = try JSON.decoder.decode(SearchFactsResponse.self, from: data)
-                    let facts = stub.facts.shuffled().prefix(10)
-                    return .just(Array(facts))
-                }
-                if CommandLine.arguments.contains("--empty-facts") {
-                    return .just([])
-                }
                 let facts = factsService.retrieveFacts(searchTerm: searchTerm)
                 if searchTerm.isEmpty {
                     return facts.map { Array($0.shuffled().prefix(10)) }
