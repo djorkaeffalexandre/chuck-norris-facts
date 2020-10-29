@@ -17,14 +17,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
 
-        if CommandLine.arguments.contains("--reset-storage") {
+        processArguments()
+
+        return true
+    }
+
+    private func processArguments() {
+        if LaunchArgument.check(.uiTest) {
+            UIView.setAnimationsEnabled(false)
+        }
+
+        if LaunchArgument.check(.resetData) {
             let realm = try? Realm()
             try? realm?.write {
                 realm?.deleteAll()
             }
         }
 
-        return true
-    }
+        if LaunchArgument.check(.mockStorage) {
+            let facts = Data.stub("facts", type: [Fact].self) ?? []
 
+            let entities = [
+                SearchEntity(searchTerm: "games", facts: facts),
+                SearchEntity(searchTerm: "fashion", facts: facts)
+            ]
+
+            let realm = try? Realm()
+            try? realm?.write {
+                realm?.add(entities, update: .modified)
+            }
+        }
+    }
 }
