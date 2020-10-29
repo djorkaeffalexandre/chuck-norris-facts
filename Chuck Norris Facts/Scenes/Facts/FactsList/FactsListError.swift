@@ -36,4 +36,9 @@ struct FactsListError {
             return true
         }
     }
+
+    init(_ error: Error, type: ErrorType) {
+        self.error = error as? HTTPError
+        self.type = type
+    }
 }

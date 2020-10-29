@@ -76,7 +76,7 @@ final class FactsListViewModel {
                     .materialize()
             }
             .compactMap { $0.event.error }
-            .map { FactsListError(error: $0 as? HTTPError, type: .syncCategories) }
+            .map { FactsListError($0, type: .syncCategories) }
 
         let searchFactsError = Observable.combineLatest(viewDidAppearSubject, searchTerm) { _, term in term }
             .filter { !$0.isEmpty }
@@ -86,7 +86,7 @@ final class FactsListViewModel {
                     .materialize()
             }
             .compactMap { $0.event.error }
-            .map { FactsListError(error: $0 as? HTTPError, type: .searchFacts) }
+            .map { FactsListError($0, type: .searchFacts) }
 
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
