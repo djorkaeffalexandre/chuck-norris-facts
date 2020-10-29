@@ -31,7 +31,7 @@ final class FactsServiceTests: XCTestCase {
         realm = try Realm(configuration: .init(inMemoryIdentifier: self.name))
         factsStorage = FactsStorage(realm: realm)
         factsProvider = MoyaProvider<FactsAPI>(stubClosure: MoyaProvider.immediatelyStub)
-        factsService = FactsService(provider: factsProvider, storage: factsStorage)
+        factsService = FactsService(provider: factsProvider, storage: factsStorage, scheduler: MainScheduler.instance)
     }
 
     override func tearDown() {

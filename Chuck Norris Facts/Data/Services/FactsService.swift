@@ -8,7 +8,6 @@
 
 import RxSwift
 import Moya
-import Alamofire
 
 protocol FactsServiceType {
 
@@ -32,17 +31,23 @@ struct FactsService: FactsServiceType {
 
     private var provider: MoyaProvider<FactsAPI>
     private var storage: FactsStorageType
+    private var scheduler: SchedulerType?
 
-    init(provider: MoyaProvider<FactsAPI> = MoyaProvider<FactsAPI>(), storage: FactsStorageType = FactsStorage()) {
+    init(
+        provider: MoyaProvider<FactsAPI> = MoyaProvider<FactsAPI>(),
+        storage: FactsStorageType = FactsStorage(),
+        scheduler: SchedulerType? = nil
+    ) {
         self.provider = provider
         self.storage = storage
+        self.scheduler = scheduler
     }
 
     func searchFacts(searchTerm: String) -> Observable<Void> {
         provider.rx
             .request(.searchFacts(searchTerm: searchTerm))
             .asObservable()
-            .observeOn(MainScheduler.asyncInstance)
+            .observeOn(scheduler ?? MainScheduler.asyncInstance)
             .map(SearchFactsResponse.self, using: JSON.decoder)
             .map { $0.facts }
             .map { self.storage.storeSearch(searchTerm: searchTerm, facts: $0) }
@@ -57,7 +62,7 @@ struct FactsService: FactsServiceType {
                 return self.provider.rx
                     .request(.getCategories)
                     .asObservable()
-                    .observeOn(MainScheduler.asyncInstance)
+                    .observeOn(self.scheduler ?? MainScheduler.asyncInstance)
                     .map([FactCategory].self, using: JSON.decoder)
                     .map { self.storage.storeCategories($0) }
                     .map { () }
