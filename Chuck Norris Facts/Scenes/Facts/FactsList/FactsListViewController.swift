@@ -162,7 +162,6 @@ class FactsListViewController: UIViewController {
     }
 
     private func showEmptyView(_ listEmpty: Bool, _ searchEmpty: Bool) {
-        tableView.isHidden = listEmpty
         emptyListView.isHidden = !listEmpty
 
         if searchEmpty {
