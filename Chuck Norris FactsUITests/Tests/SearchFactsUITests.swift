@@ -19,6 +19,7 @@ final class SearchFactsUITests: XCTestCase {
     }
 
     func test_searchFactsUsingSearchBar() throws {
+        app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -36,6 +37,7 @@ final class SearchFactsUITests: XCTestCase {
     }
 
     func test_cancelSearchFacts() throws {
+        app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -48,6 +50,7 @@ final class SearchFactsUITests: XCTestCase {
     }
 
     func test_shouldShow8FactCategories() {
+        app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -62,6 +65,7 @@ final class SearchFactsUITests: XCTestCase {
     }
 
     func test_tapFactCategoryShouldSearchByTerm() {
+        app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -84,6 +88,7 @@ final class SearchFactsUITests: XCTestCase {
     }
 
     func test_tapPastSearchShouldSearchByTerm() {
+        app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -106,6 +111,7 @@ final class SearchFactsUITests: XCTestCase {
     }
 
     func test_tapPastSearchShouldOrderByDate() {
+        app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -128,7 +134,7 @@ final class SearchFactsUITests: XCTestCase {
     }
 
     func test_pastSearchShouldBeHiddenOnFirstAccess() {
-        app.launchArguments = ["--reset-storage"]
+        app.setLaunchArguments([.uiTest, .resetData])
         app.launch()
 
         let factsListScene = FactsListScene()

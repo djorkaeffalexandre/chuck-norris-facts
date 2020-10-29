@@ -19,7 +19,7 @@ final class FactsListUITests: XCTestCase {
     }
 
     func test_showEmptyView() throws {
-        app.launchArguments = ["--empty-facts"]
+        app.setLaunchArguments([.uiTest, .resetData])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -29,7 +29,7 @@ final class FactsListUITests: XCTestCase {
     }
 
     func test_show10RandomFacts() {
-        app.launchArguments = ["--search-facts"]
+        app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -38,7 +38,7 @@ final class FactsListUITests: XCTestCase {
     }
 
     func test_shareFact() {
-        app.launchArguments = ["--search-facts"]
+        app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -58,6 +58,7 @@ final class FactsListUITests: XCTestCase {
     }
 
     func test_searchFacts() {
+        app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
         let factsListScene = FactsListScene()
