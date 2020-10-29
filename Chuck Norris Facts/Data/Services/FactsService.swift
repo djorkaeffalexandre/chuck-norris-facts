@@ -50,13 +50,18 @@ struct FactsService: FactsServiceType {
     }
 
     func syncCategories() -> Observable<Void> {
-        provider.rx
-            .request(.getCategories)
-            .asObservable()
-            .observeOn(MainScheduler.asyncInstance)
-            .map([FactCategory].self, using: JSON.decoder)
-            .map { self.storage.storeCategories($0) }
-            .map { () }
+        storage.retrieveCategories()
+            .flatMapLatest { categories -> Observable<Void> in
+                guard categories.isEmpty else { return Observable<Void>.just(()) }
+
+                return self.provider.rx
+                    .request(.getCategories)
+                    .asObservable()
+                    .observeOn(MainScheduler.asyncInstance)
+                    .map([FactCategory].self, using: JSON.decoder)
+                    .map { self.storage.storeCategories($0) }
+                    .map { () }
+            }
     }
 
     func retrieveCategories() -> Observable<[FactCategory]> {
