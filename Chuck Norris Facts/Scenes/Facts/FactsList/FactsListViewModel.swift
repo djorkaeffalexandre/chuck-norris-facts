@@ -9,7 +9,6 @@
 import Foundation
 import RxSwift
 import RxDataSources
-import Moya
 
 typealias FactsSectionModel = AnimatableSectionModel<String, FactViewModel>
 
@@ -77,7 +76,7 @@ final class FactsListViewModel {
                     .materialize()
             }
             .compactMap { $0.event.error }
-            .map { FactsListError(error: $0 as? MoyaError, type: .syncCategories) }
+            .map { FactsListError(error: $0 as? HTTPError, type: .syncCategories) }
 
         let searchFactsError = Observable.combineLatest(viewDidAppearSubject, searchTerm) { _, term in term }
             .filter { !$0.isEmpty }
@@ -87,7 +86,7 @@ final class FactsListViewModel {
                     .materialize()
             }
             .compactMap { $0.event.error }
-            .map { FactsListError(error: $0 as? MoyaError, type: .searchFacts) }
+            .map { FactsListError(error: $0 as? HTTPError, type: .searchFacts) }
 
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in

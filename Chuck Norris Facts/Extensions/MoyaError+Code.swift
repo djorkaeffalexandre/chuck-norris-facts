@@ -9,14 +9,14 @@
 import Moya
 import Alamofire
 
-enum HTTPError: Int {
+enum HTTPErrorCode: Int {
     case unknown = 0
     case noConnection = 1
 }
 
 extension MoyaError {
 
-    var code: HTTPError {
+    var code: HTTPErrorCode {
         let alamofireError = errorUserInfo["NSUnderlyingError"] as? Alamofire.AFError
         let error = alamofireError?.underlyingError as NSError?
 

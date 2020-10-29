@@ -6,7 +6,6 @@
 //  Copyright © 2020 Djorkaeff Alexandre Vilela Pereira. All rights reserved.
 //
 
-import Moya
 import Foundation
 
 struct FactsListError {
@@ -16,7 +15,7 @@ struct FactsListError {
         case searchFacts
     }
 
-    let error: MoyaError?
+    let error: HTTPError?
 
     let type: ErrorType
 
