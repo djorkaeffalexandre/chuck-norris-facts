@@ -127,6 +127,8 @@ final class SearchFactsUITests: XCTestCase {
 
         secondItem.tap()
 
+        factsListScene.searchButton.tap()
+
         let firstItem = searchFactsCells.element(boundBy: 1)
         XCTAssertTrue(firstItem.exists)
 
@@ -136,6 +138,8 @@ final class SearchFactsUITests: XCTestCase {
     func test_pastSearchShouldBeHiddenOnFirstAccess() {
         app.setLaunchArguments([.uiTest, .resetData])
         app.launch()
+
+        sleep(3)
 
         let factsListScene = FactsListScene()
         factsListScene.searchButton.tap()
