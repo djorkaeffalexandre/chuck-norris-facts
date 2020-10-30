@@ -103,7 +103,7 @@ class FactsListViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        navigationItem.title = "Chuck Norris Facts"
+        navigationItem.title = L10n.FactsList.title
         navigationItem.rightBarButtonItem = searchButton
         navigationController?.navigationBar.prefersLargeTitles = true
 
@@ -165,10 +165,10 @@ class FactsListViewController: UIViewController {
         emptyListView.isHidden = !listEmpty
 
         if searchEmpty {
-            emptyListView.label.text = "Looks like there are no facts"
+            emptyListView.label.text = L10n.EmptyView.empty
             emptyListView.searchButton.isHidden = false
         } else {
-            emptyListView.label.text = "There are no facts to your search"
+            emptyListView.label.text = L10n.EmptyView.emptySearch
             emptyListView.searchButton.isHidden = true
         }
 

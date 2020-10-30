@@ -1,0 +1,21 @@
+/*
+  Localizable.strings
+  Chuck Norris Facts
+
+  Created by Djorkaeff Alexandre Vilela Pereira on 10/29/20.
+  Copyright © 2020 Djorkaeff Alexandre Vilela Pereira. All rights reserved.
+*/
+
+"FactsList.title" = "Chuck Norris Facts";
+
+"SearchFacts.title" = "Search";
+"SearchFacts.sections.suggestions" = "Suggestions";
+"SearchFacts.sections.pastSearches" = "Past Searches";
+
+"EmptyView.empty" = "Looks like there are no Facts";
+"EmptyView.emptySearch" = "There are no facts to your search";
+
+"FactCategory.uncategorized" = "UNCATEGORIZED";
+
+"FactListError.noConnection" = "Internet Connection appears to be offline";
+"FactListError.serviceUnavailable" = "Looks like the Chuck Norris Service is unavailable";

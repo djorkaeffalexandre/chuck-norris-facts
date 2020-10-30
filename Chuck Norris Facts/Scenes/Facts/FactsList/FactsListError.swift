@@ -22,9 +22,9 @@ struct FactsListError {
     var message: String {
         switch error?.code {
         case .noConnection:
-            return "Internet Connection appears to be offline."
+            return L10n.FactListError.noConnection
         default:
-            return "Looks like the Chuck Norris Service is unavailable."
+            return L10n.FactListError.serviceUnavailable
         }
     }
 
