@@ -48,7 +48,7 @@ final class SearchFactsUITests: XCTestCase {
     }
 
     func test_shouldShow8FactCategories() {
-        app.setLaunchArguments([.uiTest, .mockStorage])
+        app.setLaunchArguments([.uiTest, .mockStorage, .mockHttp])
         app.launch()
 
         let factsListScene = FactsListScene()
