@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import RxSwift
 
 class FactCell: UITableViewCell {
 
-    static let cellIdentifier = "FactTableViewCell"
-
     private let categoryView = CategoryView()
+
+    var disposeBag = DisposeBag()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -21,6 +22,11 @@ class FactCell: UITableViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
+        super.prepareForReuse()
     }
 
     private lazy var shadowView: UIView = {

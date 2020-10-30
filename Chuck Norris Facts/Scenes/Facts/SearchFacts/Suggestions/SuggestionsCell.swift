@@ -13,8 +13,6 @@ import RxDataSources
 
 class SuggestionsCell: UITableViewCell {
 
-    static let identifier = "SuggestionsCell"
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -24,18 +22,19 @@ class SuggestionsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
+
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
+        super.prepareForReuse()
+    }
 
     private lazy var suggestionsDataSource = RxCollectionViewSectionedReloadDataSource<SuggestionsSectionModel>(
         configureCell: { _, collectionView, indexPath, category -> UICollectionViewCell in
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: FactCategoryCell.cellIdentifier,
-                for: indexPath
-            ) as? FactCategoryCell ?? FactCategoryCell()
-
+            let cell = collectionView.dequeueReusableCell(cell: FactCategoryCell.self, indexPath: indexPath)
             cell.setup(category)
             return cell
-    }
+        }
     )
 
     var viewModel: SuggestionsViewModel! {
@@ -54,7 +53,7 @@ class SuggestionsCell: UITableViewCell {
 
         collectionView.isScrollEnabled = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(FactCategoryCell.self, forCellWithReuseIdentifier: FactCategoryCell.cellIdentifier)
+        collectionView.register(FactCategoryCell.self)
 
         return collectionView
     }()

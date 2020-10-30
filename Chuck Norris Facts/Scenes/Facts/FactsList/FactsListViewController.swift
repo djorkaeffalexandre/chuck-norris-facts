@@ -19,6 +19,7 @@ class FactsListViewController: UIViewController {
     private let disposeBag = DisposeBag()
 
     let tableView = UITableView()
+    let errorView = ErrorView()
     let loadingView = LoadingView()
     let emptyListView = EmptyListView()
     let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: nil)
@@ -27,15 +28,13 @@ class FactsListViewController: UIViewController {
         configureCell: { [weak self] _, tableView, indexPath, fact -> UITableViewCell in
 
             guard let viewModel = self?.viewModel, let disposeBag = self?.disposeBag else { return UITableViewCell() }
-            let cell = tableView.dequeueReusableCell(withIdentifier: FactCell.cellIdentifier, for: indexPath)
+            let cell = tableView.dequeueReusableCell(cell: FactCell.self, indexPath: indexPath)
 
-            if let cell = cell as? FactCell {
-                cell.setup(fact)
-                cell.shareButton.rx.tap
-                    .map { fact }
-                    .bind(to: viewModel.startShareFact)
-                    .disposed(by: disposeBag)
-            }
+            cell.setup(fact)
+            cell.shareButton.rx.tap
+                .map { fact }
+                .bind(to: viewModel.startShareFact)
+                .disposed(by: cell.disposeBag)
 
             return cell
         }
@@ -47,6 +46,7 @@ class FactsListViewController: UIViewController {
         setupView()
         setupBindings()
         setupTableView()
+        setupErrorView()
         setupEmptyListView()
         setupLoadingView()
         setupNavigationBar()
@@ -61,13 +61,12 @@ class FactsListViewController: UIViewController {
 
         tableView.separatorStyle = .none
 
+        tableView.register(FactCell.self)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-
-        tableView.register(FactCell.self, forCellReuseIdentifier: FactCell.cellIdentifier)
 
         tableView.accessibilityIdentifier = "factsTableView"
     }
@@ -80,6 +79,17 @@ class FactsListViewController: UIViewController {
         loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+
+    private func setupErrorView() {
+        view.addSubview(errorView)
+
+        errorView.isHidden = true
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 
     private func setupEmptyListView() {
@@ -111,12 +121,19 @@ class FactsListViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
-        viewModel.facts
+        let factsIsEmpty = viewModel.facts
             .map { $0.flatMap { $0.items } }
             .map { $0.isEmpty }
-            .asDriver(onErrorJustReturn: true)
-            .drive(onNext: { [weak self] isEmpty in
-                self?.showEmptyView(isEmpty)
+            .share()
+
+        let searchIsEmpty = viewModel.searchTerm
+            .map { $0.isEmpty }
+            .share()
+
+        Observable.combineLatest(factsIsEmpty, searchIsEmpty)
+            .asDriver(onErrorJustReturn: (true, true))
+            .drive(onNext: { [weak self] listEmpty, searchEmpty in
+                self?.showEmptyView(listEmpty, searchEmpty)
             })
             .disposed(by: disposeBag)
 
@@ -129,17 +146,33 @@ class FactsListViewController: UIViewController {
             .bind(to: viewModel.startSearchFacts)
             .disposed(by: disposeBag)
 
-        viewModel.syncCategories
-            .asDriver(onErrorJustReturn: ())
-            .drive()
+        emptyListView.searchButton.rx.tap
+            .bind(to: viewModel.startSearchFacts)
+            .disposed(by: disposeBag)
+
+        errorView.retryButton.rx.tap
+            .bind(to: viewModel.retryAction)
+            .disposed(by: disposeBag)
+
+        viewModel.errors
+            .bind(onNext: { [weak self] error in
+                self?.showErrorView(error)
+            })
             .disposed(by: disposeBag)
     }
 
-    private func showEmptyView(_ isEmpty: Bool) {
-        tableView.isHidden = isEmpty
-        emptyListView.isHidden = !isEmpty
+    private func showEmptyView(_ listEmpty: Bool, _ searchEmpty: Bool) {
+        emptyListView.isHidden = !listEmpty
 
-        if isEmpty {
+        if searchEmpty {
+            emptyListView.label.text = L10n.EmptyView.empty
+            emptyListView.searchButton.isHidden = false
+        } else {
+            emptyListView.label.text = L10n.EmptyView.emptySearch
+            emptyListView.searchButton.isHidden = true
+        }
+
+        if listEmpty {
             emptyListView.play()
         } else {
             emptyListView.stop()
@@ -147,14 +180,21 @@ class FactsListViewController: UIViewController {
     }
 
     private func showLoadingView(_ isLoading: Bool) {
-        tableView.isHidden = isLoading
         loadingView.isHidden = !isLoading
 
         if isLoading {
-            emptyListView.isHidden = isLoading
             loadingView.play()
         } else {
             loadingView.stop()
         }
+    }
+
+    private func showErrorView(_ error: FactsListError) {
+        emptyListView.isHidden = true
+
+        errorView.label.text = error.message
+        errorView.retryButton.isHidden = !error.retryEnabled
+        errorView.isHidden = false
+        errorView.play()
     }
 }

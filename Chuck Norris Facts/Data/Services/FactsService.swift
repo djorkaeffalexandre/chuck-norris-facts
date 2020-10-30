@@ -27,20 +27,60 @@ protocol FactsServiceType {
     func retrievePastSearches() -> Observable<[String]>
 }
 
+let errorEndpointClosure = { (target: FactsAPI) -> Endpoint in
+    Endpoint(
+        url: URL(target: target).absoluteString,
+        sampleResponseClosure: { .networkResponse(500, Data()) },
+        method: target.method,
+        task: target.task,
+        httpHeaderFields: target.headers
+    )
+}
+
+let mockEndpointClosure = {  (target: FactsAPI) -> Endpoint in
+   Endpoint(
+       url: URL(target: target).absoluteString,
+       sampleResponseClosure: { .networkResponse(200, target.sampleData) },
+       method: target.method,
+       task: target.task,
+       httpHeaderFields: target.headers
+   )
+}
+
 struct FactsService: FactsServiceType {
 
     private var provider: MoyaProvider<FactsAPI>
     private var storage: FactsStorageType
+    private var scheduler: SchedulerType?
 
-    init(provider: MoyaProvider<FactsAPI> = MoyaProvider<FactsAPI>(), storage: FactsStorageType = FactsStorage()) {
-        self.provider = provider
+    init(
+        provider: MoyaProvider<FactsAPI> = MoyaProvider<FactsAPI>(),
+        storage: FactsStorageType = FactsStorage(),
+        scheduler: SchedulerType? = nil
+    ) {
+        if LaunchArgument.check(.mockHttpError) {
+            self.provider = MoyaProvider<FactsAPI>(
+                endpointClosure: errorEndpointClosure,
+                stubClosure: MoyaProvider.immediatelyStub
+            )
+        } else if LaunchArgument.check(.mockHttp) {
+            self.provider = MoyaProvider<FactsAPI>(
+                endpointClosure: mockEndpointClosure,
+                stubClosure: MoyaProvider.immediatelyStub
+            )
+        } else {
+            self.provider = provider
+        }
+
         self.storage = storage
+        self.scheduler = scheduler
     }
 
     func searchFacts(searchTerm: String) -> Observable<Void> {
         provider.rx
             .request(.searchFacts(searchTerm: searchTerm))
             .asObservable()
+            .observeOn(scheduler ?? MainScheduler.asyncInstance)
             .map(SearchFactsResponse.self, using: JSON.decoder)
             .map { $0.facts }
             .map { self.storage.storeSearch(searchTerm: searchTerm, facts: $0) }
@@ -48,12 +88,18 @@ struct FactsService: FactsServiceType {
     }
 
     func syncCategories() -> Observable<Void> {
-        provider.rx
-            .request(.getCategories)
-            .asObservable()
-            .map([FactCategory].self, using: JSON.decoder)
-            .map { self.storage.storeCategories($0) }
-            .map { () }
+        storage.retrieveCategories()
+            .flatMapLatest { categories -> Observable<Void> in
+                guard categories.isEmpty else { return Observable<Void>.just(()) }
+
+                return self.provider.rx
+                    .request(.getCategories)
+                    .asObservable()
+                    .observeOn(self.scheduler ?? MainScheduler.asyncInstance)
+                    .map([FactCategory].self, using: JSON.decoder)
+                    .map { self.storage.storeCategories($0) }
+                    .map { () }
+            }
     }
 
     func retrieveCategories() -> Observable<[FactCategory]> {

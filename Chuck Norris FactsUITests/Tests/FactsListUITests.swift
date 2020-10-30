@@ -73,4 +73,26 @@ final class FactsListUITests: XCTestCase {
 
         XCTAssertTrue(searchFactsView.exists)
     }
+
+    func test_shouldShowErrorViewWhenSearchRaisesAnError() {
+        app.setLaunchArguments([.uiTest, .mockHttpError])
+        app.launch()
+
+        let factsListScene = FactsListScene()
+        let searchFactsButton = factsListScene.searchButton
+
+        let searchFactsScene = SearchFactsScene()
+
+        XCTAssertTrue(searchFactsButton.exists)
+
+        searchFactsButton.firstMatch.tap()
+
+        searchFactsScene.searchBarField.tap()
+        searchFactsScene.searchBarField.typeText("games")
+
+        app.keyboards.buttons["Search"].tap()
+
+        XCTAssertTrue(factsListScene.errorView.exists)
+        XCTAssertTrue(factsListScene.retryButton.exists)
+    }
 }

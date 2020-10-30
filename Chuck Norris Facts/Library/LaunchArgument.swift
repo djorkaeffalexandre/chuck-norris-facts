@@ -16,6 +16,12 @@ enum LaunchArgument: String {
     // Mock storage data
     case mockStorage = "--mock-storage"
 
+    // Mock Http Result
+    case mockHttp = "--mock-http"
+
+    // Mock Http Error Result
+    case mockHttpError = "--mock-http-error"
+
     // Check if there is an argument on CommandLine arguments
     static func check(_ argument: LaunchArgument) -> Bool {
         CommandLine.arguments.contains(argument.rawValue)

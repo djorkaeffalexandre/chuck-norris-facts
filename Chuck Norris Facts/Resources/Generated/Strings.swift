@@ -13,12 +13,21 @@ internal enum L10n {
 
   internal enum EmptyView {
     /// Looks like there are no Facts
-    internal static let text = L10n.tr("Localizable", "EmptyView.text")
+    internal static let empty = L10n.tr("Localizable", "EmptyView.empty")
+    /// There are no facts to your search
+    internal static let emptySearch = L10n.tr("Localizable", "EmptyView.emptySearch")
   }
 
   internal enum FactCategory {
     /// UNCATEGORIZED
     internal static let uncategorized = L10n.tr("Localizable", "FactCategory.uncategorized")
+  }
+
+  internal enum FactListError {
+    /// Internet Connection appears to be offline
+    internal static let noConnection = L10n.tr("Localizable", "FactListError.noConnection")
+    /// Looks like the Chuck Norris Service is unavailable
+    internal static let serviceUnavailable = L10n.tr("Localizable", "FactListError.serviceUnavailable")
   }
 
   internal enum FactsList {

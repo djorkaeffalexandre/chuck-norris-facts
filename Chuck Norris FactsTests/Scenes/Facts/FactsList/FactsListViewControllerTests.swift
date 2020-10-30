@@ -42,7 +42,6 @@ class FactsListViewControllerTests: XCTestCase {
         factsListViewModel.viewDidAppear.onNext(())
 
         XCTAssertFalse(factsListViewController.emptyListView.isHidden)
-        XCTAssertTrue(factsListViewController.tableView.isHidden)
     }
 
     func test_factCellFontSizeShouldBe24ForShortContent() throws {

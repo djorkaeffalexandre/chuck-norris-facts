@@ -10,8 +10,6 @@ import UIKit
 
 class FactCategoryCell: UICollectionViewCell {
 
-    static let cellIdentifier = "FactCategoryCell"
-
     private lazy var bodyLabel: UILabel = {
         let label = UILabel()
 
