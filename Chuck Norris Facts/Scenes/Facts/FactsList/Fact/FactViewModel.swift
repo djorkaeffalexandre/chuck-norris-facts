@@ -19,7 +19,7 @@ final class FactViewModel {
         if let factUrl = fact.url {
             self.url = URL(string: factUrl)
         }
-        self.category = fact.categories.first?.text.uppercased() ?? "UNCATEGORIZED"
+        self.category = fact.categories.first?.text.uppercased() ?? L10n.FactCategory.uncategorized
     }
 }
 

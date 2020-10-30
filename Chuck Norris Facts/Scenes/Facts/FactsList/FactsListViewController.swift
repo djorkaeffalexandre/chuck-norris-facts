@@ -93,7 +93,7 @@ class FactsListViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        navigationItem.title = "Chuck Norris Facts"
+        navigationItem.title = L10n.FactsList.title
         navigationItem.rightBarButtonItem = searchButton
         navigationController?.navigationBar.prefersLargeTitles = true
 

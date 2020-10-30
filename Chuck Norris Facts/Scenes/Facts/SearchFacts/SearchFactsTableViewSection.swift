@@ -35,9 +35,9 @@ extension SearchFactsTableViewSection: SectionModelType {
     var header: String {
         switch self {
         case .SuggestionsSection:
-            return "Suggestions"
+            return L10n.SearchFacts.Sections.suggestions
         case .PastSearchesSection:
-            return "Past Searches"
+            return L10n.SearchFacts.Sections.pastSearches
         }
     }
 

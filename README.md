@@ -36,6 +36,7 @@ Using [RxSwift](https://github.com/ReactiveX/RxSwift) and [RxRealm](https://gith
 - [RxDataSources](https://github.com/RxSwiftCommunity/RxDataSources) UITableView and UICollectionView Data Sources for RxSwift.
 - [RxRealm](https://github.com/RxSwiftCommunity/RxRealm) RxSwift extension for RealmSwift's types.
 - [SwiftLint](https://github.com/realm/SwiftLint) A tool to enforce Swift style and conventions.
+- [SwiftGen](https://github.com/SwiftGen/SwiftGen) The Swift code generator for Localizable.strings.
 - [Lottie](https://github.com/airbnb/lottie-ios) An iOS library to natively render After Effects vector animations.
 - [Moya](https://github.com/Moya/Moya) Network abstraction layer written in Swift.
 - [RealmSwift](https://github.com/realm/realm-cocoa) Realm is a mobile database: a replacement for Core Data & SQLite.
