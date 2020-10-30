@@ -1,0 +1,17 @@
+/*
+  Localizable.strings
+  Chuck Norris Facts
+
+  Created by Djorkaeff Alexandre Vilela Pereira on 10/29/20.
+  Copyright © 2020 Djorkaeff Alexandre Vilela Pereira. All rights reserved.
+*/
+
+"FactsList.title" = "Chuck Norris Facts";
+
+"SearchFacts.title" = "Search";
+"SearchFacts.sections.suggestions" = "Suggestions";
+"SearchFacts.sections.pastSearches" = "Past Searches";
+
+"EmptyView.text" = "Looks like there are no Facts";
+
+"FactCategory.uncategorized" = "UNCATEGORIZED";

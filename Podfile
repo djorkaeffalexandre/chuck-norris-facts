@@ -19,6 +19,7 @@ target 'Chuck Norris Facts' do
 
   # Tools
   pod 'SwiftLint'
+  pod 'SwiftGen'
 
   # UI
   pod 'lottie-ios'

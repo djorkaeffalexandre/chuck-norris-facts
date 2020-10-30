@@ -22,6 +22,7 @@
 		1E5617282540FAF200BF26A0 /* get-categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E5617272540FAF200BF26A0 /* get-categories.json */; };
 		1E56172C2541007500BF26A0 /* Data+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E56172B2541007500BF26A0 /* Data+Stub.swift */; };
 		1E56172E2541039B00BF26A0 /* SearchFactsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E56172D2541039B00BF26A0 /* SearchFactsViewControllerTests.swift */; };
+		1E580BC8254B92E600886A2E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E580BC7254B92E600886A2E /* Localizable.strings */; };
 		1E7F15BE253324CF0006887B /* FactsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15BD253324CF0006887B /* FactsListViewModelTests.swift */; };
 		1E7F15C0253324FD0006887B /* FactsListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15BF253324FD0006887B /* FactsListViewControllerTests.swift */; };
 		1E7F15C6253329780006887B /* FactViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15C5253329780006887B /* FactViewModelTests.swift */; };
@@ -38,6 +39,7 @@
 		1E921139253F909700DB340B /* FactsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E921138253F909700DB340B /* FactsStorage.swift */; };
 		1E92113B253F90BF00DB340B /* FactCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E92113A253F90BF00DB340B /* FactCategory.swift */; };
 		1E92113E253F915100DB340B /* FactCategoryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E92113D253F915100DB340B /* FactCategoryEntity.swift */; };
+		1EA3AB02254B956C004A877B /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA3AB01254B956C004A877B /* Strings.swift */; };
 		1EAB20AF2540BEC400633382 /* SuggestionsViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAB20AE2540BEC400633382 /* SuggestionsViewFlowLayout.swift */; };
 		1EACEC99253649BD0006B36D /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 1EACEC98253649BD0006B36D /* loading.json */; };
 		1EACEC9E25364B6C0006B36D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EACEC9D25364B6C0006B36D /* ActivityIndicator.swift */; };
@@ -108,6 +110,7 @@
 		1E5617272540FAF200BF26A0 /* get-categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "get-categories.json"; sourceTree = "<group>"; };
 		1E56172B2541007500BF26A0 /* Data+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Stub.swift"; sourceTree = "<group>"; };
 		1E56172D2541039B00BF26A0 /* SearchFactsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFactsViewControllerTests.swift; sourceTree = "<group>"; };
+		1E580BC7254B92E600886A2E /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		1E7F15BD253324CF0006887B /* FactsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListViewModelTests.swift; sourceTree = "<group>"; };
 		1E7F15BF253324FD0006887B /* FactsListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListViewControllerTests.swift; sourceTree = "<group>"; };
 		1E7F15C5253329780006887B /* FactViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactViewModelTests.swift; sourceTree = "<group>"; };
@@ -124,6 +127,7 @@
 		1E921138253F909700DB340B /* FactsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsStorage.swift; sourceTree = "<group>"; };
 		1E92113A253F90BF00DB340B /* FactCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCategory.swift; sourceTree = "<group>"; };
 		1E92113D253F915100DB340B /* FactCategoryEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCategoryEntity.swift; sourceTree = "<group>"; };
+		1EA3AB01254B956C004A877B /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		1EAB20AE2540BEC400633382 /* SuggestionsViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsViewFlowLayout.swift; sourceTree = "<group>"; };
 		1EACEC98253649BD0006B36D /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		1EACEC9D25364B6C0006B36D /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
@@ -363,6 +367,14 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
+		1EA3AB00254B955F004A877B /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				1EA3AB01254B956C004A877B /* Strings.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		1ED5D18B25348FC40035046C /* Library */ = {
 			isa = PBXGroup;
 			children = (
@@ -479,11 +491,13 @@
 		1EFE286025320614008806B9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1EA3AB00254B955F004A877B /* Generated */,
 				1E3275902532A2C4007E838A /* Animations */,
 				1EFE287C2532105D008806B9 /* Stubs */,
 				1EE0714525314AF600F6BF6D /* Assets.xcassets */,
 				1EE0714725314AF600F6BF6D /* LaunchScreen.storyboard */,
 				1EE0714A25314AF600F6BF6D /* Info.plist */,
+				1E580BC7254B92E600886A2E /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -622,6 +636,7 @@
 				1EE0713625314AF500F6BF6D /* Frameworks */,
 				1EE0713725314AF500F6BF6D /* Resources */,
 				1EFBC28C2531F8FB00594676 /* SwiftLint */,
+				1E580BC6254B919900886A2E /* SwiftGen */,
 				735DB507838707E07E18E902 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -726,6 +741,7 @@
 				1EE0714925314AF600F6BF6D /* LaunchScreen.storyboard in Resources */,
 				1E5617282540FAF200BF26A0 /* get-categories.json in Resources */,
 				1EE0714625314AF600F6BF6D /* Assets.xcassets in Resources */,
+				1E580BC8254B92E600886A2E /* Localizable.strings in Resources */,
 				1E3275922532A2CD007E838A /* empty-box.json in Resources */,
 				1EACEC99253649BD0006B36D /* loading.json in Resources */,
 			);
@@ -773,6 +789,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		1E580BC6254B919900886A2E /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ -f \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" ]]; then\n  \"${PODS_ROOT}/SwiftGen/bin/swiftgen\"\nelse\n  echo \"warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it.\"\nfi\n";
 		};
 		1EFBC28C2531F8FB00594676 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -901,6 +935,7 @@
 				1EFE288925321123008806B9 /* JSON.swift in Sources */,
 				1ED06C952548AAD300139151 /* LoadingView.swift in Sources */,
 				1EFE288725321119008806B9 /* Fact.swift in Sources */,
+				1EA3AB02254B956C004A877B /* Strings.swift in Sources */,
 				1EFE289725321CE2008806B9 /* FactCell.swift in Sources */,
 				1E56172C2541007500BF26A0 /* Data+Stub.swift in Sources */,
 				1E8A0FEE2547603700565A86 /* SuggestionsCell.swift in Sources */,

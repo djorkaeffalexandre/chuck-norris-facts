@@ -27,7 +27,7 @@ final class EmptyListView: UIView {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
 
-        label.text = "Looks like there are no Facts"
+        label.text = L10n.EmptyView.text
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
 
         return label

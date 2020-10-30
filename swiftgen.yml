@@ -1,0 +1,5 @@
+strings:
+  inputs: Chuck Norris Facts/Resources/Localizable.strings
+  outputs:
+    - templateName: structured-swift5
+      output: Chuck Norris Facts/Resources/Generated/Strings.swift
