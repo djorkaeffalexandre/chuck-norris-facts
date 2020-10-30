@@ -48,6 +48,8 @@ final class ErrorView: UIView {
         super.init(frame: frame)
 
         setupView()
+
+        accessibilityIdentifier = "errorView"
     }
 
     required init?(coder: NSCoder) {

@@ -27,6 +27,26 @@ protocol FactsServiceType {
     func retrievePastSearches() -> Observable<[String]>
 }
 
+let errorEndpointClosure = { (target: FactsAPI) -> Endpoint in
+    Endpoint(
+        url: URL(target: target).absoluteString,
+        sampleResponseClosure: { .networkResponse(500, Data()) },
+        method: target.method,
+        task: target.task,
+        httpHeaderFields: target.headers
+    )
+}
+
+let mockEndpointClosure = {  (target: FactsAPI) -> Endpoint in
+   Endpoint(
+       url: URL(target: target).absoluteString,
+       sampleResponseClosure: { .networkResponse(200, target.sampleData) },
+       method: target.method,
+       task: target.task,
+       httpHeaderFields: target.headers
+   )
+}
+
 struct FactsService: FactsServiceType {
 
     private var provider: MoyaProvider<FactsAPI>
@@ -38,7 +58,20 @@ struct FactsService: FactsServiceType {
         storage: FactsStorageType = FactsStorage(),
         scheduler: SchedulerType? = nil
     ) {
-        self.provider = provider
+        if LaunchArgument.check(.mockHttpError) {
+            self.provider = MoyaProvider<FactsAPI>(
+                endpointClosure: errorEndpointClosure,
+                stubClosure: MoyaProvider.immediatelyStub
+            )
+        } else if LaunchArgument.check(.mockHttp) {
+            self.provider = MoyaProvider<FactsAPI>(
+                endpointClosure: mockEndpointClosure,
+                stubClosure: MoyaProvider.immediatelyStub
+            )
+        } else {
+            self.provider = provider
+        }
+
         self.storage = storage
         self.scheduler = scheduler
     }

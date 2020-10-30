@@ -19,7 +19,7 @@ final class SearchFactsUITests: XCTestCase {
     }
 
     func test_searchFactsUsingSearchBar() throws {
-        app.setLaunchArguments([.uiTest, .mockStorage])
+        app.setLaunchArguments([.uiTest, .resetData, .mockStorage, .mockHttp])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -30,8 +30,6 @@ final class SearchFactsUITests: XCTestCase {
         searchFactsScene.searchBarField.typeText("games")
 
         app.keyboards.buttons["Search"].tap()
-
-        sleep(5)
 
         XCTAssertEqual(factsListScene.factsTableView.cells.count, 16)
     }
@@ -65,7 +63,7 @@ final class SearchFactsUITests: XCTestCase {
     }
 
     func test_tapFactCategoryShouldSearchByTerm() {
-        app.setLaunchArguments([.uiTest, .mockStorage])
+        app.setLaunchArguments([.uiTest, .mockStorage, .mockHttp])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -81,14 +79,12 @@ final class SearchFactsUITests: XCTestCase {
 
         suggestion.tap()
 
-        sleep(5)
-
         XCTAssertFalse(searchFactsScene.searchFactsView.exists)
         XCTAssertGreaterThan(factsListScene.factsTableView.cells.count, 0)
     }
 
     func test_tapPastSearchShouldSearchByTerm() {
-        app.setLaunchArguments([.uiTest, .mockStorage])
+        app.setLaunchArguments([.uiTest, .mockStorage, .mockHttp])
         app.launch()
 
         let factsListScene = FactsListScene()
@@ -103,8 +99,6 @@ final class SearchFactsUITests: XCTestCase {
         XCTAssertTrue(pastSearchCell.exists)
 
         pastSearchCell.tap()
-
-        sleep(5)
 
         XCTAssertFalse(searchFactsScene.searchFactsView.exists)
         XCTAssertGreaterThan(factsListScene.factsTableView.cells.count, 0)
@@ -136,10 +130,8 @@ final class SearchFactsUITests: XCTestCase {
     }
 
     func test_pastSearchShouldBeHiddenOnFirstAccess() {
-        app.setLaunchArguments([.uiTest, .resetData])
+        app.setLaunchArguments([.uiTest, .resetData, .mockHttp])
         app.launch()
-
-        sleep(3)
 
         let factsListScene = FactsListScene()
         factsListScene.searchButton.tap()

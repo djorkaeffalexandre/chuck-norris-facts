@@ -15,6 +15,8 @@ struct FactsListScene {
     let emptyListView: XCUIElement
     let emptyListLabelView: XCUIElement
     let searchButton: XCUIElement
+    let errorView: XCUIElement
+    let retryButton: XCUIElement
 
     init() {
         let app = XCUIApplication()
@@ -23,6 +25,8 @@ struct FactsListScene {
         emptyListView = app.otherElements["emptyListView"]
         emptyListLabelView = app.staticTexts["emptyListLabelView"]
         searchButton = app.navigationBars.buttons["searchButton"]
+        errorView = app.otherElements["errorView"]
+        retryButton = app.buttons["retryButton"]
     }
 
 }

@@ -18,6 +18,12 @@ enum LaunchArgument: String {
 
     // Mock storage data
     case mockStorage = "--mock-storage"
+
+    // Mock Http Result
+    case mockHttp = "--mock-http"
+
+    // Mock Http Error Result
+    case mockHttpError = "--mock-http-error"
 }
 
 extension XCUIApplication {
