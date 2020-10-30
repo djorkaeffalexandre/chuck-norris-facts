@@ -189,11 +189,11 @@ class FactsListViewController: UIViewController {
         }
     }
 
-    private func showErrorView(_ error: FactsListError) {
+    private func showErrorView(_ factsListError: FactsListError) {
         emptyListView.isHidden = true
 
-        errorView.label.text = error.message
-        errorView.retryButton.isHidden = !error.retryEnabled
+        let localizedErrorDescription = factsListError.error.underlyingError?.localizedDescription
+        errorView.label.text = localizedErrorDescription ?? L10n.FactListError.serviceUnavailable
         errorView.isHidden = false
         errorView.play()
     }

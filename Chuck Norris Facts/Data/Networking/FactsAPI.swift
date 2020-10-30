@@ -48,11 +48,12 @@ extension FactsAPI: APITarget {
     }
 
     var sampleData: Data? {
-        switch self {
-        case .getCategories:
-            return Data.stub("get-categories")
-        case .searchFacts:
-            return Data.stub("search-facts")
-        }
+//        switch self {
+//        case .getCategories:
+//            return Data.stub("get-categories")
+//        case .searchFacts:
+//            return Data.stub("search-facts")
+//        }
+        return nil
     }
 }

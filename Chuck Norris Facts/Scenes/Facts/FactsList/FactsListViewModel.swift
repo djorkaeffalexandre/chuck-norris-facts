@@ -67,7 +67,7 @@ final class FactsListViewModel {
         let retrySyncCategories = retryActionSubject
             .withLatestFrom(currentErrorSubject)
             .compactMap { $0 }
-            .filter { $0.type == .syncCategories }
+            .filter { $0 == .syncCategories($0.error) }
             .map { _ in () }
 
         let syncCategoriesError = Observable.merge(viewDidAppearSubject, retrySyncCategories)
@@ -76,7 +76,7 @@ final class FactsListViewModel {
                     .materialize()
             }
             .compactMap { $0.event.error }
-            .map { FactsListError($0, type: .syncCategories) }
+            .map { FactsListError.syncCategories($0) }
 
         let searchFactsError = Observable.combineLatest(viewDidAppearSubject, searchTerm) { _, term in term }
             .filter { !$0.isEmpty }
@@ -86,7 +86,7 @@ final class FactsListViewModel {
                     .materialize()
             }
             .compactMap { $0.event.error }
-            .map { FactsListError($0, type: .searchFacts) }
+            .map { FactsListError.searchFacts($0) }
 
         self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
             .flatMapLatest { _, searchTerm -> Observable<[Fact]> in

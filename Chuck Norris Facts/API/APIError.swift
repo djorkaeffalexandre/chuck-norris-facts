@@ -28,6 +28,9 @@ enum APIError: Swift.Error {
 
     // Indicates that an `Endpoint` failed to encode the parameters for the `URLRequest`.
     case parameterEncoding(Swift.Error)
+
+    // Indicates that an Unknown error happened
+    case unknown(Error?)
 }
 
 extension APIError {
@@ -41,6 +44,7 @@ extension APIError {
         case .statusCode: return nil
         case .underlying: return nil
         case .dataMapping: return nil
+        case .unknown: return nil
         }
     }
 
@@ -53,6 +57,7 @@ extension APIError {
         case .requestMapping: return nil
         case .parameterEncoding(let error): return error
         case .dataMapping: return nil
+        case .unknown: return nil
         }
     }
 }
@@ -72,6 +77,8 @@ extension APIError: LocalizedError {
             return "Failed to map Endpoint to a URLRequest."
         case .parameterEncoding(let error):
             return "Failed to encode parameters for URLRequest. \(error.localizedDescription)"
+        case .unknown:
+            return "Something unexpected happened."
         }
     }
 }

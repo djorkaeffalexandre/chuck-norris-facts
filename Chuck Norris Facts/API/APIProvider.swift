@@ -11,8 +11,10 @@ import Foundation
 // A protocol representing a minimal interface for a APIProvider.
 protocol APIProviderType: AnyObject {
 
+    // Completion of a request make by a provider.
     typealias Completion = (_ result: Result<APIResponse, APIError>) -> Void
 
+    // Associated type of an APITarget.
     associatedtype Target: APITarget
 
     // Designated request-making method.
@@ -21,17 +23,42 @@ protocol APIProviderType: AnyObject {
 
 class APIProvider<Target: APITarget>: APIProviderType {
 
+    // Closure that defines the urlRequest for the provider.
+    typealias RequestClosure = (Target) -> URLRequest
+
+    // A closure responsible for mapping a `APITarget` to an `URLRequest`.
+    let requestClosure: RequestClosure
+
+    private let urlSession: URLSession
+
+    init(
+        urlSession: URLSession = URLSession.shared,
+        requestClosure: @escaping RequestClosure = { $0.urlRequest() }
+    ) {
+        self.urlSession = urlSession
+        self.requestClosure = requestClosure
+    }
+
     // Designated request-making method.
     func request(_ target: Target, completion: @escaping Completion) -> URLSessionDataTask? {
-        let targetRequest = target.urlRequest()
 
-        let task = URLSession.shared.dataTask(with: targetRequest) { (data, response, error) in
+        let request = requestClosure(target)
+
+        if let sampleData = target.sampleData {
+            completion(.success(APIResponse(statusCode: 200, data: sampleData)))
+            return nil
+        }
+
+        let task = urlSession.dataTask(with: request) { (data, response, error) in
+            let response = response as? HTTPURLResponse
+
             let result = self.convertResponseToResult(
-                response as? HTTPURLResponse,
-                request: targetRequest,
+                response,
+                request: request,
                 data: data,
                 error: error
             )
+
             completion(result)
         }
 
