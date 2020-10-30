@@ -1,12 +1,6 @@
 PODS:
-  - Alamofire (5.2.2)
   - Differentiator (4.0.1)
   - lottie-ios (3.1.8)
-  - Moya/Core (14.0.0):
-    - Alamofire (~> 5.0)
-  - Moya/RxSwift (14.0.0):
-    - Moya/Core
-    - RxSwift (~> 5.0)
   - Realm (5.4.6):
     - Realm/Headers (= 5.4.6)
   - Realm/Headers (5.4.6)
@@ -34,7 +28,6 @@ PODS:
 
 DEPENDENCIES:
   - lottie-ios
-  - Moya/RxSwift
   - RealmSwift
   - RxBlocking
   - RxCocoa
@@ -47,10 +40,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Alamofire
     - Differentiator
     - lottie-ios
-    - Moya
     - Realm
     - RealmSwift
     - RxBlocking
@@ -64,10 +55,8 @@ SPEC REPOS:
     - SwiftLint
 
 SPEC CHECKSUMS:
-  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
-  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   Realm: bb8d7be40d0bc92f139c47095124513c489c0baf
   RealmSwift: c469118d55feccd985f1de12973c6ef5587213ca
   RxBlocking: 5f700a78cad61ce253ebd37c9a39b5ccc76477b4
@@ -80,6 +69,6 @@ SPEC CHECKSUMS:
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
   SwiftLint: dfd554ff0dff17288ee574814ccdd5cea85d76f7
 
-PODFILE CHECKSUM: 002646d5407246e73467489d3ab8bd3ae6552551
+PODFILE CHECKSUM: 39b23e4d93b6e19f465020f3530517a02f6d6898
 
 COCOAPODS: 1.9.3

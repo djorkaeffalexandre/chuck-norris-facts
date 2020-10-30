@@ -15,30 +15,32 @@ struct FactsListError {
         case searchFacts
     }
 
-    let error: HTTPError?
+    let error: String?
 
     let type: ErrorType
 
     var message: String {
-        switch error?.code {
-        case .noConnection:
-            return L10n.FactListError.noConnection
-        default:
-            return L10n.FactListError.serviceUnavailable
-        }
+//        switch error?.code {
+//        case .noConnection:
+//            return L10n.FactListError.noConnection
+//        default:
+//            return L10n.FactListError.serviceUnavailable
+//        }
+        return L10n.FactListError.serviceUnavailable
     }
 
     var retryEnabled: Bool {
-        switch error?.code {
-        case .noConnection:
-            return false
-        default:
-            return true
-        }
+//        switch error?.code {
+//        case .noConnection:
+//            return false
+//        default:
+//            return true
+//        }
+        return true
     }
 
     init(_ error: Error, type: ErrorType) {
-        self.error = error as? HTTPError
+        self.error = error.localizedDescription
         self.type = type
     }
 }
