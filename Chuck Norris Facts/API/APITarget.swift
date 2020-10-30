@@ -54,3 +54,9 @@ extension APITarget {
         }
     }
 }
+
+extension APITarget {
+
+    // Provides stub data for use in testing. Default is `Data()`.
+    var sampleData: Data? { Data() }
+}

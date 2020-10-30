@@ -35,6 +35,26 @@ enum APIError: Swift.Error {
 
 extension APIError {
 
+    // Code for each error type.
+    var code: Int {
+        switch self {
+        case .objectMapping:
+            return 1
+        case .dataMapping:
+            return 2
+        case .statusCode:
+            return 3
+        case .underlying:
+            return 4
+        case .requestMapping:
+            return 5
+        case .parameterEncoding:
+            return 6
+        case .unknown:
+            return 7
+        }
+    }
+
     // Depending on error type, returns a `Response` object.
     var response: APIResponse? {
         switch self {
@@ -80,5 +100,11 @@ extension APIError: LocalizedError {
         case .unknown:
             return "Something unexpected happened."
         }
+    }
+}
+
+extension APIError: Equatable {
+    static func == (lhs: APIError, rhs: APIError) -> Bool {
+        return lhs.code == rhs.code
     }
 }

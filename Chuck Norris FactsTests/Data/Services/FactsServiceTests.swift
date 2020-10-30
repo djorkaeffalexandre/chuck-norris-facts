@@ -11,7 +11,6 @@ import RxSwift
 import RxBlocking
 import RxTest
 import RealmSwift
-import Moya
 
 @testable import Chuck_Norris_Facts
 
@@ -19,7 +18,7 @@ final class FactsServiceTests: XCTestCase {
 
     var factsService: FactsServiceType!
     var factsStorage: FactsStorageType!
-    var factsProvider: MoyaProvider<FactsAPI>!
+    var factsProvider: APIMock!
     var realm: Realm!
 
     var disposeBag: DisposeBag!
@@ -30,7 +29,7 @@ final class FactsServiceTests: XCTestCase {
         disposeBag = DisposeBag()
         realm = try Realm(configuration: .init(inMemoryIdentifier: self.name))
         factsStorage = FactsStorage(realm: realm)
-        factsProvider = MoyaProvider<FactsAPI>(stubClosure: MoyaProvider.immediatelyStub)
+        factsProvider = APIMock()
         factsService = FactsService(provider: factsProvider, storage: factsStorage, scheduler: MainScheduler.instance)
     }
 
@@ -46,6 +45,8 @@ final class FactsServiceTests: XCTestCase {
     }
 
     func test_syncCategoriesShouldSaveCategoriesOnStorage() throws {
+        factsProvider.mockRequest(statusCode: 200, data: stub("get-categories"))
+
         let storedCategories = factsStorage.retrieveCategories()
         let categories = try storedCategories.toBlocking().first() ?? []
         XCTAssertTrue(categories.isEmpty)
@@ -63,14 +64,17 @@ final class FactsServiceTests: XCTestCase {
         let categories = try storedCategories.toBlocking().first() ?? []
         XCTAssertTrue(categories.isEmpty)
 
-        let stubCategories = try stub("get-categories", type: [FactCategory].self) ?? []
-        factsStorage.storeCategories(stubCategories)
+        let stubCategories = try stub("get-categories", type: [FactCategory].self)
+        let mockCategories = try XCTUnwrap(stubCategories)
+        factsStorage.storeCategories(mockCategories)
 
         let savedCategories = try storedCategories.toBlocking().first()
-        XCTAssertEqual(savedCategories?.count, stubCategories.count)
+        XCTAssertEqual(savedCategories?.count, mockCategories.count)
     }
 
     func test_searchFactsShouldSaveFactsOnStorage() throws {
+        factsProvider.mockRequest(statusCode: 200, data: stub("search-facts"))
+
         let storedFacts = factsStorage.retrieveFacts(searchTerm: "")
         let facts = try storedFacts.toBlocking().first() ?? []
         XCTAssertTrue(facts.isEmpty)
@@ -88,11 +92,13 @@ final class FactsServiceTests: XCTestCase {
         let facts = try storedFacts.toBlocking().first() ?? []
         XCTAssertTrue(facts.isEmpty)
 
-        let stubFacts = try stub("facts-list", type: [Fact].self) ?? []
-        factsStorage.storeFacts(stubFacts)
+        let stubFacts = try stub("facts-list", type: [Fact].self)
+        let mockFacts = try XCTUnwrap(stubFacts)
+
+        factsStorage.storeFacts(mockFacts)
 
         let savedFacts = try storedFacts.toBlocking().first()
-        XCTAssertEqual(savedFacts?.count, stubFacts.count)
+        XCTAssertEqual(savedFacts?.count, mockFacts.count)
     }
 
     func test_retrievePastSearchesShouldReturnDistinctSortedByDateSearchesOnStorage() throws {
