@@ -34,7 +34,7 @@ extension FactsAPI: APITarget {
         }
     }
 
-    var task: APITask {
+    var task: HTTPTask {
         switch self {
         case .searchFacts(let searchTerm):
             return .requestParameters(parameters: ["query": searchTerm])

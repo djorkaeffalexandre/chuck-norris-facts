@@ -31,9 +31,9 @@
 		1E5A87C4254CD8E30039DE07 /* search-facts.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E5A87C3254CD8E30039DE07 /* search-facts.json */; };
 		1E655786254CB0FF00950706 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E655785254CB0FF00950706 /* APIError.swift */; };
 		1E655788254CB13B00950706 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E655787254CB13B00950706 /* APIResponse.swift */; };
-		1E65578A254CB1BB00950706 /* APITask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E655789254CB1BB00950706 /* APITask.swift */; };
 		1E65578C254CB20D00950706 /* API+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E65578B254CB20D00950706 /* API+Rx.swift */; };
 		1E65578E254CB22800950706 /* URLRequest+Encoded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E65578D254CB22800950706 /* URLRequest+Encoded.swift */; };
+		1E7A6528254DA2B1006E493B /* HTTPTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A6527254DA2B1006E493B /* HTTPTask.swift */; };
 		1E7F15BE253324CF0006887B /* FactsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15BD253324CF0006887B /* FactsListViewModelTests.swift */; };
 		1E7F15C0253324FD0006887B /* FactsListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15BF253324FD0006887B /* FactsListViewControllerTests.swift */; };
 		1E7F15C6253329780006887B /* FactViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7F15C5253329780006887B /* FactViewModelTests.swift */; };
@@ -134,9 +134,9 @@
 		1E5A87C3254CD8E30039DE07 /* search-facts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "search-facts.json"; sourceTree = "<group>"; };
 		1E655785254CB0FF00950706 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		1E655787254CB13B00950706 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
-		1E655789254CB1BB00950706 /* APITask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITask.swift; sourceTree = "<group>"; };
 		1E65578B254CB20D00950706 /* API+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Rx.swift"; sourceTree = "<group>"; };
 		1E65578D254CB22800950706 /* URLRequest+Encoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Encoded.swift"; sourceTree = "<group>"; };
+		1E7A6527254DA2B1006E493B /* HTTPTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPTask.swift; sourceTree = "<group>"; };
 		1E7F15BD253324CF0006887B /* FactsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListViewModelTests.swift; sourceTree = "<group>"; };
 		1E7F15BF253324FD0006887B /* FactsListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactsListViewControllerTests.swift; sourceTree = "<group>"; };
 		1E7F15C5253329780006887B /* FactViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactViewModelTests.swift; sourceTree = "<group>"; };
@@ -258,7 +258,6 @@
 				1E3075C8254CA5F70082A194 /* APIProvider.swift */,
 				1E655785254CB0FF00950706 /* APIError.swift */,
 				1E655787254CB13B00950706 /* APIResponse.swift */,
-				1E655789254CB1BB00950706 /* APITask.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -267,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				1E3075C4254C9D710082A194 /* HTTPMethod.swift */,
+				1E7A6527254DA2B1006E493B /* HTTPTask.swift */,
 			);
 			path = HTTP;
 			sourceTree = "<group>";
@@ -1004,7 +1004,6 @@
 				1EA3AB02254B956C004A877B /* Strings.swift in Sources */,
 				1EFE289725321CE2008806B9 /* FactCell.swift in Sources */,
 				1E56172C2541007500BF26A0 /* Data+Stub.swift in Sources */,
-				1E65578A254CB1BB00950706 /* APITask.swift in Sources */,
 				1E8A0FEE2547603700565A86 /* SuggestionsCell.swift in Sources */,
 				1E8AF33A254793D800BBB808 /* PastSearchCell.swift in Sources */,
 				1EE0713D25314AF500F6BF6D /* AppDelegate.swift in Sources */,
@@ -1035,6 +1034,7 @@
 				1E23683E253FB07200BE17F3 /* FactCategoryCell.swift in Sources */,
 				1E92113E253F915100DB340B /* FactCategoryEntity.swift in Sources */,
 				1EF0DA1425449898005CF7E2 /* CategoryView.swift in Sources */,
+				1E7A6528254DA2B1006E493B /* HTTPTask.swift in Sources */,
 				1EAB20AF2540BEC400633382 /* SuggestionsViewFlowLayout.swift in Sources */,
 				1E92112D253F6D0000DB340B /* FactsService.swift in Sources */,
 				1EFE2892253214DB008806B9 /* FactsListViewModel.swift in Sources */,
