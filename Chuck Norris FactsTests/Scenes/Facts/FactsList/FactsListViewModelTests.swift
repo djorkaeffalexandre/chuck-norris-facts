@@ -107,4 +107,23 @@ class FactsListViewModelTests: XCTestCase {
         let error = errorObserver.events.compactMap { $0.value.element }.first
         XCTAssertEqual(error?.code, FactsListError.searchFacts(apiError).code)
     }
+
+    func test_FactsListViewModel_WhenSyncCategoriesWithError_ShouldEmmitFactListError() throws {
+        let response = APIResponse(statusCode: 500, data: nil)
+        let apiError = APIError.statusCode(response)
+        factsServiceMock.syncCategoriesReturnValue = .error(apiError)
+
+        let errorObserver = testScheduler.createObserver(FactsListError.self)
+
+        factsListViewModel.errors
+            .subscribe(errorObserver)
+            .disposed(by: disposeBag)
+
+        factsListViewModel.viewDidAppear.onNext(())
+
+        testScheduler.start()
+
+        let error = errorObserver.events.compactMap { $0.value.element }.first
+        XCTAssertEqual(error?.code, FactsListError.syncCategories(apiError).code)
+    }
 }
