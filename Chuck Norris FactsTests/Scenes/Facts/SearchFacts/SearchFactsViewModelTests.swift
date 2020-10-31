@@ -34,7 +34,7 @@ class SearchFactsViewModelTests: XCTestCase {
         factsServiceMock = nil
     }
 
-    func test_searchFactsWhenSearchShouldSearchFacts() {
+    func test_SeachFactsViewModel_WhenSearchFacts_ShouldSetSearchTerm() {
         let searchFactsObserver = testScheduler.createObserver(String.self)
 
         searchFactsViewModel.didSearchFacts
@@ -50,7 +50,7 @@ class SearchFactsViewModelTests: XCTestCase {
         XCTAssertEqual(searchFactsTerm, "games")
     }
 
-    func test_cancelSearchShouldCallCancelSearch() {
+    func test_SearchFactsViewModel_WhenCancelSearch_ShouldCancelSearchScene() {
         let cancelObserver = testScheduler.createObserver(Void.self)
 
         searchFactsViewModel.didCancel
@@ -65,7 +65,7 @@ class SearchFactsViewModelTests: XCTestCase {
         XCTAssertEqual(cancelCount, 1)
     }
 
-    func test_shouldLoad8RandomFactCategories() throws {
+    func test_SearchFactsViewModel_WhenViewWillAppear_ShouldLoad8RandomSuggestions() throws {
         let searchFactsItemsObserver = testScheduler.createObserver([SearchFactsTableViewSection].self)
 
         let testCategories = try stub("get-categories", type: [FactCategory].self) ?? []
@@ -83,7 +83,7 @@ class SearchFactsViewModelTests: XCTestCase {
         XCTAssertEqual(searchFactsViewModelEvents?.first?.items.first?.quantity, 8)
     }
 
-    func test_shouldLoadPastSearches() {
+    func test_SearchFactsViewModel_WhenViewWillAppear_ShouldLoadPastSearches() {
         let searchFactsItemsObserver = testScheduler.createObserver([SearchFactsTableViewSection].self)
 
         let pastSearches = ["fashion", "games", "food"]

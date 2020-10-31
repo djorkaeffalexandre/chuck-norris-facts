@@ -18,7 +18,7 @@ final class FactsListUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func test_showEmptyView() throws {
+    func test_FactsList_WhenFirstAccess_ShouldShowEmptyView() throws {
         app.setLaunchArguments([.uiTest, .resetData])
         app.launch()
 
@@ -28,7 +28,7 @@ final class FactsListUITests: XCTestCase {
         XCTAssertTrue(factsListScene.emptyListLabelView.exists)
     }
 
-    func test_shareFact() {
+    func test_FactsList_WhenShareFact_ShouldShowShareActivity() {
         app.setLaunchArguments([.uiTest, .mockStorage, .mockHttp])
         app.launch()
 
@@ -60,7 +60,7 @@ final class FactsListUITests: XCTestCase {
         XCTAssertFalse(shareActivity.waitForExistence(timeout: 1))
     }
 
-    func test_searchFacts() {
+    func test_FactsList_WhenTapSearch_ShouldShowSearchFacts() {
         app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
@@ -77,7 +77,7 @@ final class FactsListUITests: XCTestCase {
         XCTAssertTrue(searchFactsView.exists)
     }
 
-    func test_shouldShowErrorViewWhenSearchRaisesAnError() {
+    func test_FactsList_WhenSearchFails_ShouldShowErrorView() {
         app.setLaunchArguments([.uiTest, .mockHttpError])
         app.launch()
 
