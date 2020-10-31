@@ -39,7 +39,7 @@ class SearchFactsViewControllerTests: XCTestCase {
         factsServiceMock = nil
     }
 
-    func test_searchFactsViewShouldShow8Categories() throws {
+    func test_SearchFactsViewController_WhenViewWillAppear_ShouldLoad8Categories() throws {
         let stubFactCategories = try stub("get-categories", type: [FactCategory].self) ?? []
         factsServiceMock.retrieveCategoriesReturnValue = .just(stubFactCategories)
 
@@ -54,7 +54,7 @@ class SearchFactsViewControllerTests: XCTestCase {
         XCTAssertEqual(suggestionsCell?.collectionView.numberOfItems(inSection: 0), 8)
     }
 
-    func test_searchFactsViewShouldShowOnlyPastSearches() {
+    func test_SearchFactsViewController_WhenViewWillAppear_ShouldLoadPastSearches() {
         factsServiceMock.retrievePastSearchesReturnValue = .just(["fashion", "games", "explicit"])
 
         searchFactsViewModel.viewWillAppear.onNext(())
@@ -66,7 +66,29 @@ class SearchFactsViewControllerTests: XCTestCase {
         XCTAssertEqual(searchFactsDataSource?.tableView(tableView, numberOfRowsInSection: 0), 3)
     }
 
-    func test_searchFactsViewShouldBeEmptyWhenThereIsNoSuggestionsOrPastSearches() {
+    func test_SearchFactsViewController_WhenViewWillAppearWithoutData_ShouldBeEmpty() {
+        searchFactsViewModel.viewWillAppear.onNext(())
+
+        let tableView = searchFactsViewController.tableView
+        let searchFactsDataSource = tableView.dataSource
+
+        XCTAssertEqual(searchFactsDataSource?.numberOfSections?(in: tableView), 0)
+    }
+
+    func test_Suggestions_WhenEmpty_ShouldBeHidden() {
+        factsServiceMock.retrieveCategoriesReturnValue = .just([])
+
+        searchFactsViewModel.viewWillAppear.onNext(())
+
+        let tableView = searchFactsViewController.tableView
+        let searchFactsDataSource = tableView.dataSource
+
+        XCTAssertEqual(searchFactsDataSource?.numberOfSections?(in: tableView), 0)
+    }
+
+    func test_PastSearches_WhenEmpty_ShouldBeHidden() {
+        factsServiceMock.retrievePastSearchesReturnValue = .just([])
+
         searchFactsViewModel.viewWillAppear.onNext(())
 
         let tableView = searchFactsViewController.tableView

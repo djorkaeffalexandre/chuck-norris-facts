@@ -34,7 +34,7 @@ class FactsListViewModelTests: XCTestCase {
         factsListViewModel = nil
     }
 
-    func test_loadEmptyFacts() throws {
+    func test_FactsListViewModel_WhenViewDidAppear_ShouldLoadEmptyFacts() throws {
         factsServiceMock.searchFactsReturnValue = .just([])
 
         let factsObserver = testScheduler.createObserver([FactsSectionModel].self)
@@ -51,9 +51,9 @@ class FactsListViewModelTests: XCTestCase {
         XCTAssertEqual(sectionModels?.first?.items.count, 0)
     }
 
-    func test_showShareFact() throws {
+    func test_FactsListViewModel_WhenStartShareFact_ShouldShowShareFact() throws {
         let factStub = try stub("short-fact", type: Fact.self)
-        let fact = try XCTUnwrap(factStub, "looks like short-fact.json doesn't exists")
+        let fact = try XCTUnwrap(factStub)
 
         factsListViewModel.viewDidAppear.onNext(())
 
@@ -70,9 +70,9 @@ class FactsListViewModelTests: XCTestCase {
         XCTAssertEqual(fact.value, shareFact?.text)
     }
 
-    func test_categoriesShouldSyncWhenViewDidAppearWithNoErrors() throws {
+    func test_FactsListViewModel_WhenViewDidAppear_ShouldSyncCategoriesWithNoErrors() throws {
         let stubCategories = try stub("get-categories", type: [FactCategory].self) ?? []
-        let categories = try XCTUnwrap(stubCategories, "looks like get-categories.json doesn't exists")
+        let categories = try XCTUnwrap(stubCategories)
         factsServiceMock.retrieveCategoriesReturnValue = .just(categories)
 
         let errorObserver = testScheduler.createObserver(FactsListError.self)
@@ -87,5 +87,24 @@ class FactsListViewModelTests: XCTestCase {
 
         let error = errorObserver.events.compactMap { $0.value.element }.first
         XCTAssertNil(error)
+    }
+
+    func test_FactsListViewModel_WhenSearchFactsWithError_ShouldEmmitFactListError() throws {
+        let response = APIResponse(statusCode: 500, data: nil)
+        let apiError = APIError.statusCode(response)
+        factsServiceMock.searchFactsReturnValue = .error(apiError)
+
+        let errorObserver = testScheduler.createObserver(FactsListError.self)
+
+        factsListViewModel.errors
+            .subscribe(errorObserver)
+            .disposed(by: disposeBag)
+
+        factsListViewModel.viewDidAppear.onNext(())
+
+        testScheduler.start()
+
+        let error = errorObserver.events.compactMap { $0.value.element }.first
+        XCTAssertEqual(error?.code, FactsListError.searchFacts(apiError).code)
     }
 }

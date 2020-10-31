@@ -339,19 +339,19 @@
 		1E7F15BC253324BD0006887B /* FactsList */ = {
 			isa = PBXGroup;
 			children = (
-				1E7F15C4253329600006887B /* Cells */,
+				1E7F15C4253329600006887B /* Fact */,
 				1E7F15BD253324CF0006887B /* FactsListViewModelTests.swift */,
 				1E7F15BF253324FD0006887B /* FactsListViewControllerTests.swift */,
 			);
 			path = FactsList;
 			sourceTree = "<group>";
 		};
-		1E7F15C4253329600006887B /* Cells */ = {
+		1E7F15C4253329600006887B /* Fact */ = {
 			isa = PBXGroup;
 			children = (
 				1E7F15C5253329780006887B /* FactViewModelTests.swift */,
 			);
-			path = Cells;
+			path = Fact;
 			sourceTree = "<group>";
 		};
 		1E8AF337254792DB00BBB808 /* FactCategory */ = {

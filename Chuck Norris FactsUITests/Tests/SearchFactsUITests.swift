@@ -18,7 +18,7 @@ final class SearchFactsUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func test_searchFactsUsingSearchBar() throws {
+    func test_SearchFacts_WhenSearchByTerm_ShouldLoadFacts() throws {
         app.setLaunchArguments([.uiTest, .resetData, .mockStorage, .mockHttp])
         app.launch()
 
@@ -34,7 +34,7 @@ final class SearchFactsUITests: XCTestCase {
         XCTAssertEqual(factsListScene.factsTableView.cells.count, 16)
     }
 
-    func test_cancelSearchFacts() throws {
+    func test_SearchFacts_WhenCancelSearch_ShouldCancelSearchFacts() throws {
         app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
@@ -47,7 +47,7 @@ final class SearchFactsUITests: XCTestCase {
         XCTAssertFalse(searchFactsScene.searchFactsView.exists)
     }
 
-    func test_shouldShow8FactCategories() {
+    func test_SearchFacts_WhenViewAppear_ShouldShow8RandomSuggestions() {
         app.setLaunchArguments([.uiTest, .resetData, .mockHttp])
         app.launch()
 
@@ -62,7 +62,7 @@ final class SearchFactsUITests: XCTestCase {
         XCTAssertEqual(suggestionsCells.count, 8)
     }
 
-    func test_tapFactCategoryShouldSearchByTerm() {
+    func test_SearchFacts_WhenTapSuggestion_ShouldSearchBySuggestion() {
         app.setLaunchArguments([.uiTest, .mockStorage, .mockHttp])
         app.launch()
 
@@ -82,7 +82,7 @@ final class SearchFactsUITests: XCTestCase {
         XCTAssertGreaterThan(factsListScene.factsTableView.cells.count, 0)
     }
 
-    func test_tapPastSearchShouldSearchByTerm() {
+    func test_SearchFacts_WhenTapPastSearch_ShouldSearchByPastSearch() {
         app.setLaunchArguments([.uiTest, .mockStorage, .mockHttp])
         app.launch()
 
@@ -102,7 +102,7 @@ final class SearchFactsUITests: XCTestCase {
         XCTAssertGreaterThan(factsListScene.factsTableView.cells.count, 0)
     }
 
-    func test_tapPastSearchShouldOrderByDate() {
+    func test_SearchFacts_WhenTapPastSearch_ShouldOrderPastSearch() {
         app.setLaunchArguments([.uiTest, .mockStorage])
         app.launch()
 
@@ -127,7 +127,7 @@ final class SearchFactsUITests: XCTestCase {
         XCTAssertEqual(firstItem.label, secondItem.label)
     }
 
-    func test_pastSearchShouldBeHiddenOnFirstAccess() {
+    func test_SearchFacts_WhenFirstAccess_ShouldNoHavePastSearches() {
         app.setLaunchArguments([.uiTest, .resetData, .mockHttp])
         app.launch()
 

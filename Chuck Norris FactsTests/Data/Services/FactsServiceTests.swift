@@ -44,7 +44,7 @@ final class FactsServiceTests: XCTestCase {
         }
     }
 
-    func test_syncCategoriesShouldSaveCategoriesOnStorage() throws {
+    func test_FactsService_WhenSyncCategories_ShouldSaveCategoriesOnDatabase() throws {
         factsProvider.mockRequest(statusCode: 200, data: stub("get-categories"))
 
         let storedCategories = factsStorage.retrieveCategories()
@@ -59,7 +59,24 @@ final class FactsServiceTests: XCTestCase {
         XCTAssertEqual(savedCategories?.count, 16)
     }
 
-    func test_retrieveCategoriesShouldReturnCategoriesOnStorage() throws {
+    func test_FactsService_WhenSearchFacts_ShouldSaveSearchTermOnDatabase() throws {
+        factsProvider.mockRequest(statusCode: 200, data: stub("search-facts"))
+
+        let storedSearches = factsStorage.retrieveSearches()
+        let searches = try storedSearches.toBlocking().first() ?? []
+        XCTAssertTrue(searches.isEmpty)
+
+        factsService.searchFacts(searchTerm: "games")
+            .subscribe()
+            .disposed(by: disposeBag)
+
+        testScheduler.start()
+
+        let savedSearches = try storedSearches.toBlocking().first()
+        XCTAssertEqual(savedSearches?.count, 1)
+    }
+
+    func test_FactsService_WhenRetrieveCategories_ShouldReturnCategoriesOnDatabase() throws {
         let storedCategories = factsStorage.retrieveCategories()
         let categories = try storedCategories.toBlocking().first() ?? []
         XCTAssertTrue(categories.isEmpty)
@@ -72,7 +89,7 @@ final class FactsServiceTests: XCTestCase {
         XCTAssertEqual(savedCategories?.count, mockCategories.count)
     }
 
-    func test_searchFactsShouldSaveRetrieveAPIFacts() throws {
+    func test_FactsService_WhenSearchFacts_ShouldReturnFacts() throws {
         factsProvider.mockRequest(statusCode: 200, data: stub("search-facts"))
 
         let factsObserver = testScheduler.createObserver([Fact].self)
@@ -87,7 +104,7 @@ final class FactsServiceTests: XCTestCase {
         XCTAssertEqual(facts?.count, 16)
     }
 
-    func test_retrievePastSearchesShouldReturnDistinctSortedByDateSearchesOnStorage() throws {
+    func test_FactsService_WhenRetrievePastSearches_ShouldReturnDistinctSortedByDateSearches() throws {
         let storedSearches = factsStorage.retrieveSearches()
         let searches = try storedSearches.toBlocking().first() ?? []
         XCTAssertTrue(searches.isEmpty)

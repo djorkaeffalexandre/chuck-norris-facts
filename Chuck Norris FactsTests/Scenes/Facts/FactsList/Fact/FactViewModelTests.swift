@@ -15,18 +15,26 @@ import RxTest
 
 class FactViewModelTests: XCTestCase {
 
-    func test_factViewModelIsEquatable() throws {
+    func test_FactViewModel_WhenWithoutCategory_ShouldHaveCategoryUncategorized() throws {
         let factStub = try stub("short-fact", type: Fact.self)
-        let fact = try XCTUnwrap(factStub, "looks like short-fact.json doesn't exists")
+        let fact = try XCTUnwrap(factStub)
+
+        let factViewModel = FactViewModel(fact: fact)
+        XCTAssertEqual(factViewModel.category, L10n.FactCategory.uncategorized)
+    }
+
+    func test_FactViewModel_WhenCompare_ShouldBeEquatable() throws {
+        let factStub = try stub("short-fact", type: Fact.self)
+        let fact = try XCTUnwrap(factStub)
 
         let factViewModelTest = FactViewModel(fact: fact)
         let factViewModel = FactViewModel(fact: fact)
         XCTAssertEqual(factViewModelTest, factViewModel)
     }
 
-    func test_factViewModelIsIdentifiable() throws {
+    func test_FactViewModel_WhenCompare_ShouldBeIdentifiable() throws {
         let factStub = try stub("short-fact", type: Fact.self)
-        let fact = try XCTUnwrap(factStub, "looks like short-fact.json doesn't exists")
+        let fact = try XCTUnwrap(factStub)
 
         let factViewModelTest = FactViewModel(fact: fact)
         XCTAssertEqual(factViewModelTest.identity, fact.value)
