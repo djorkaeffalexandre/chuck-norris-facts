@@ -37,7 +37,7 @@ class FactsListViewControllerTests: XCTestCase {
     }
 
     func test_factsListEmptyShouldShowEmptyList() {
-        factsServiceMock.retrieveFactsReturnValue = .just([])
+        factsServiceMock.searchFactsReturnValue = .just([])
 
         factsListViewModel.viewDidAppear.onNext(())
 
@@ -48,7 +48,7 @@ class FactsListViewControllerTests: XCTestCase {
         let factStub = try stub("short-fact", type: Fact.self)
         let fact = try XCTUnwrap(factStub, "looks like short-fact.json doesn't exists")
 
-        factsServiceMock.retrieveFactsReturnValue = .just([fact])
+        factsServiceMock.searchFactsReturnValue = .just([fact])
 
         factsListViewModel.viewDidAppear.onNext(())
 
@@ -61,7 +61,7 @@ class FactsListViewControllerTests: XCTestCase {
         let factStub = try stub("long-fact", type: Fact.self)
         let fact = try XCTUnwrap(factStub, "looks like long-fact.json doesn't exists")
 
-        factsServiceMock.retrieveFactsReturnValue = .just([fact])
+        factsServiceMock.searchFactsReturnValue = .just([fact])
 
         factsListViewModel.viewDidAppear.onNext(())
 
@@ -74,7 +74,7 @@ class FactsListViewControllerTests: XCTestCase {
         let factStub = try stub("short-fact", type: Fact.self)
         let fact = try XCTUnwrap(factStub, "looks like short-fact.json doesn't exists")
 
-        factsServiceMock.retrieveFactsReturnValue = .just([fact])
+        factsServiceMock.searchFactsReturnValue = .just([fact])
 
         let testScheduler = TestScheduler(initialClock: 0)
         let shareFactObserver = testScheduler.createObserver(FactViewModel.self)

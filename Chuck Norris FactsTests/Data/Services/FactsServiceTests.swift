@@ -72,33 +72,19 @@ final class FactsServiceTests: XCTestCase {
         XCTAssertEqual(savedCategories?.count, mockCategories.count)
     }
 
-    func test_searchFactsShouldSaveFactsOnStorage() throws {
+    func test_searchFactsShouldSaveRetrieveAPIFacts() throws {
         factsProvider.mockRequest(statusCode: 200, data: stub("search-facts"))
 
-        let storedFacts = factsStorage.retrieveFacts(searchTerm: "")
-        let facts = try storedFacts.toBlocking().first() ?? []
-        XCTAssertTrue(facts.isEmpty)
+        let factsObserver = testScheduler.createObserver([Fact].self)
 
-        factsService.searchFacts(searchTerm: "")
-            .subscribe()
+        factsService.searchFacts(searchTerm: "games")
+            .subscribe(factsObserver)
             .disposed(by: disposeBag)
 
-        let savedFacts = try storedFacts.toBlocking().first()
-        XCTAssertEqual(savedFacts?.count, 16)
-    }
+        testScheduler.start()
 
-    func test_retrieveFactsShouldReturnFactsOnStorage() throws {
-        let storedFacts = factsStorage.retrieveFacts(searchTerm: "")
-        let facts = try storedFacts.toBlocking().first() ?? []
-        XCTAssertTrue(facts.isEmpty)
-
-        let stubFacts = try stub("facts-list", type: [Fact].self)
-        let mockFacts = try XCTUnwrap(stubFacts)
-
-        factsStorage.storeFacts(mockFacts)
-
-        let savedFacts = try storedFacts.toBlocking().first()
-        XCTAssertEqual(savedFacts?.count, mockFacts.count)
+        let facts = factsObserver.events.compactMap { $0.value.element }.first
+        XCTAssertEqual(facts?.count, 16)
     }
 
     func test_retrievePastSearchesShouldReturnDistinctSortedByDateSearchesOnStorage() throws {
@@ -106,16 +92,10 @@ final class FactsServiceTests: XCTestCase {
         let searches = try storedSearches.toBlocking().first() ?? []
         XCTAssertTrue(searches.isEmpty)
 
-        let stubShortFact = try stub("short-fact", type: Fact.self)
-        let shortFact = try XCTUnwrap(stubShortFact)
-
-        let stubLongFact = try stub("long-fact", type: Fact.self)
-        let longFact = try XCTUnwrap(stubLongFact)
-
-        factsStorage.storeSearch(searchTerm: "games", facts: [shortFact])
-        factsStorage.storeSearch(searchTerm: "explicit", facts: [longFact])
-        factsStorage.storeSearch(searchTerm: "explicit", facts: [longFact])
-        factsStorage.storeSearch(searchTerm: "fashion", facts: [shortFact])
+        factsStorage.storeSearch(searchTerm: "games")
+        factsStorage.storeSearch(searchTerm: "explicit")
+        factsStorage.storeSearch(searchTerm: "explicit")
+        factsStorage.storeSearch(searchTerm: "fashion")
 
         let savedSearches = try storedSearches.toBlocking().first()
         XCTAssertEqual(savedSearches, ["fashion", "explicit", "games"])

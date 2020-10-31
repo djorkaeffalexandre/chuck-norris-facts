@@ -35,11 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         if LaunchArgument.check(.mockStorage) {
-            let facts = Data.stub("facts", type: [Fact].self) ?? []
-
             let entities = [
-                SearchEntity(searchTerm: "games", facts: facts),
-                SearchEntity(searchTerm: "fashion", facts: facts)
+                SearchEntity(searchTerm: "games"),
+                SearchEntity(searchTerm: "fashion")
             ]
 
             let realm = try? Realm()

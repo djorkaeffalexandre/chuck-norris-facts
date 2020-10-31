@@ -34,24 +34,24 @@ class FactsListViewModelTests: XCTestCase {
         factsListViewModel = nil
     }
 
-    func test_load10RandomFacts() throws {
-        let factsListStub = try stub("facts-list", type: [Fact].self)
-        let factsList = try XCTUnwrap(factsListStub, "looks like facts-list.json doesn't exists")
-        factsServiceMock.retrieveFactsReturnValue = .just(factsList)
-
-        let factsObserver = testScheduler.createObserver([FactsSectionModel].self)
-
-        factsListViewModel.facts
-            .subscribe(factsObserver)
-            .disposed(by: disposeBag)
-
-        factsListViewModel.viewDidAppear.onNext(())
-
-        testScheduler.start()
-
-        let sectionModels = factsObserver.events.compactMap { $0.value.element }.first
-        XCTAssertEqual(sectionModels?.first?.items.count, 10)
-    }
+//    func test_load10RandomFacts() throws {
+//        let factsListStub = try stub("facts-list", type: [Fact].self)
+//        let factsList = try XCTUnwrap(factsListStub, "looks like facts-list.json doesn't exists")
+//        factsServiceMock.retrieveFactsReturnValue = .just(factsList)
+//
+//        let factsObserver = testScheduler.createObserver([FactsSectionModel].self)
+//
+//        factsListViewModel.facts
+//            .subscribe(factsObserver)
+//            .disposed(by: disposeBag)
+//
+//        factsListViewModel.viewDidAppear.onNext(())
+//
+//        testScheduler.start()
+//
+//        let sectionModels = factsObserver.events.compactMap { $0.value.element }.first
+//        XCTAssertEqual(sectionModels?.first?.items.count, 10)
+//    }
 
     func test_showShareFact() throws {
         let factStub = try stub("short-fact", type: Fact.self)

@@ -11,16 +11,13 @@ import RxSwift
 protocol FactsServiceType {
 
     // Search Facts on Chuck Norris API
-    func searchFacts(searchTerm: String) -> Observable<Void>
+    func searchFacts(searchTerm: String) -> Observable<[Fact]>
 
     // Sync local stored Categories with Chuck Norris API Categories
     func syncCategories() -> Observable<Void>
 
     // Retrieve local stored Categories
     func retrieveCategories() -> Observable<[FactCategory]>
-
-    // Retrieve local stored Facts
-    func retrieveFacts(searchTerm: String) -> Observable<[Fact]>
 
     // Retrieve local stored Past Searches
     func retrievePastSearches() -> Observable<[String]>
@@ -42,15 +39,20 @@ struct FactsService: FactsServiceType {
         self.scheduler = scheduler
     }
 
-    func searchFacts(searchTerm: String) -> Observable<Void> {
-        provider.rx
+    func searchFacts(searchTerm: String) -> Observable<[Fact]> {
+        if searchTerm.isEmpty {
+            return .just([])
+        }
+
+        return provider.rx
             .request(.searchFacts(searchTerm: searchTerm))
             .asObservable()
-            .observeOn(scheduler ?? MainScheduler.asyncInstance)
+            .observeOn(self.scheduler ?? MainScheduler.asyncInstance)
             .map(SearchFactsResponse.self, using: JSON.decoder)
             .map { $0.facts }
-            .map { self.storage.storeSearch(searchTerm: searchTerm, facts: $0) }
-            .map { () }
+            .do(onNext: { _ in
+                self.storage.storeSearch(searchTerm: searchTerm)
+            })
     }
 
     func syncCategories() -> Observable<Void> {
@@ -70,10 +72,6 @@ struct FactsService: FactsServiceType {
 
     func retrieveCategories() -> Observable<[FactCategory]> {
         storage.retrieveCategories()
-    }
-
-    func retrieveFacts(searchTerm: String) -> Observable<[Fact]> {
-        storage.retrieveFacts(searchTerm: searchTerm)
     }
 
     func retrievePastSearches() -> Observable<[String]> {

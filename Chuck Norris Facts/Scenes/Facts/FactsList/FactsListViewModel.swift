@@ -78,28 +78,15 @@ final class FactsListViewModel {
             .compactMap { $0.event.error }
             .map { FactsListError.syncCategories($0) }
 
-        let searchFactsError = Observable.combineLatest(viewDidAppearSubject, searchTerm) { _, term in term }
-            .filter { !$0.isEmpty }
-            .flatMapLatest { searchTerm in
+        self.facts = Observable.combineLatest(viewDidAppearSubject, searchTerm) { _, term in term }
+            .flatMapLatest { searchTerm -> Observable<[Fact]> in
                 factsService.searchFacts(searchTerm: searchTerm)
                     .trackActivity(loadingIndicator)
-                    .materialize()
-            }
-            .compactMap { $0.event.error }
-            .map { FactsListError.searchFacts($0) }
-
-        self.facts = Observable.combineLatest(viewDidAppearSubject, searchTermSubject)
-            .flatMapLatest { _, searchTerm -> Observable<[Fact]> in
-                let facts = factsService.retrieveFacts(searchTerm: searchTerm)
-                if searchTerm.isEmpty {
-                    return facts.map { Array($0.shuffled().prefix(10)) }
-                }
-                return facts
             }
             .map { $0.map { FactViewModel(fact: $0) } }
             .map { [FactsSectionModel(model: "", items: $0)] }
 
-        self.errors = Observable.merge(searchFactsError, syncCategoriesError)
+        self.errors = syncCategoriesError
             .do(onNext: currentErrorSubject.onNext)
     }
 }
