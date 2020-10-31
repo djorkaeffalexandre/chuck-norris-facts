@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// A type representing possible errors Moya can throw.
+/// A type representing possible errors API can throw.
 enum APIError: Swift.Error {
 
     // Indicates a response failed to map to a Decodable object.
