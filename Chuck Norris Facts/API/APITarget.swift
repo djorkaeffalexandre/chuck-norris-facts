@@ -26,7 +26,7 @@ protocol APITarget {
     var sampleData: Data? { get }
 
     // The type of HTTP task to be performed.
-    var task: APITask { get }
+    var task: HTTPTask { get }
 }
 
 extension APITarget {

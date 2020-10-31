@@ -18,14 +18,8 @@ protocol FactsStorageType {
     // Retrieve all local stored categories
     func retrieveCategories() -> Observable<[FactCategory]>
 
-    // Store a list of facts
-    func storeFacts(_ facts: [Fact])
-
-    // Retrieve local stored facts filtered by a search term
-    func retrieveFacts(searchTerm: String) -> Observable<[Fact]>
-
     // Store a search and it's result
-    func storeSearch(searchTerm: String, facts: [Fact])
+    func storeSearch(searchTerm: String)
 
     // Retrieve all past searches terms
     func retrieveSearches() -> Observable<[String]>
@@ -50,26 +44,9 @@ final class FactsStorage: FactsStorageType {
         return Observable.collection(from: entities).map { $0.map { $0.item } }
     }
 
-    func storeFacts(_ facts: [Fact]) {
+    func storeSearch(searchTerm: String) {
         try? realm.write {
-            let entities = facts.map(FactEntity.init)
-            self.realm.add(entities, update: .modified)
-        }
-    }
-
-    func retrieveFacts(searchTerm: String) -> Observable<[Fact]> {
-        var entities = realm.objects(FactEntity.self)
-
-        if !searchTerm.isEmpty {
-            entities = entities.filter("ANY search.searchTerm = %@", searchTerm)
-        }
-
-        return Observable.collection(from: entities).map { $0.map { $0.item }}
-    }
-
-    func storeSearch(searchTerm: String, facts: [Fact]) {
-        try? realm.write {
-            let entity = SearchEntity(searchTerm: searchTerm, facts: facts)
+            let entity = SearchEntity(searchTerm: searchTerm)
             self.realm.add(entity, update: .modified)
         }
     }

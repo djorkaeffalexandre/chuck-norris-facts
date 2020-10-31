@@ -28,20 +28,23 @@ final class FactsListUITests: XCTestCase {
         XCTAssertTrue(factsListScene.emptyListLabelView.exists)
     }
 
-    func test_show10RandomFacts() {
-        app.setLaunchArguments([.uiTest, .mockStorage])
-        app.launch()
-
-        let factsListScene = FactsListScene()
-
-        XCTAssertEqual(factsListScene.factsTableView.cells.count, 10)
-    }
-
     func test_shareFact() {
-        app.setLaunchArguments([.uiTest, .mockStorage])
+        app.setLaunchArguments([.uiTest, .mockStorage, .mockHttp])
         app.launch()
 
         let factsListScene = FactsListScene()
+
+        let searchFactsScene = SearchFactsScene()
+        let searchFactsButton = factsListScene.searchButton
+        XCTAssertTrue(searchFactsButton.exists)
+
+        searchFactsButton.firstMatch.tap()
+
+        searchFactsScene.searchBarField.tap()
+        searchFactsScene.searchBarField.typeText("games")
+
+        app.keyboards.buttons["Search"].tap()
+
         let firstFactCell = factsListScene.factsTableView.firstMatch
         let shareFactButton = firstFactCell.buttons["shareFactButton"]
         XCTAssertTrue(shareFactButton.exists)
