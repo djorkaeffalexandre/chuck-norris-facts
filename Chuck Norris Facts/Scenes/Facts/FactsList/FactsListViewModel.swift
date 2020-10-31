@@ -64,8 +64,7 @@ final class FactsListViewModel {
 
         let currentErrorSubject = BehaviorSubject<FactsListError?>(value: nil)
 
-        let retrySyncCategories = retryActionSubject
-            .withLatestFrom(currentErrorSubject)
+        let retrySyncCategories = retryActionSubject.withLatestFrom(currentErrorSubject)
             .compactMap { $0 }
             .filter { $0 == .syncCategories($0.error) }
             .map { _ in () }
@@ -78,15 +77,23 @@ final class FactsListViewModel {
             .compactMap { $0.event.error }
             .map { FactsListError.syncCategories($0) }
 
-        self.facts = Observable.combineLatest(viewDidAppearSubject, searchTerm) { _, term in term }
-            .flatMapLatest { searchTerm -> Observable<[Fact]> in
+        let searchFacts = Observable.combineLatest(viewDidAppearSubject, searchTerm) { _, term in term }
+            .flatMapLatest { searchTerm in
                 factsService.searchFacts(searchTerm: searchTerm)
                     .trackActivity(loadingIndicator)
+                    .materialize()
             }
+
+        let searchFactsError = searchFacts
+            .compactMap { $0.event.error }
+            .map { FactsListError.searchFacts($0) }
+
+        self.facts = searchFacts
+            .compactMap { $0.event.element }
             .map { $0.map { FactViewModel(fact: $0) } }
             .map { [FactsSectionModel(model: "", items: $0)] }
 
-        self.errors = syncCategoriesError
+        self.errors = Observable.merge(syncCategoriesError, searchFactsError)
             .do(onNext: currentErrorSubject.onNext)
     }
 }

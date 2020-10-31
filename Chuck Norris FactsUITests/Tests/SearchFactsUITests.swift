@@ -79,7 +79,6 @@ final class SearchFactsUITests: XCTestCase {
 
         suggestion.tap()
 
-        XCTAssertFalse(searchFactsScene.searchFactsView.exists)
         XCTAssertGreaterThan(factsListScene.factsTableView.cells.count, 0)
     }
 
@@ -100,7 +99,6 @@ final class SearchFactsUITests: XCTestCase {
 
         pastSearchCell.tap()
 
-        XCTAssertFalse(searchFactsScene.searchFactsView.exists)
         XCTAssertGreaterThan(factsListScene.factsTableView.cells.count, 0)
     }
 
