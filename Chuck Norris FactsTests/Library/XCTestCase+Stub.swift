@@ -24,4 +24,19 @@ extension XCTestCase {
         let stub = try decoder.decode(type, from: data)
         return stub
     }
+
+    func stub(_ resource: String) -> Data? {
+        let bundle = Bundle(for: Self.self)
+
+        do {
+            guard let url = bundle.url(forResource: resource, withExtension: ".json") else {
+                return nil
+            }
+
+            let data = try Data(contentsOf: url)
+            return data
+        } catch {
+            return nil
+        }
+    }
 }

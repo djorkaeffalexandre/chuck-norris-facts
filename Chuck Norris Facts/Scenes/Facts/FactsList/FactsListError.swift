@@ -8,37 +8,32 @@
 
 import Foundation
 
-struct FactsListError {
+enum FactsListError {
 
-    enum ErrorType {
-        case syncCategories
-        case searchFacts
-    }
+    case syncCategories(Error)
+    case searchFacts(Error)
 
-    let error: HTTPError?
-
-    let type: ErrorType
-
-    var message: String {
-        switch error?.code {
-        case .noConnection:
-            return L10n.FactListError.noConnection
-        default:
-            return L10n.FactListError.serviceUnavailable
+    var error: APIError {
+        switch self {
+        case .syncCategories(let error):
+            return (error as? APIError) ?? APIError.unknown(error)
+        case .searchFacts(let error):
+            return (error as? APIError) ?? APIError.unknown(error)
         }
     }
 
-    var retryEnabled: Bool {
-        switch error?.code {
-        case .noConnection:
-            return false
-        default:
-            return true
+    var code: Int {
+        switch self {
+        case .syncCategories:
+            return -100
+        case .searchFacts:
+            return -101
         }
     }
+}
 
-    init(_ error: Error, type: ErrorType) {
-        self.error = error as? HTTPError
-        self.type = type
+extension FactsListError: Equatable {
+    static func == (lhs: FactsListError, rhs: FactsListError) -> Bool {
+        lhs.code == rhs.code
     }
 }

@@ -7,7 +7,6 @@
 //
 
 import RxSwift
-import Moya
 
 protocol FactsServiceType {
 
@@ -27,51 +26,18 @@ protocol FactsServiceType {
     func retrievePastSearches() -> Observable<[String]>
 }
 
-let errorEndpointClosure = { (target: FactsAPI) -> Endpoint in
-    Endpoint(
-        url: URL(target: target).absoluteString,
-        sampleResponseClosure: { .networkResponse(500, Data()) },
-        method: target.method,
-        task: target.task,
-        httpHeaderFields: target.headers
-    )
-}
-
-let mockEndpointClosure = {  (target: FactsAPI) -> Endpoint in
-   Endpoint(
-       url: URL(target: target).absoluteString,
-       sampleResponseClosure: { .networkResponse(200, target.sampleData) },
-       method: target.method,
-       task: target.task,
-       httpHeaderFields: target.headers
-   )
-}
-
 struct FactsService: FactsServiceType {
 
-    private var provider: MoyaProvider<FactsAPI>
+    private var provider: APIProvider<FactsAPI>
     private var storage: FactsStorageType
     private var scheduler: SchedulerType?
 
     init(
-        provider: MoyaProvider<FactsAPI> = MoyaProvider<FactsAPI>(),
+        provider: APIProvider<FactsAPI> = APIProvider<FactsAPI>(),
         storage: FactsStorageType = FactsStorage(),
         scheduler: SchedulerType? = nil
     ) {
-        if LaunchArgument.check(.mockHttpError) {
-            self.provider = MoyaProvider<FactsAPI>(
-                endpointClosure: errorEndpointClosure,
-                stubClosure: MoyaProvider.immediatelyStub
-            )
-        } else if LaunchArgument.check(.mockHttp) {
-            self.provider = MoyaProvider<FactsAPI>(
-                endpointClosure: mockEndpointClosure,
-                stubClosure: MoyaProvider.immediatelyStub
-            )
-        } else {
-            self.provider = provider
-        }
-
+        self.provider = provider
         self.storage = storage
         self.scheduler = scheduler
     }

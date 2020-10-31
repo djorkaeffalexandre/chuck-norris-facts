@@ -24,9 +24,6 @@ target 'Chuck Norris Facts' do
   # UI
   pod 'lottie-ios'
 
-  # Networking
-  pod 'Moya/RxSwift'
-
   # Storage
   pod 'RealmSwift'
 

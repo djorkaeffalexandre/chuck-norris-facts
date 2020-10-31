@@ -6,15 +6,14 @@
 //  Copyright © 2020 Djorkaeff Alexandre Vilela Pereira. All rights reserved.
 //
 
-import Moya
+import Foundation
 
 enum FactsAPI {
     case searchFacts(searchTerm: String)
     case getCategories
 }
 
-extension FactsAPI: TargetType {
-
+extension FactsAPI: APITarget {
     var baseURL: URL {
         return URL(string: "https://api.chucknorris.io/jokes")!
     }
@@ -28,17 +27,17 @@ extension FactsAPI: TargetType {
         }
     }
 
-    var method: Method {
+    var method: HTTPMethod {
         switch self {
         case .searchFacts, .getCategories:
             return .get
         }
     }
 
-    var task: Task {
+    var task: APITask {
         switch self {
         case .searchFacts(let searchTerm):
-            return .requestParameters(parameters: ["query": searchTerm], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["query": searchTerm])
         case .getCategories:
             return .requestPlain
         }
@@ -48,13 +47,20 @@ extension FactsAPI: TargetType {
         return ["Content-type": "application/json"]
     }
 
-    var sampleData: Data {
-        switch self {
-        case .getCategories:
-            return Data.stub("get-categories") ?? Data()
-        case .searchFacts:
-            return Data.stub("search-facts") ?? Data()
+    var sampleData: Data? {
+        if LaunchArgument.check(.mockHttp) {
+            switch self {
+            case .getCategories:
+                return Data.stub("get-categories")
+            case .searchFacts:
+                return Data.stub("search-facts")
+            }
         }
-    }
 
+        if LaunchArgument.check(.mockHttpError) {
+            return Data()
+        }
+
+        return nil
+    }
 }
