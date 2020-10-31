@@ -40,9 +40,7 @@ struct FactsService: FactsServiceType {
     }
 
     func searchFacts(searchTerm: String) -> Observable<[Fact]> {
-        if searchTerm.isEmpty {
-            return .just([])
-        }
+        guard !searchTerm.isEmpty else { return .just([]) }
 
         return provider.rx
             .request(.searchFacts(searchTerm: searchTerm))
