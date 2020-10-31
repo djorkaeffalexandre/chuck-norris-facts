@@ -10,18 +10,7 @@ import RxDataSources
 
 enum SearchFactsTableViewItem {
     case SuggestionsTableViewItem(suggestions: [SuggestionsSectionModel])
-    case PastSearchTableViewItem(model: PastSearchViewModel)
-}
-
-extension SearchFactsTableViewItem {
-    var quantity: Int {
-        switch self {
-        case .SuggestionsTableViewItem(let suggestions):
-            return suggestions.first?.items.count ?? 0
-        default:
-            return 0
-        }
-    }
+    case PastSearchTableViewItem(pastSearch: PastSearchViewModel)
 }
 
 enum SearchFactsTableViewSection {
@@ -47,6 +36,20 @@ extension SearchFactsTableViewSection: SectionModelType {
             return items
         case .PastSearchesSection(let items):
             return items
+        }
+    }
+
+    var isEmpty: Bool {
+        switch self {
+        case .SuggestionsSection(let items):
+            switch items.first {
+            case .SuggestionsTableViewItem(let suggestions):
+                return suggestions.first?.items.isEmpty ?? false
+            default:
+                return true
+            }
+        case .PastSearchesSection(let items):
+            return items.isEmpty
         }
     }
 
