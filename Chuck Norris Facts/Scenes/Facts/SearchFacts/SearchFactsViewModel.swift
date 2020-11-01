@@ -10,8 +10,6 @@ import Foundation
 import RxDataSources
 import RxSwift
 
-typealias SuggestionsSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
-
 typealias PastSearchesSectionModel = AnimatableSectionModel<String, PastSearchViewModel>
 
 protocol SearchFactsViewModelInputs {
@@ -80,7 +78,6 @@ final class SearchFactsViewModel: SearchFactsViewModelInputs, SearchFactsViewMod
 
         let suggestions = categories
             .map { $0.map { FactCategoryViewModel(category: $0) } }
-            .map { [SuggestionsSectionModel(model: "", items: $0)] }
             .map { [SearchFactsTableViewItem.SuggestionsTableViewItem(suggestions: $0)] }
             .map { suggestions -> SearchFactsTableViewSection in .SuggestionsSection(items: suggestions) }
 

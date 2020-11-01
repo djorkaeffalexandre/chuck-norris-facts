@@ -9,7 +9,7 @@
 import RxDataSources
 
 enum SearchFactsTableViewItem {
-    case SuggestionsTableViewItem(suggestions: [SuggestionsSectionModel])
+    case SuggestionsTableViewItem(suggestions: [FactCategoryViewModel])
     case PastSearchTableViewItem(pastSearch: PastSearchViewModel)
 }
 
@@ -44,12 +44,26 @@ extension SearchFactsTableViewSection: SectionModelType {
         case .SuggestionsSection(let items):
             switch items.first {
             case .SuggestionsTableViewItem(let suggestions):
-                return suggestions.first?.items.isEmpty ?? false
+                return suggestions.isEmpty
             default:
                 return true
             }
         case .PastSearchesSection(let items):
             return items.isEmpty
+        }
+    }
+
+    var count: Int {
+        switch self {
+        case .SuggestionsSection(let items):
+            switch items.first {
+            case .SuggestionsTableViewItem(let suggestions):
+                return suggestions.count
+            default:
+                return 0
+            }
+        case .PastSearchesSection(let items):
+            return items.count
         }
     }
 

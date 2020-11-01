@@ -7,6 +7,9 @@
 //
 
 import RxSwift
+import RxDataSources
+
+typealias SuggestionsSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
 
 protocol SuggestionsViewModelInputs {
     var suggestion: AnyObserver<String> { get }
@@ -38,11 +41,11 @@ struct SuggestionsViewModel: SuggestionsViewModelInputs, SuggestionsViewModelOut
 
     var didSelectSuggestion: Observable<String>
 
-    init(suggestions: [SuggestionsSectionModel]) {
+    init(suggestions: [FactCategoryViewModel]) {
         let suggestionsSubject = BehaviorSubject<[SuggestionsSectionModel]>(value: [])
         self.suggestions = suggestionsSubject.asObserver()
 
-        suggestionsSubject.onNext(suggestions)
+        suggestionsSubject.onNext([SuggestionsSectionModel(model: "", items: suggestions)])
 
         let suggestionSubject = BehaviorSubject<String>(value: "")
         self.suggestion = suggestionSubject.asObserver()
