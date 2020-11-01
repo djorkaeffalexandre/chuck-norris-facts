@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E049E13254F5A5300226E0B /* RxSwift+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E049E12254F5A5300226E0B /* RxSwift+Extensions.swift */; };
 		1E0E4BA22549F7E30030BC49 /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E0E4BA12549F7E30030BC49 /* error.json */; };
 		1E135FAA254B4E66009D18AF /* LaunchArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E135FA9254B4E66009D18AF /* LaunchArgument.swift */; };
 		1E135FAD254B4E9F009D18AF /* XCUIApplication+LaunchArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E135FAC254B4E9F009D18AF /* XCUIApplication+LaunchArgument.swift */; };
@@ -111,6 +112,7 @@
 
 /* Begin PBXFileReference section */
 		02186229E02F0A408D2EE0C2 /* Pods_Chuck_Norris_Facts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chuck_Norris_Facts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E049E12254F5A5300226E0B /* RxSwift+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxSwift+Extensions.swift"; sourceTree = "<group>"; };
 		1E0E4BA12549F7E30030BC49 /* error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = error.json; sourceTree = "<group>"; };
 		1E135FA9254B4E66009D18AF /* LaunchArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchArgument.swift; sourceTree = "<group>"; };
 		1E135FAC254B4E9F009D18AF /* XCUIApplication+LaunchArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+LaunchArgument.swift"; sourceTree = "<group>"; };
@@ -463,6 +465,7 @@
 				1EEDC6A0254A331500D75F3E /* UICollectionView+Extensions.swift */,
 				1E65578B254CB20D00950706 /* API+Rx.swift */,
 				1E65578D254CB22800950706 /* URLRequest+Encoded.swift */,
+				1E049E12254F5A5300226E0B /* RxSwift+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1018,6 +1021,7 @@
 				1E8A0FF0254760D400565A86 /* SuggestionsViewModel.swift in Sources */,
 				1E3075C5254C9D710082A194 /* HTTPMethod.swift in Sources */,
 				1E463805253636D80079D8E9 /* SearchFactsCoordinator.swift in Sources */,
+				1E049E13254F5A5300226E0B /* RxSwift+Extensions.swift in Sources */,
 				1EFE288925321123008806B9 /* JSON.swift in Sources */,
 				1ED06C952548AAD300139151 /* LoadingView.swift in Sources */,
 				1EFE288725321119008806B9 /* Fact.swift in Sources */,

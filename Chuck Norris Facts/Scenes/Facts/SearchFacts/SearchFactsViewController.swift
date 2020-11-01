@@ -28,7 +28,7 @@ final class SearchFactsViewController: UIViewController {
                     .bind(to: self.viewModel.inputs.searchTerm)
                     .disposed(by: cell.disposeBag)
                 viewModel.outputs.didSelectSuggestion
-                    .map { _ in () }
+                    .mapToVoid()
                     .bind(to: self.viewModel.inputs.searchAction)
                     .disposed(by: cell.disposeBag)
                 return cell
@@ -146,7 +146,7 @@ final class SearchFactsViewController: UIViewController {
             .disposed(by: disposeBag)
 
         pastSearchSelected
-            .map { _ in () }
+            .mapToVoid()
             .bind(to: viewModel.inputs.searchAction)
             .disposed(by: disposeBag)
     }

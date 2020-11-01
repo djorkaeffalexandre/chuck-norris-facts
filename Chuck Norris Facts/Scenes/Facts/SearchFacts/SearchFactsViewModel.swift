@@ -34,9 +34,9 @@ protocol SearchFactsViewModelOutputs {
 
 final class SearchFactsViewModel: SearchFactsViewModelInputs, SearchFactsViewModelOutputs {
 
-    var inputs: SearchFactsViewModelInputs { return self }
+    var inputs: SearchFactsViewModelInputs { self }
 
-    var outputs: SearchFactsViewModelOutputs { return self }
+    var outputs: SearchFactsViewModelOutputs { self }
 
     // MARK: - Inputs
 

@@ -86,7 +86,7 @@ class SuggestionsCell: UITableViewCell {
             .disposed(by: disposeBag)
 
         categorySelected
-            .map { _ in () }
+            .mapToVoid()
             .bind(to: viewModel.inputs.selectAction)
             .disposed(by: disposeBag)
     }

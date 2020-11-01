@@ -64,7 +64,7 @@ struct FactsService: FactsServiceType {
                     .observeOn(self.scheduler ?? MainScheduler.asyncInstance)
                     .map([FactCategory].self, using: JSON.decoder)
                     .map { self.storage.storeCategories($0) }
-                    .map { () }
+                    .mapToVoid()
             }
     }
 

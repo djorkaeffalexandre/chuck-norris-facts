@@ -14,9 +14,9 @@ typealias FactsSectionModel = AnimatableSectionModel<String, FactViewModel>
 
 protocol FactsListViewModelInputs {
     var viewDidAppear: AnyObserver<Void> { get }
-    
+
     var startShareFact: AnyObserver<FactViewModel> { get }
-    
+
     var startSearchFacts: AnyObserver<Void> { get }
 
     var setSearchTerm: AnyObserver<String> { get }
@@ -39,10 +39,10 @@ protocol FactsListViewModelOutputs {
 }
 
 final class FactsListViewModel: FactsListViewModelInputs, FactsListViewModelOutputs {
-    
-    var inputs: FactsListViewModelInputs { return self }
 
-    var outputs: FactsListViewModelOutputs { return self }
+    var inputs: FactsListViewModelInputs { self }
+
+    var outputs: FactsListViewModelOutputs { self }
 
     // MARK: - Inputs
 
@@ -97,14 +97,14 @@ final class FactsListViewModel: FactsListViewModelInputs, FactsListViewModelOutp
         let retrySyncCategories = retryActionSubject.withLatestFrom(currentErrorSubject)
             .compactMap { $0 }
             .filter { $0 == .syncCategories($0.error) }
-            .map { _ in () }
+            .mapToVoid()
 
         let syncCategoriesError = Observable.merge(viewDidAppearSubject, retrySyncCategories)
             .flatMapLatest { _ in
                 factsService.syncCategories()
                     .materialize()
             }
-            .compactMap { $0.event.error }
+            .errors()
             .map { FactsListError.syncCategories($0) }
 
         let searchFacts = Observable.combineLatest(viewDidAppearSubject, searchTerm) { _, term in term }
@@ -115,11 +115,11 @@ final class FactsListViewModel: FactsListViewModelInputs, FactsListViewModelOutp
             }
 
         let searchFactsError = searchFacts
-            .compactMap { $0.event.error }
+            .errors()
             .map { FactsListError.searchFacts($0) }
 
         self.facts = searchFacts
-            .compactMap { $0.event.element }
+            .elements()
             .map { $0.map { FactViewModel(fact: $0) } }
             .map { [FactsSectionModel(model: "", items: $0)] }
 

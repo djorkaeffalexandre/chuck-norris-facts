@@ -11,10 +11,10 @@ import RxSwift
 
 extension Reactive where Base: UIViewController {
     var viewDidAppear: Observable<Void> {
-        sentMessage(#selector(Base.viewDidAppear(_:))).map { _ in () }
+        sentMessage(#selector(Base.viewDidAppear(_:))).mapToVoid()
     }
 
     var viewWillAppear: Observable<Void> {
-        sentMessage(#selector(Base.viewWillAppear(_:))).map { _ in () }
+        sentMessage(#selector(Base.viewWillAppear(_:))).mapToVoid()
     }
 }

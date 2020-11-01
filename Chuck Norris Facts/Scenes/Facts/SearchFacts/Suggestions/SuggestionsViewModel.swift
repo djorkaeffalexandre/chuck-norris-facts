@@ -22,9 +22,9 @@ protocol SuggestionsViewModelOutputs {
 
 struct SuggestionsViewModel: SuggestionsViewModelInputs, SuggestionsViewModelOutputs {
 
-    var inputs: SuggestionsViewModelInputs { return self }
+    var inputs: SuggestionsViewModelInputs { self }
 
-    var outputs: SuggestionsViewModelOutputs { return self }
+    var outputs: SuggestionsViewModelOutputs { self }
 
     // MARK: - Inputs
 
