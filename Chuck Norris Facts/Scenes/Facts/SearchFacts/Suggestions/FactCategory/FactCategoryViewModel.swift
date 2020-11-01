@@ -13,7 +13,7 @@ class FactCategoryViewModel {
     let text: String
 
     init(category: FactCategory) {
-        self.text = category.text
+        self.text = category.text.uppercased()
     }
 }
 

@@ -10,15 +10,7 @@ import UIKit
 
 class FactCategoryCell: UICollectionViewCell {
 
-    private lazy var bodyLabel: UILabel = {
-        let label = UILabel()
-
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.lineBreakMode = .byWordWrapping
-        label.textColor = .white
-
-        return label
-    }()
+    private let categoryView: CategoryView = CategoryView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,22 +26,14 @@ class FactCategoryCell: UICollectionViewCell {
     }
 
     func setup(_ factCategory: FactCategoryViewModel) {
-        bodyLabel.text = factCategory.text
-        bodyLabel.font = .preferredFont(forTextStyle: .headline)
+        categoryView.label.text = factCategory.text
+        categoryView.label.font = .preferredFont(forTextStyle: .headline)
     }
 
     func setupView() {
-        let cornerRadius: CGFloat = 4
-        let padding: CGFloat = 4
-
-        layer.cornerRadius = cornerRadius
-
-        backgroundColor = .systemBlue
-
-        contentView.addSubview(bodyLabel)
-        bodyLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding).isActive = true
-        bodyLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding).isActive = true
-        bodyLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding).isActive = true
-        bodyLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding).isActive = true
+        contentView.addSubview(categoryView)
+        categoryView.translatesAutoresizingMaskIntoConstraints = false
+        categoryView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        categoryView.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
     }
 }
