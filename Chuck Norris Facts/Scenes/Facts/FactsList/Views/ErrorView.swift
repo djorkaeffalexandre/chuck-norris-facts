@@ -57,17 +57,20 @@ final class ErrorView: UIView {
     }
 
     private func setupView() {
+        let animationSize: CGFloat = 200
+        let padding: CGFloat = 16
+
         backgroundColor = .systemBackground
 
         addSubview(animation)
-        animation.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        animation.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        animation.widthAnchor.constraint(equalToConstant: animationSize).isActive = true
+        animation.heightAnchor.constraint(equalToConstant: animationSize).isActive = true
         animation.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         animation.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
         addSubview(label)
         label.topAnchor.constraint(equalTo: animation.bottomAnchor).isActive = true
-        label.widthAnchor.constraint(equalTo: widthAnchor, constant: -16).isActive = true
+        label.widthAnchor.constraint(equalTo: widthAnchor, constant: -padding).isActive = true
         label.centerXAnchor.constraint(equalTo: animation.centerXAnchor).isActive = true
 
         addSubview(retryButton)

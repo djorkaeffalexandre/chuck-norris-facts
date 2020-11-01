@@ -44,12 +44,14 @@ class SuggestionsCell: UITableViewCell {
     }
 
     lazy var collectionView: DynamicHeightCollectionView = {
-        let layout = SuggestionsViewFlowLayout()
-        let collectionView = DynamicHeightCollectionView(frame: .zero, collectionViewLayout: layout)
+        let insets: CGFloat = 16
 
-        layout.scrollDirection = .vertical
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        let suggestionsViewFlowLayout = SuggestionsViewFlowLayout()
+        let collectionView = DynamicHeightCollectionView(frame: .zero, collectionViewLayout: suggestionsViewFlowLayout)
+
+        suggestionsViewFlowLayout.scrollDirection = .vertical
+        suggestionsViewFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        suggestionsViewFlowLayout.sectionInset = UIEdgeInsets(top: insets, left: insets, bottom: insets, right: insets)
 
         collectionView.isScrollEnabled = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false

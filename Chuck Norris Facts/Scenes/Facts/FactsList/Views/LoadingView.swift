@@ -31,12 +31,14 @@ final class LoadingView: UIView {
     }
 
     private func setupView() {
+        let animationSize: CGFloat = 48
+
         backgroundColor = .systemBackground
 
         addSubview(animation)
         animation.translatesAutoresizingMaskIntoConstraints = false
-        animation.widthAnchor.constraint(equalToConstant: 48).isActive = true
-        animation.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        animation.widthAnchor.constraint(equalToConstant: animationSize).isActive = true
+        animation.heightAnchor.constraint(equalToConstant: animationSize).isActive = true
         animation.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         animation.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }

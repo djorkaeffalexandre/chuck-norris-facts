@@ -33,15 +33,18 @@ class CategoryView: UIView {
     }
 
     func setupView() {
-        layer.cornerRadius = 4
+        let cornerRadius: CGFloat = 4
+        let padding: CGFloat = 4
+
+        layer.cornerRadius = cornerRadius
         backgroundColor = .systemBlue
 
         addSubview(label)
 
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4).isActive = true
-        label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4).isActive = true
-        label.topAnchor.constraint(equalTo: topAnchor, constant: 4).isActive = true
-        label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4).isActive = true
+        label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding).isActive = true
+        label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding).isActive = true
+        label.topAnchor.constraint(equalTo: topAnchor, constant: padding).isActive = true
+        label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding).isActive = true
     }
 }

@@ -65,6 +65,8 @@ class FactCell: UITableViewCell {
     }()
 
     private func setupView() {
+        let padding: CGFloat = 16
+
         clipsToBounds = false
         selectionStyle = .none
 
@@ -75,22 +77,22 @@ class FactCell: UITableViewCell {
         shadowView.addSubview(shareButton)
         shadowView.addSubview(categoryView)
 
-        shadowView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
-        shadowView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        shadowView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16 / 2).isActive = true
-        shadowView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16 / 2).isActive = true
+        shadowView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding).isActive = true
+        shadowView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding).isActive = true
+        shadowView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding / 2).isActive = true
+        shadowView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding / 2).isActive = true
 
-        bodyLabel.topAnchor.constraint(equalTo: shadowView.topAnchor, constant: 16).isActive = true
-        bodyLabel.leadingAnchor.constraint(equalTo: shadowView.leadingAnchor, constant: 16).isActive = true
-        bodyLabel.trailingAnchor.constraint(equalTo: shadowView.trailingAnchor, constant: -16).isActive = true
+        bodyLabel.topAnchor.constraint(equalTo: shadowView.topAnchor, constant: padding).isActive = true
+        bodyLabel.leadingAnchor.constraint(equalTo: shadowView.leadingAnchor, constant: padding).isActive = true
+        bodyLabel.trailingAnchor.constraint(equalTo: shadowView.trailingAnchor, constant: -padding).isActive = true
 
-        shareButton.topAnchor.constraint(equalTo: bodyLabel.bottomAnchor, constant: 16).isActive = true
-        shareButton.trailingAnchor.constraint(equalTo: shadowView.trailingAnchor, constant: -16).isActive = true
-        shareButton.bottomAnchor.constraint(equalTo: shadowView.bottomAnchor, constant: -16).isActive = true
+        shareButton.topAnchor.constraint(equalTo: bodyLabel.bottomAnchor, constant: padding).isActive = true
+        shareButton.trailingAnchor.constraint(equalTo: shadowView.trailingAnchor, constant: -padding).isActive = true
+        shareButton.bottomAnchor.constraint(equalTo: shadowView.bottomAnchor, constant: -padding).isActive = true
 
         categoryView.translatesAutoresizingMaskIntoConstraints = false
         categoryView.centerYAnchor.constraint(equalTo: shareButton.centerYAnchor).isActive = true
-        categoryView.leftAnchor.constraint(equalTo: shadowView.leftAnchor, constant: 16).isActive = true
+        categoryView.leftAnchor.constraint(equalTo: shadowView.leftAnchor, constant: padding).isActive = true
     }
 
     func setup(_ fact: FactViewModel) {

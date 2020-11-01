@@ -39,14 +39,17 @@ class FactCategoryCell: UICollectionViewCell {
     }
 
     func setupView() {
-        layer.cornerRadius = 4
+        let cornerRadius: CGFloat = 4
+        let padding: CGFloat = 4
+
+        layer.cornerRadius = cornerRadius
 
         backgroundColor = .systemBlue
 
         contentView.addSubview(bodyLabel)
-        bodyLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4).isActive = true
-        bodyLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4).isActive = true
-        bodyLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4).isActive = true
-        bodyLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4).isActive = true
+        bodyLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding).isActive = true
+        bodyLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding).isActive = true
+        bodyLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding).isActive = true
+        bodyLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding).isActive = true
     }
 }
