@@ -24,12 +24,12 @@ final class SearchFactsViewController: UIViewController {
                 let cell = tableView.dequeueReusableCell(cell: SuggestionsCell.self, indexPath: indexPath)
                 let viewModel = SuggestionsViewModel(suggestions: suggestions)
                 cell.viewModel = viewModel
-                viewModel.didSelectSuggestion
-                    .bind(to: self.viewModel.searchTerm)
+                viewModel.outputs.didSelectSuggestion
+                    .bind(to: self.viewModel.inputs.searchTerm)
                     .disposed(by: cell.disposeBag)
-                viewModel.didSelectSuggestion
+                viewModel.outputs.didSelectSuggestion
                     .map { _ in () }
-                    .bind(to: self.viewModel.searchAction)
+                    .bind(to: self.viewModel.inputs.searchAction)
                     .disposed(by: cell.disposeBag)
                 return cell
             case .PastSearchTableViewItem(let model):
@@ -107,23 +107,23 @@ final class SearchFactsViewController: UIViewController {
 
     private func setupBindings() {
         rx.viewWillAppear
-            .bind(to: viewModel.viewWillAppear)
+            .bind(to: viewModel.inputs.viewWillAppear)
             .disposed(by: disposeBag)
 
         cancelButton.rx.tap
-            .bind(to: viewModel.cancel)
+            .bind(to: viewModel.inputs.cancel)
             .disposed(by: disposeBag)
 
         searchController.searchBar.rx.text
             .compactMap { $0 }
-            .bind(to: viewModel.searchTerm)
+            .bind(to: viewModel.inputs.searchTerm)
             .disposed(by: disposeBag)
 
         searchController.searchBar.rx.textDidEndEditing
-            .bind(to: viewModel.searchAction)
+            .bind(to: viewModel.inputs.searchAction)
             .disposed(by: disposeBag)
 
-        viewModel.items
+        viewModel.outputs.items
             .bind(to: tableView.rx.items(dataSource: itemsDataSource))
             .disposed(by: disposeBag)
 
@@ -142,12 +142,12 @@ final class SearchFactsViewController: UIViewController {
                 return ""
             }
             .filter { !$0.isEmpty }
-            .bind(to: viewModel.searchTerm)
+            .bind(to: viewModel.inputs.searchTerm)
             .disposed(by: disposeBag)
 
         pastSearchSelected
             .map { _ in () }
-            .bind(to: viewModel.searchAction)
+            .bind(to: viewModel.inputs.searchAction)
             .disposed(by: disposeBag)
     }
 }

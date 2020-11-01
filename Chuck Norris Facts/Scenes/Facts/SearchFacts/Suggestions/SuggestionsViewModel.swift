@@ -8,19 +8,35 @@
 
 import RxSwift
 
-struct SuggestionsViewModel {
+protocol SuggestionsViewModelInputs {
+    var suggestion: AnyObserver<String> { get }
+
+    var selectAction: AnyObserver<Void> { get }
+}
+
+protocol SuggestionsViewModelOutputs {
+    var suggestions: Observable<[SuggestionsSectionModel]> { get }
+
+    var didSelectSuggestion: Observable<String> { get }
+}
+
+struct SuggestionsViewModel: SuggestionsViewModelInputs, SuggestionsViewModelOutputs {
+
+    var inputs: SuggestionsViewModelInputs { return self }
+
+    var outputs: SuggestionsViewModelOutputs { return self }
 
     // MARK: - Inputs
 
-    let suggestion: AnyObserver<String>
+    var suggestion: AnyObserver<String>
 
-    let selectAction: AnyObserver<Void>
+    var selectAction: AnyObserver<Void>
 
     // MARK: - Outputs
 
-    let suggestions: Observable<[SuggestionsSectionModel]>
+    var suggestions: Observable<[SuggestionsSectionModel]>
 
-    let didSelectSuggestion: Observable<String>
+    var didSelectSuggestion: Observable<String>
 
     init(suggestions: [SuggestionsSectionModel]) {
         let suggestionsSubject = BehaviorSubject<[SuggestionsSectionModel]>(value: [])

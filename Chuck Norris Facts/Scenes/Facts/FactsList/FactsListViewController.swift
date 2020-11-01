@@ -33,7 +33,7 @@ class FactsListViewController: UIViewController {
             cell.setup(fact)
             cell.shareButton.rx.tap
                 .map { fact }
-                .bind(to: viewModel.startShareFact)
+                .bind(to: viewModel.inputs.startShareFact)
                 .disposed(by: cell.disposeBag)
 
             return cell
@@ -112,21 +112,21 @@ class FactsListViewController: UIViewController {
 
     private func setupBindings() {
         rx.viewDidAppear
-            .bind(to: viewModel.viewDidAppear)
+            .bind(to: viewModel.inputs.viewDidAppear)
             .disposed(by: disposeBag)
 
-        viewModel.isLoading
+        viewModel.outputs.isLoading
             .drive(onNext: { [weak self] isLoading in
                 self?.showLoadingView(isLoading)
             })
             .disposed(by: disposeBag)
 
-        let factsIsEmpty = viewModel.facts
+        let factsIsEmpty = viewModel.outputs.facts
             .map { $0.flatMap { $0.items } }
             .map { $0.isEmpty }
             .share()
 
-        let searchIsEmpty = viewModel.searchTerm
+        let searchIsEmpty = viewModel.outputs.searchTerm
             .map { $0.isEmpty }
             .share()
 
@@ -137,24 +137,24 @@ class FactsListViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
-        viewModel.facts
+        viewModel.outputs.facts
             .observeOn(MainScheduler.instance)
             .bind(to: tableView.rx.items(dataSource: factsDataSource))
             .disposed(by: disposeBag)
 
         searchButton.rx.tap
-            .bind(to: viewModel.startSearchFacts)
+            .bind(to: viewModel.inputs.startSearchFacts)
             .disposed(by: disposeBag)
 
         emptyListView.searchButton.rx.tap
-            .bind(to: viewModel.startSearchFacts)
+            .bind(to: viewModel.inputs.startSearchFacts)
             .disposed(by: disposeBag)
 
         errorView.retryButton.rx.tap
-            .bind(to: viewModel.retryAction)
+            .bind(to: viewModel.inputs.retryAction)
             .disposed(by: disposeBag)
 
-        viewModel.errors
+        viewModel.outputs.errors
             .bind(onNext: { [weak self] error in
                 self?.showErrorView(error)
             })

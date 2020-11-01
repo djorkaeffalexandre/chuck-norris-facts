@@ -14,25 +14,47 @@ typealias SuggestionsSectionModel = AnimatableSectionModel<String, FactCategoryV
 
 typealias PastSearchesSectionModel = AnimatableSectionModel<String, PastSearchViewModel>
 
-class SearchFactsViewModel {
+protocol SearchFactsViewModelInputs {
+    var cancel: AnyObserver<Void> { get }
+
+    var searchTerm: AnyObserver<String> { get }
+
+    var searchAction: AnyObserver<Void> { get }
+
+    var viewWillAppear: AnyObserver<Void> { get }
+}
+
+protocol SearchFactsViewModelOutputs {
+    var didCancel: Observable<Void> { get }
+
+    var didSearchFacts: Observable<String> { get }
+
+    var items: Observable<[SearchFactsTableViewSection]> { get }
+}
+
+final class SearchFactsViewModel: SearchFactsViewModelInputs, SearchFactsViewModelOutputs {
+
+    var inputs: SearchFactsViewModelInputs { return self }
+
+    var outputs: SearchFactsViewModelOutputs { return self }
 
     // MARK: - Inputs
 
-    let cancel: AnyObserver<Void>
+    var cancel: AnyObserver<Void>
 
-    let searchTerm: AnyObserver<String>
+    var searchTerm: AnyObserver<String>
 
-    let searchAction: AnyObserver<Void>
+    var searchAction: AnyObserver<Void>
 
-    let viewWillAppear: AnyObserver<Void>
+    var viewWillAppear: AnyObserver<Void>
 
     // MARK: - Outputs
 
-    let didCancel: Observable<Void>
+    var didCancel: Observable<Void>
 
-    let didSearchFacts: Observable<String>
+    var didSearchFacts: Observable<String>
 
-    let items: Observable<[SearchFactsTableViewSection]>
+    var items: Observable<[SearchFactsTableViewSection]>
 
     init(factsService: FactsServiceType = FactsService()) {
         let cancelSubject = PublishSubject<Void>()
@@ -54,7 +76,7 @@ class SearchFactsViewModel {
 
         let categories = viewWillAppearSubject
             .flatMapLatest { factsService.retrieveCategories() }
-            .map { Array($0.shuffled().prefix(0)) }
+            .map { Array($0.shuffled().prefix(8)) }
 
         let suggestions = categories
             .map { $0.map { FactCategoryViewModel(category: $0) } }

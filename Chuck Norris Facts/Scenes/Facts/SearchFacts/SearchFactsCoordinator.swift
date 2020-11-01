@@ -29,8 +29,8 @@ class SearchFactsCoordinator: BaseCoordinator<SearchFactsCoordinationResult> {
         let searchFactsViewModel = SearchFactsViewModel()
         searchFactsViewController.viewModel = searchFactsViewModel
 
-        let cancel = searchFactsViewModel.didCancel.map { _ in CoordinationResult.cancel }
-        let search = searchFactsViewModel.didSearchFacts.map { CoordinationResult.search($0) }
+        let cancel = searchFactsViewModel.outputs.didCancel.map { _ in CoordinationResult.cancel }
+        let search = searchFactsViewModel.outputs.didSearchFacts.map { CoordinationResult.search($0) }
 
         rootViewController.present(navigationController, animated: true)
 

@@ -39,7 +39,7 @@ class FactsListViewControllerTests: XCTestCase {
     func test_FactsListViewController_WhenFactsIsEmpty_WhenSearchTermIsEmpty_ShouldShowEmptyList() {
         factsServiceMock.searchFactsReturnValue = .just([])
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         XCTAssertFalse(factsListViewController.emptyListView.isHidden)
         XCTAssertEqual(factsListViewController.emptyListView.label.text, L10n.EmptyView.empty)
@@ -49,8 +49,8 @@ class FactsListViewControllerTests: XCTestCase {
     func test_FactsListViewController_WhenFactsIsEmpty_WhenSearchTermIsNotEmpty_ShouldShowEmptyList() {
         factsServiceMock.searchFactsReturnValue = .just([])
 
-        factsListViewModel.setSearchTerm.onNext("games")
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.setSearchTerm.onNext("games")
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         XCTAssertFalse(factsListViewController.emptyListView.isHidden)
         XCTAssertEqual(factsListViewController.emptyListView.label.text, L10n.EmptyView.emptySearch)
@@ -62,7 +62,7 @@ class FactsListViewControllerTests: XCTestCase {
         let apiError = APIError.statusCode(response)
         factsServiceMock.searchFactsReturnValue = .error(apiError)
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         XCTAssertFalse(factsListViewController.errorView.isHidden)
     }
@@ -73,7 +73,7 @@ class FactsListViewControllerTests: XCTestCase {
 
         factsServiceMock.searchFactsReturnValue = .just([fact])
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         let factCell = factsListFirstCell()
 
@@ -86,7 +86,7 @@ class FactsListViewControllerTests: XCTestCase {
 
         factsServiceMock.searchFactsReturnValue = .just([fact])
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         let factCell = factsListFirstCell()
 
@@ -102,10 +102,10 @@ class FactsListViewControllerTests: XCTestCase {
         let testScheduler = TestScheduler(initialClock: 0)
         let shareFactObserver = testScheduler.createObserver(FactViewModel.self)
 
-        factsListViewModel.setSearchTerm.onNext("games")
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.setSearchTerm.onNext("games")
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
-        factsListViewModel.showShareFact
+        factsListViewModel.outputs.showShareFact
             .subscribe(shareFactObserver)
             .disposed(by: disposeBag)
 

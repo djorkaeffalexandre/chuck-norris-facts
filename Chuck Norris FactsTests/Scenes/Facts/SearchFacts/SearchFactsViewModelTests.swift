@@ -37,12 +37,12 @@ class SearchFactsViewModelTests: XCTestCase {
     func test_SeachFactsViewModel_WhenSearchFacts_ShouldSetSearchTerm() {
         let searchFactsObserver = testScheduler.createObserver(String.self)
 
-        searchFactsViewModel.didSearchFacts
+        searchFactsViewModel.outputs.didSearchFacts
             .subscribe(searchFactsObserver)
             .disposed(by: disposeBag)
 
-        searchFactsViewModel.searchTerm.onNext("games")
-        searchFactsViewModel.searchAction.onNext(())
+        searchFactsViewModel.inputs.searchTerm.onNext("games")
+        searchFactsViewModel.inputs.searchAction.onNext(())
 
         testScheduler.start()
 
@@ -53,7 +53,7 @@ class SearchFactsViewModelTests: XCTestCase {
     func test_SearchFactsViewModel_WhenCancelSearch_ShouldCancelSearchScene() {
         let cancelObserver = testScheduler.createObserver(Void.self)
 
-        searchFactsViewModel.didCancel
+        searchFactsViewModel.outputs.didCancel
             .subscribe(cancelObserver)
             .disposed(by: disposeBag)
 
@@ -71,11 +71,11 @@ class SearchFactsViewModelTests: XCTestCase {
         let testCategories = try stub("get-categories", type: [FactCategory].self) ?? []
         factsServiceMock.retrieveCategoriesReturnValue = .just(testCategories)
 
-        searchFactsViewModel.items
+        searchFactsViewModel.outputs.items
             .subscribe(searchFactsItemsObserver)
             .disposed(by: disposeBag)
 
-        searchFactsViewModel.viewWillAppear.onNext(())
+        searchFactsViewModel.inputs.viewWillAppear.onNext(())
 
         testScheduler.start()
 
@@ -89,11 +89,11 @@ class SearchFactsViewModelTests: XCTestCase {
         let pastSearches = ["fashion", "games", "food"]
         factsServiceMock.retrievePastSearchesReturnValue = .just(pastSearches)
 
-        searchFactsViewModel.items
+        searchFactsViewModel.outputs.items
             .subscribe(searchFactsItemsObserver)
             .disposed(by: disposeBag)
 
-        searchFactsViewModel.viewWillAppear.onNext(())
+        searchFactsViewModel.inputs.viewWillAppear.onNext(())
 
         testScheduler.start()
 

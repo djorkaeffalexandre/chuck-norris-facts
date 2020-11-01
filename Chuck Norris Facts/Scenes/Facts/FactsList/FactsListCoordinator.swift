@@ -24,18 +24,18 @@ final class FactsListCoordinator: BaseCoordinator<Void> {
 
         let navigationController = UINavigationController(rootViewController: factsListViewController)
 
-        factsListViewModel.showShareFact
+        factsListViewModel.outputs.showShareFact
             .bind(onNext: { [weak self] in
                 self?.showShareFact(fact: $0, in: navigationController)
             })
             .disposed(by: disposeBag)
 
-        factsListViewModel.showSearchFacts
+        factsListViewModel.outputs.showSearchFacts
             .flatMap { [weak self] _ -> Observable<String?> in
                 self?.showSearchFacts(on: factsListViewController) ?? .empty()
             }
             .compactMap { $0 }
-            .bind(to: factsListViewModel.setSearchTerm)
+            .bind(to: factsListViewModel.inputs.setSearchTerm)
             .disposed(by: disposeBag)
 
         window.rootViewController = navigationController

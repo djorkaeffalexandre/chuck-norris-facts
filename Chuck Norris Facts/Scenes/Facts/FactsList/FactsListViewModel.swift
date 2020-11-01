@@ -12,33 +12,63 @@ import RxDataSources
 
 typealias FactsSectionModel = AnimatableSectionModel<String, FactViewModel>
 
-final class FactsListViewModel {
+protocol FactsListViewModelInputs {
+    var viewDidAppear: AnyObserver<Void> { get }
+    
+    var startShareFact: AnyObserver<FactViewModel> { get }
+    
+    var startSearchFacts: AnyObserver<Void> { get }
+
+    var setSearchTerm: AnyObserver<String> { get }
+
+    var retryAction: AnyObserver<Void> { get }
+}
+
+protocol FactsListViewModelOutputs {
+    var facts: Observable<[FactsSectionModel]> { get }
+
+    var showShareFact: Observable<FactViewModel> { get }
+
+    var showSearchFacts: Observable<Void> { get }
+
+    var searchTerm: Observable<String> { get }
+
+    var isLoading: ActivityIndicator { get }
+
+    var errors: Observable<FactsListError> { get }
+}
+
+final class FactsListViewModel: FactsListViewModelInputs, FactsListViewModelOutputs {
+    
+    var inputs: FactsListViewModelInputs { return self }
+
+    var outputs: FactsListViewModelOutputs { return self }
 
     // MARK: - Inputs
 
-    let viewDidAppear: AnyObserver<Void>
+    var viewDidAppear: AnyObserver<Void>
 
-    let startShareFact: AnyObserver<FactViewModel>
+    var startShareFact: AnyObserver<FactViewModel>
 
-    let startSearchFacts: AnyObserver<Void>
+    var startSearchFacts: AnyObserver<Void>
 
-    let setSearchTerm: AnyObserver<String>
+    var setSearchTerm: AnyObserver<String>
 
-    let retryAction: AnyObserver<Void>
+    var retryAction: AnyObserver<Void>
 
     // MARK: - Outputs
 
-    let facts: Observable<[FactsSectionModel]>
+    var facts: Observable<[FactsSectionModel]>
 
-    let showShareFact: Observable<FactViewModel>
+    var showShareFact: Observable<FactViewModel>
 
-    let showSearchFacts: Observable<Void>
+    var showSearchFacts: Observable<Void>
 
-    let searchTerm: Observable<String>
+    var searchTerm: Observable<String>
 
-    let isLoading: ActivityIndicator
+    var isLoading: ActivityIndicator
 
-    let errors: Observable<FactsListError>
+    var errors: Observable<FactsListError>
 
     init(factsService: FactsServiceType = FactsService()) {
         let loadingIndicator = ActivityIndicator()

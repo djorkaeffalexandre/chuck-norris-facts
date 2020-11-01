@@ -39,11 +39,11 @@ class FactsListViewModelTests: XCTestCase {
 
         let factsObserver = testScheduler.createObserver([FactsSectionModel].self)
 
-        factsListViewModel.facts
+        factsListViewModel.outputs.facts
             .subscribe(factsObserver)
             .disposed(by: disposeBag)
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         testScheduler.start()
 
@@ -55,16 +55,16 @@ class FactsListViewModelTests: XCTestCase {
         let factStub = try stub("short-fact", type: Fact.self)
         let fact = try XCTUnwrap(factStub)
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         let factObserver = testScheduler.createObserver(FactViewModel.self)
 
-        factsListViewModel.showShareFact
+        factsListViewModel.outputs.showShareFact
             .subscribe(factObserver)
             .disposed(by: disposeBag)
 
         let factViewModel = FactViewModel(fact: fact)
-        factsListViewModel.startShareFact.onNext(factViewModel)
+        factsListViewModel.inputs.startShareFact.onNext(factViewModel)
 
         let shareFact = factObserver.events.compactMap { $0.value.element }.first
         XCTAssertEqual(fact.value, shareFact?.text)
@@ -77,11 +77,11 @@ class FactsListViewModelTests: XCTestCase {
 
         let errorObserver = testScheduler.createObserver(FactsListError.self)
 
-        factsListViewModel.errors
+        factsListViewModel.outputs.errors
             .subscribe(errorObserver)
             .disposed(by: disposeBag)
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         testScheduler.start()
 
@@ -96,11 +96,11 @@ class FactsListViewModelTests: XCTestCase {
 
         let errorObserver = testScheduler.createObserver(FactsListError.self)
 
-        factsListViewModel.errors
+        factsListViewModel.outputs.errors
             .subscribe(errorObserver)
             .disposed(by: disposeBag)
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         testScheduler.start()
 
@@ -115,11 +115,11 @@ class FactsListViewModelTests: XCTestCase {
 
         let errorObserver = testScheduler.createObserver(FactsListError.self)
 
-        factsListViewModel.errors
+        factsListViewModel.outputs.errors
             .subscribe(errorObserver)
             .disposed(by: disposeBag)
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         testScheduler.start()
 

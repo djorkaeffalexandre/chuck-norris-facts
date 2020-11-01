@@ -71,7 +71,7 @@ class SuggestionsCell: UITableViewCell {
             .setDelegate(self)
             .disposed(by: disposeBag)
 
-        viewModel.suggestions
+        viewModel.outputs.suggestions
             .observeOn(MainScheduler.instance)
             .bind(to: collectionView.rx.items(dataSource: suggestionsDataSource))
             .disposed(by: disposeBag)
@@ -82,12 +82,12 @@ class SuggestionsCell: UITableViewCell {
 
         categorySelected
             .compactMap { $0.text }
-            .bind(to: viewModel.suggestion)
+            .bind(to: viewModel.inputs.suggestion)
             .disposed(by: disposeBag)
 
         categorySelected
             .map { _ in () }
-            .bind(to: viewModel.selectAction)
+            .bind(to: viewModel.inputs.selectAction)
             .disposed(by: disposeBag)
     }
 }
