@@ -96,8 +96,9 @@ class FactCell: UITableViewCell {
     func setup(_ fact: FactViewModel) {
         bodyLabel.text = fact.text
 
-        let fontSize = fact.text.count > 80 ? 16 : 24
-        bodyLabel.font = .systemFont(ofSize: CGFloat(fontSize), weight: .bold)
+        bodyLabel.font = fact.text.count > 80
+            ? UIFont.preferredFont(forTextStyle: .title3)
+            : UIFont.preferredFont(forTextStyle: .title1)
 
         categoryView.label.text = fact.category
     }

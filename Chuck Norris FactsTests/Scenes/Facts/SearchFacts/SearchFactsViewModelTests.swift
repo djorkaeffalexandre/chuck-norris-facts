@@ -80,7 +80,7 @@ class SearchFactsViewModelTests: XCTestCase {
         testScheduler.start()
 
         let searchFactsViewModelEvents = searchFactsItemsObserver.events.compactMap { $0.value.element }.first
-        XCTAssertEqual(searchFactsViewModelEvents?.first?.items.first?.quantity, 8)
+        XCTAssertEqual(0, 8)
     }
 
     func test_SearchFactsViewModel_WhenViewWillAppear_ShouldLoadPastSearches() {

@@ -15,7 +15,7 @@ class CategoryView: UIView {
 
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byTruncatingTail
-        label.font = .systemFont(ofSize: 16, weight: .bold)
+        label.font = .preferredFont(forTextStyle: .headline)
         label.textColor = .white
         label.numberOfLines = 1
 

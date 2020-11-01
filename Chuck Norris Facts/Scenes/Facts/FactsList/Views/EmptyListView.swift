@@ -24,7 +24,7 @@ final class EmptyListView: UIView {
         let label = UILabel()
 
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label.font = .preferredFont(forTextStyle: .headline)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
 
@@ -37,7 +37,7 @@ final class EmptyListView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.accessibilityLabel = "Search"
         button.setTitle("Search", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .regular)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .body)
         button.accessibilityIdentifier = "searchButton"
 
         return button

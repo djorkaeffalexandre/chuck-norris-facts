@@ -35,7 +35,7 @@ class FactCategoryCell: UICollectionViewCell {
 
     func setup(_ factCategory: FactCategoryViewModel) {
         bodyLabel.text = factCategory.text
-        bodyLabel.font = .systemFont(ofSize: 16, weight: .bold)
+        bodyLabel.font = .preferredFont(forTextStyle: .headline)
     }
 
     func setupView() {
