@@ -22,15 +22,19 @@ final class SearchFactsViewController: UIViewController {
             switch dataSource[indexPath] {
             case .SuggestionsTableViewItem(let suggestions):
                 let cell = tableView.dequeueReusableCell(cell: SuggestionsCell.self, indexPath: indexPath)
+
                 let viewModel = SuggestionsViewModel(suggestions: suggestions)
                 cell.viewModel = viewModel
+
                 viewModel.outputs.didSelectSuggestion
                     .bind(to: self.viewModel.inputs.searchTerm)
                     .disposed(by: cell.disposeBag)
+
                 viewModel.outputs.didSelectSuggestion
                     .mapToVoid()
                     .bind(to: self.viewModel.inputs.searchAction)
                     .disposed(by: cell.disposeBag)
+
                 return cell
             case .PastSearchTableViewItem(let model):
                 let cell = tableView.dequeueReusableCell(cell: PastSearchCell.self, indexPath: indexPath)
