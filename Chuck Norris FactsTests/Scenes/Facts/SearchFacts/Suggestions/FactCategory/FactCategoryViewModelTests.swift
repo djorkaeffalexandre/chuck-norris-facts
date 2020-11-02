@@ -15,6 +15,14 @@ import RxTest
 
 class FactCategoryViewModelTests: XCTestCase {
 
+    func test_FactCategoryViewModel_WhenFormat_ShouldHaveText() throws {
+        let factCategoryStub = try stub("fact-category", type: FactCategory.self)
+        let factCategory = try XCTUnwrap(factCategoryStub)
+
+        let factCategoryViewModel = FactCategoryViewModel(category: factCategory)
+        XCTAssertEqual(factCategoryViewModel.text, factCategory.text)
+    }
+
     func test_FactCategoryViewModel_WhenCompare_ShouldBeEquatable() throws {
         let factCategoryStub = try stub("fact-category", type: FactCategory.self)
         let factCategory = try XCTUnwrap(factCategoryStub)

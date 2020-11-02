@@ -43,7 +43,7 @@ class SearchFactsViewControllerTests: XCTestCase {
         let stubFactCategories = try stub("get-categories", type: [FactCategory].self) ?? []
         factsServiceMock.retrieveCategoriesReturnValue = .just(stubFactCategories)
 
-        searchFactsViewModel.viewWillAppear.onNext(())
+        searchFactsViewModel.inputs.viewWillAppear.onNext(())
 
         let tableView = searchFactsViewController.tableView
         let searchFactsDataSource = tableView.dataSource
@@ -57,7 +57,7 @@ class SearchFactsViewControllerTests: XCTestCase {
     func test_SearchFactsViewController_WhenViewWillAppear_ShouldLoadPastSearches() {
         factsServiceMock.retrievePastSearchesReturnValue = .just(["fashion", "games", "explicit"])
 
-        searchFactsViewModel.viewWillAppear.onNext(())
+        searchFactsViewModel.inputs.viewWillAppear.onNext(())
 
         let tableView = searchFactsViewController.tableView
         let searchFactsDataSource = tableView.dataSource
@@ -67,7 +67,7 @@ class SearchFactsViewControllerTests: XCTestCase {
     }
 
     func test_SearchFactsViewController_WhenViewWillAppearWithoutData_ShouldBeEmpty() {
-        searchFactsViewModel.viewWillAppear.onNext(())
+        searchFactsViewModel.inputs.viewWillAppear.onNext(())
 
         let tableView = searchFactsViewController.tableView
         let searchFactsDataSource = tableView.dataSource
@@ -78,7 +78,7 @@ class SearchFactsViewControllerTests: XCTestCase {
     func test_Suggestions_WhenEmpty_ShouldBeHidden() {
         factsServiceMock.retrieveCategoriesReturnValue = .just([])
 
-        searchFactsViewModel.viewWillAppear.onNext(())
+        searchFactsViewModel.inputs.viewWillAppear.onNext(())
 
         let tableView = searchFactsViewController.tableView
         let searchFactsDataSource = tableView.dataSource
@@ -89,7 +89,7 @@ class SearchFactsViewControllerTests: XCTestCase {
     func test_PastSearches_WhenEmpty_ShouldBeHidden() {
         factsServiceMock.retrievePastSearchesReturnValue = .just([])
 
-        searchFactsViewModel.viewWillAppear.onNext(())
+        searchFactsViewModel.inputs.viewWillAppear.onNext(())
 
         let tableView = searchFactsViewController.tableView
         let searchFactsDataSource = tableView.dataSource

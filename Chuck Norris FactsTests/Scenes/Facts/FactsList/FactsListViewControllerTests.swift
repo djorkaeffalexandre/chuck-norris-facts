@@ -39,7 +39,7 @@ class FactsListViewControllerTests: XCTestCase {
     func test_FactsListViewController_WhenFactsIsEmpty_WhenSearchTermIsEmpty_ShouldShowEmptyList() {
         factsServiceMock.searchFactsReturnValue = .just([])
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         XCTAssertFalse(factsListViewController.emptyListView.isHidden)
         XCTAssertEqual(factsListViewController.emptyListView.label.text, L10n.EmptyView.empty)
@@ -49,8 +49,8 @@ class FactsListViewControllerTests: XCTestCase {
     func test_FactsListViewController_WhenFactsIsEmpty_WhenSearchTermIsNotEmpty_ShouldShowEmptyList() {
         factsServiceMock.searchFactsReturnValue = .just([])
 
-        factsListViewModel.setSearchTerm.onNext("games")
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.setSearchTerm.onNext("games")
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
         XCTAssertFalse(factsListViewController.emptyListView.isHidden)
         XCTAssertEqual(factsListViewController.emptyListView.label.text, L10n.EmptyView.emptySearch)
@@ -62,35 +62,35 @@ class FactsListViewControllerTests: XCTestCase {
         let apiError = APIError.statusCode(response)
         factsServiceMock.searchFactsReturnValue = .error(apiError)
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.setSearchTerm.onNext("")
 
         XCTAssertFalse(factsListViewController.errorView.isHidden)
     }
 
-    func test_FactCell_WhenContentIsShort_FontSizeShouldBe24() throws {
+    func test_FactCell_WhenContentIsShort_FontSizeShouldBeTitle1() throws {
         let factStub = try stub("short-fact", type: Fact.self)
         let fact = try XCTUnwrap(factStub)
 
         factsServiceMock.searchFactsReturnValue = .just([fact])
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.setSearchTerm.onNext("")
 
         let factCell = factsListFirstCell()
 
-        XCTAssertEqual(factCell?.bodyLabel.font.pointSize, 24)
+        XCTAssertEqual(factCell?.bodyLabel.font, .preferredFont(forTextStyle: .title1))
     }
 
-    func test_FactCell_WhenContentIsLong_FontSizeShouldBe16() throws {
+    func test_FactCell_WhenContentIsLong_FontSizeShouldBeTitle3() throws {
         let factStub = try stub("long-fact", type: Fact.self)
         let fact = try XCTUnwrap(factStub)
 
         factsServiceMock.searchFactsReturnValue = .just([fact])
 
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.setSearchTerm.onNext("")
 
         let factCell = factsListFirstCell()
 
-        XCTAssertEqual(factCell?.bodyLabel.font.pointSize, 16)
+        XCTAssertEqual(factCell?.bodyLabel.font, .preferredFont(forTextStyle: .title3))
     }
 
     func test_FactCell_WhenTapShareFact_ShouldShowShareActivity() throws {
@@ -102,10 +102,10 @@ class FactsListViewControllerTests: XCTestCase {
         let testScheduler = TestScheduler(initialClock: 0)
         let shareFactObserver = testScheduler.createObserver(FactViewModel.self)
 
-        factsListViewModel.setSearchTerm.onNext("games")
-        factsListViewModel.viewDidAppear.onNext(())
+        factsListViewModel.inputs.setSearchTerm.onNext("games")
+        factsListViewModel.inputs.viewDidAppear.onNext(())
 
-        factsListViewModel.showShareFact
+        factsListViewModel.outputs.showShareFact
             .subscribe(shareFactObserver)
             .disposed(by: disposeBag)
 
