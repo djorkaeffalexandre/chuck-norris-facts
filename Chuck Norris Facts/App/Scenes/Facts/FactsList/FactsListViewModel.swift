@@ -46,7 +46,7 @@ protocol FactsListViewModelOutputs {
     var isLoading: ActivityIndicator { get }
 
     // Emmits an FactsListError to be shown
-    var errors: Observable<FactsListError> { get }
+    var errors: Observable<FactsListErrorViewModel> { get }
 }
 
 final class FactsListViewModel: FactsListViewModelInputs, FactsListViewModelOutputs {
@@ -79,7 +79,7 @@ final class FactsListViewModel: FactsListViewModelInputs, FactsListViewModelOutp
 
     var isLoading: ActivityIndicator
 
-    var errors: Observable<FactsListError>
+    var errors: Observable<FactsListErrorViewModel>
 
     init(factsService: FactsServiceType = FactsService()) {
         let loadingIndicator = ActivityIndicator()
@@ -125,16 +125,15 @@ final class FactsListViewModel: FactsListViewModelInputs, FactsListViewModelOutp
                     .materialize()
             }
 
-        let searchFactsError = searchFacts
-            .errors()
+        let searchFactsError = searchFacts.errors()
             .map { FactsListError.searchFacts($0) }
 
-        self.facts = searchFacts
-            .elements()
+        self.facts = searchFacts.elements()
             .map { $0.map { FactViewModel(fact: $0) } }
             .map { [FactsSectionModel(model: "", items: $0)] }
 
         self.errors = Observable.merge(syncCategoriesError, searchFactsError)
             .do(onNext: currentErrorSubject.onNext)
+            .map { FactsListErrorViewModel(factsListError: $0) }
     }
 }

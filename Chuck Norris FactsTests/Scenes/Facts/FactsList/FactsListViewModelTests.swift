@@ -89,7 +89,7 @@ class FactsListViewModelTests: XCTestCase {
         XCTAssertNil(error)
     }
 
-    func test_FactsListViewModel_WhenSearchFactsWithError_ShouldEmmitFactListError() throws {
+    func test_FactsListViewModel_WhenSearchFactsWithError_ShouldEmmitFactsListError() throws {
         let apiError = APIError.statusCode(500)
         factsServiceMock.searchFactsReturnValue = .error(apiError)
 
@@ -107,7 +107,7 @@ class FactsListViewModelTests: XCTestCase {
         XCTAssertEqual(error?.code, FactsListError.searchFacts(apiError).code)
     }
 
-    func test_FactsListViewModel_WhenSyncCategoriesWithError_ShouldEmmitFactListError() throws {
+    func test_FactsListViewModel_WhenSyncCategoriesWithError_ShouldEmmitFactsListError() throws {
         let apiError = APIError.statusCode(500)
         factsServiceMock.syncCategoriesReturnValue = .error(apiError)
 

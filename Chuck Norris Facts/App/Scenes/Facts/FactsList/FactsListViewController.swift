@@ -197,11 +197,11 @@ final class FactsListViewController: UIViewController {
         }
     }
 
-    private func showErrorView(_ factsListError: FactsListError) {
+    private func showErrorView(_ factsListError: FactsListErrorViewModel) {
         emptyListView.isHidden = true
 
-        errorView.label.text = factsListError.error.message
-        errorView.retryButton.isHidden = factsListError.error.code == APIError.noConnection.code
+        errorView.label.text = factsListError.message
+        errorView.retryButton.isHidden = !factsListError.canRetry
         errorView.isHidden = false
         errorView.play()
     }

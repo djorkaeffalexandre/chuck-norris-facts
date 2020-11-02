@@ -12,10 +12,10 @@
 "SearchFacts.sections.suggestions" = "Suggestions";
 "SearchFacts.sections.pastSearches" = "Past Searches";
 
+"EmptyView.search" = "Search";
 "EmptyView.empty" = "Looks like there are no Facts";
 "EmptyView.emptySearch" = "There are no facts to your search";
 
-"FactCategory.uncategorized" = "UNCATEGORIZED";
+"ErrorView.retry" = "Retry";
 
-"FactListError.noConnection" = "Internet Connection appears to be offline";
-"FactListError.serviceUnavailable" = "Looks like the Chuck Norris Service is unavailable";
+"FactCategory.uncategorized" = "UNCATEGORIZED";

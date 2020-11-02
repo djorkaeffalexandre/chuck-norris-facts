@@ -37,7 +37,7 @@ final class ErrorView: UIView {
 
         button.translatesAutoresizingMaskIntoConstraints = false
         button.accessibilityLabel = "Retry"
-        button.setTitle("Retry", for: .normal)
+        button.setTitle(L10n.ErrorView.retry, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .body)
         button.accessibilityIdentifier = "retryButton"
 

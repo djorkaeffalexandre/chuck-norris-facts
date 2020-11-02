@@ -38,7 +38,7 @@ final class EmptyListView: UIView {
 
         button.translatesAutoresizingMaskIntoConstraints = false
         button.accessibilityLabel = "Search"
-        button.setTitle("Search", for: .normal)
+        button.setTitle(L10n.EmptyView.search, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .body)
         button.accessibilityIdentifier = "searchButton"
 
