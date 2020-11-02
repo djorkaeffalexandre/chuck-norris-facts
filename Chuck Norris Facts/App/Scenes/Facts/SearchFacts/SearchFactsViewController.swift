@@ -17,17 +17,19 @@ final class SearchFactsViewController: UIViewController {
     let disposeBag = DisposeBag()
 
     private lazy var itemsDataSource = RxTableViewSectionedReloadDataSource<SearchFactsTableViewSection>(
-        configureCell: { dataSource, tableView, indexPath, _ -> UITableViewCell in
+        configureCell: { [weak self] dataSource, tableView, indexPath, _ -> UITableViewCell in
 
             switch dataSource[indexPath] {
             case .SuggestionsTableViewItem(let suggestions):
+                guard let searchFactsViewModel = self?.viewModel else { return UITableViewCell() }
+
                 let cell = tableView.dequeueReusableCell(cell: SuggestionsCell.self, indexPath: indexPath)
 
                 let viewModel = SuggestionsViewModel(suggestions: suggestions)
                 cell.viewModel = viewModel
 
                 viewModel.outputs.didSelectSuggestion
-                    .bind(to: self.viewModel.inputs.selectItem)
+                    .bind(to: searchFactsViewModel.inputs.selectItem)
                     .disposed(by: cell.disposeBag)
 
                 return cell
