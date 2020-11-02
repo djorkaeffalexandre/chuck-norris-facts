@@ -32,17 +32,23 @@ extension Reactive where Base: APIProviderType {
 }
 
 extension ObservableType where Element == APIResponse {
+    // Maps received data into a Decodable object. If the conversion fails, throw an APIError.
     func map<D: Decodable>(_ type: D.Type, using decoder: JSONDecoder = JSON.decoder) -> Observable<D> {
         flatMap { response -> Observable<D> in
             do {
                 guard let data = response.data else {
-                    throw APIError.dataMapping(nil)
+                    throw APIError.mapping(nil)
                 }
 
                 return Observable.just(try decoder.decode(D.self, from: data))
             } catch let error {
-                throw APIError.objectMapping(error, response)
+                throw APIError.mapping(error)
             }
         }
+    }
+
+    // Filters out responses where `statusCode` falls within the range 200 - 299.
+    func filterSuccessfulStatusCodes() -> Observable<Element> {
+        return flatMap { Observable.just(try $0.filterSuccessfulStatusCodes()) }
     }
 }

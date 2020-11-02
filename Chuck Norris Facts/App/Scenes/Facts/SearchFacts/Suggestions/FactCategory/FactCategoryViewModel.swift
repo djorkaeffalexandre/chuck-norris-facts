@@ -9,7 +9,7 @@
 import Foundation
 import RxDataSources
 
-class FactCategoryViewModel {
+final class FactCategoryViewModel {
     let category: FactCategory
     let text: String
 

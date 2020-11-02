@@ -17,17 +17,19 @@ final class SearchFactsViewController: UIViewController {
     let disposeBag = DisposeBag()
 
     private lazy var itemsDataSource = RxTableViewSectionedReloadDataSource<SearchFactsTableViewSection>(
-        configureCell: { dataSource, tableView, indexPath, _ -> UITableViewCell in
+        configureCell: { [weak self] dataSource, tableView, indexPath, _ -> UITableViewCell in
 
             switch dataSource[indexPath] {
             case .SuggestionsTableViewItem(let suggestions):
+                guard let searchFactsViewModel = self?.viewModel else { return UITableViewCell() }
+
                 let cell = tableView.dequeueReusableCell(cell: SuggestionsCell.self, indexPath: indexPath)
 
                 let viewModel = SuggestionsViewModel(suggestions: suggestions)
                 cell.viewModel = viewModel
 
                 viewModel.outputs.didSelectSuggestion
-                    .bind(to: self.viewModel.inputs.selectItem)
+                    .bind(to: searchFactsViewModel.inputs.selectItem)
                     .disposed(by: cell.disposeBag)
 
                 return cell
@@ -88,10 +90,12 @@ final class SearchFactsViewController: UIViewController {
         tableView.backgroundColor = .systemBackground
         tableView.rowHeight = UITableView.automaticDimension
 
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
 
         tableView.register(SuggestionsCell.self)
         tableView.register(PastSearchCell.self)

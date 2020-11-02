@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoryView: UIView {
+final class CategoryView: UIView {
 
     lazy var label: UILabel = {
         let label = UILabel()
@@ -40,8 +40,6 @@ class CategoryView: UIView {
         backgroundColor = .systemBlue
 
         addSubview(label)
-
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding).isActive = true
         label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding).isActive = true
         label.topAnchor.constraint(equalTo: topAnchor, constant: padding).isActive = true

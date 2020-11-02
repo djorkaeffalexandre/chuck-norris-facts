@@ -8,14 +8,14 @@
 
 import Foundation
 
-public struct JSON {
-    public static var decoder: JSONDecoder {
+struct JSON {
+    static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }
 
-    public static var encoder: JSONEncoder {
+    static var encoder: JSONEncoder {
         JSONEncoder()
     }
 }

@@ -12,10 +12,14 @@
 "SearchFacts.sections.suggestions" = "Suggestions";
 "SearchFacts.sections.pastSearches" = "Past Searches";
 
+"EmptyView.search" = "Search";
 "EmptyView.empty" = "Looks like there are no Facts";
 "EmptyView.emptySearch" = "There are no facts to your search";
 
-"FactCategory.uncategorized" = "UNCATEGORIZED";
+"Common.oops" = "Oops";
+"Common.ok" = "Ok";
 
-"FactListError.noConnection" = "Internet Connection appears to be offline";
-"FactListError.serviceUnavailable" = "Looks like the Chuck Norris Service is unavailable";
+"Errors.cantSyncCategories" = "Can't sync categories";
+"Errors.cantSearchFacts" = "Can't search facts";
+
+"FactCategory.uncategorized" = "UNCATEGORIZED";

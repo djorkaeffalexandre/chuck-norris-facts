@@ -14,6 +14,7 @@ final class EmptyListView: UIView {
     private lazy var animation: AnimationView = {
         let animation = AnimationView()
 
+        animation.translatesAutoresizingMaskIntoConstraints = false
         animation.animation = Animation.named("empty-box")
         animation.loopMode = .loop
 
@@ -23,6 +24,7 @@ final class EmptyListView: UIView {
     lazy var label: UILabel = {
         let label = UILabel()
 
+        label.accessibilityIdentifier = "emptyListLabelView"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .preferredFont(forTextStyle: .headline)
         label.lineBreakMode = .byWordWrapping
@@ -36,7 +38,7 @@ final class EmptyListView: UIView {
 
         button.translatesAutoresizingMaskIntoConstraints = false
         button.accessibilityLabel = "Search"
-        button.setTitle("Search", for: .normal)
+        button.setTitle(L10n.EmptyView.search, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .body)
         button.accessibilityIdentifier = "searchButton"
 
@@ -59,26 +61,26 @@ final class EmptyListView: UIView {
         backgroundColor = .systemBackground
 
         addSubview(animation)
-
-        animation.translatesAutoresizingMaskIntoConstraints = false
-        animation.widthAnchor.constraint(equalToConstant: animationSize).isActive = true
-        animation.heightAnchor.constraint(equalToConstant: animationSize).isActive = true
-        animation.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        animation.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            animation.widthAnchor.constraint(equalToConstant: animationSize),
+            animation.heightAnchor.constraint(equalToConstant: animationSize),
+            animation.centerXAnchor.constraint(equalTo: centerXAnchor),
+            animation.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
 
         addSubview(label)
-
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.topAnchor.constraint(equalTo: animation.bottomAnchor).isActive = true
-        label.centerXAnchor.constraint(equalTo: animation.centerXAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: animation.bottomAnchor),
+            label.centerXAnchor.constraint(equalTo: animation.centerXAnchor)
+        ])
 
         addSubview(searchButton)
-        searchButton.translatesAutoresizingMaskIntoConstraints = false
-        searchButton.topAnchor.constraint(equalTo: label.bottomAnchor).isActive = true
-        searchButton.centerXAnchor.constraint(equalTo: label.centerXAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            searchButton.topAnchor.constraint(equalTo: label.bottomAnchor),
+            searchButton.centerXAnchor.constraint(equalTo: label.centerXAnchor)
+        ])
 
         accessibilityIdentifier = "emptyListView"
-        label.accessibilityIdentifier = "emptyListLabelView"
     }
 
     func play() {

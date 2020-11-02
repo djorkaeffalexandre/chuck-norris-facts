@@ -9,10 +9,15 @@
 import Foundation
 
 enum FactsListError {
-
+    // Error related to syncCategories request
     case syncCategories(Error)
+    // Error related to searchFacts request
     case searchFacts(Error)
+}
 
+extension FactsListError {
+
+    // APIError related to the error.
     var error: APIError {
         switch self {
         case .syncCategories(let error):
@@ -22,12 +27,23 @@ enum FactsListError {
         }
     }
 
+    // A code to check where the error come.
     var code: Int {
         switch self {
         case .syncCategories:
-            return -100
+            return 0
         case .searchFacts:
-            return -101
+            return 1
+        }
+    }
+
+    // A message that will be shown to user.
+    var message: String {
+        switch self {
+        case .syncCategories:
+            return L10n.Errors.cantSyncCategories
+        case .searchFacts:
+            return L10n.Errors.cantSearchFacts
         }
     }
 }

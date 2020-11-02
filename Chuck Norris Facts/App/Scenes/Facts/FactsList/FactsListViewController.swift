@@ -12,14 +12,13 @@ import RxCocoa
 import RxDataSources
 import Lottie
 
-class FactsListViewController: UIViewController {
+final class FactsListViewController: UIViewController {
 
     var viewModel: FactsListViewModel!
 
     private let disposeBag = DisposeBag()
 
     let tableView = UITableView()
-    let errorView = ErrorView()
     let loadingView = LoadingView()
     let emptyListView = EmptyListView()
     let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: nil)
@@ -46,7 +45,6 @@ class FactsListViewController: UIViewController {
         setupView()
         setupBindings()
         setupTableView()
-        setupErrorView()
         setupEmptyListView()
         setupLoadingView()
         setupNavigationBar()
@@ -63,10 +61,12 @@ class FactsListViewController: UIViewController {
 
         tableView.register(FactCell.self)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
 
         tableView.accessibilityIdentifier = "factsTableView"
     }
@@ -75,31 +75,24 @@ class FactsListViewController: UIViewController {
         view.addSubview(loadingView)
 
         loadingView.translatesAutoresizingMaskIntoConstraints = false
-        loadingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-    }
-
-    private func setupErrorView() {
-        view.addSubview(errorView)
-
-        errorView.isHidden = true
-        errorView.translatesAutoresizingMaskIntoConstraints = false
-        errorView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 
     private func setupEmptyListView() {
         view.addSubview(emptyListView)
 
         emptyListView.translatesAutoresizingMaskIntoConstraints = false
-        emptyListView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        emptyListView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        emptyListView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        emptyListView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            emptyListView.topAnchor.constraint(equalTo: view.topAnchor),
+            emptyListView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            emptyListView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            emptyListView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 
     private func setupNavigationBar() {
@@ -149,16 +142,6 @@ class FactsListViewController: UIViewController {
         emptyListView.searchButton.rx.tap
             .bind(to: viewModel.inputs.startSearchFacts)
             .disposed(by: disposeBag)
-
-        errorView.retryButton.rx.tap
-            .bind(to: viewModel.inputs.retryAction)
-            .disposed(by: disposeBag)
-
-        viewModel.outputs.errors
-            .bind(onNext: { [weak self] error in
-                self?.showErrorView(error)
-            })
-            .disposed(by: disposeBag)
     }
 
     private func showEmptyView(_ listEmpty: Bool, _ searchEmpty: Bool) {
@@ -187,14 +170,5 @@ class FactsListViewController: UIViewController {
         } else {
             loadingView.stop()
         }
-    }
-
-    private func showErrorView(_ factsListError: FactsListError) {
-        emptyListView.isHidden = true
-
-        let localizedErrorDescription = factsListError.error.underlyingError?.localizedDescription
-        errorView.label.text = localizedErrorDescription ?? L10n.FactListError.serviceUnavailable
-        errorView.isHidden = false
-        errorView.play()
     }
 }

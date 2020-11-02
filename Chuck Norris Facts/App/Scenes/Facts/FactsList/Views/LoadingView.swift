@@ -14,6 +14,7 @@ final class LoadingView: UIView {
     private lazy var animation: AnimationView = {
         let loading = AnimationView()
 
+        loading.translatesAutoresizingMaskIntoConstraints = false
         loading.animation = Animation.named("loading")
         loading.loopMode = .loop
 
@@ -36,11 +37,12 @@ final class LoadingView: UIView {
         backgroundColor = .systemBackground
 
         addSubview(animation)
-        animation.translatesAutoresizingMaskIntoConstraints = false
-        animation.widthAnchor.constraint(equalToConstant: animationSize).isActive = true
-        animation.heightAnchor.constraint(equalToConstant: animationSize).isActive = true
-        animation.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        animation.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            animation.widthAnchor.constraint(equalToConstant: animationSize),
+            animation.heightAnchor.constraint(equalToConstant: animationSize),
+            animation.centerXAnchor.constraint(equalTo: centerXAnchor),
+            animation.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 
     func play() {

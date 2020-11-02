@@ -75,9 +75,9 @@ class FactsListViewModelTests: XCTestCase {
         let categories = try XCTUnwrap(stubCategories)
         factsServiceMock.retrieveCategoriesReturnValue = .just(categories)
 
-        let errorObserver = testScheduler.createObserver(FactsListError.self)
+        let errorObserver = testScheduler.createObserver(FactsListErrorViewModel.self)
 
-        factsListViewModel.outputs.errors
+        factsListViewModel.outputs.factsListError
             .subscribe(errorObserver)
             .disposed(by: disposeBag)
 
@@ -89,14 +89,13 @@ class FactsListViewModelTests: XCTestCase {
         XCTAssertNil(error)
     }
 
-    func test_FactsListViewModel_WhenSearchFactsWithError_ShouldEmmitFactListError() throws {
-        let response = APIResponse(statusCode: 500, data: nil)
-        let apiError = APIError.statusCode(response)
+    func test_FactsListViewModel_WhenSearchFactsWithError_ShouldEmmitFactsListError() throws {
+        let apiError = APIError.statusCode(500)
         factsServiceMock.searchFactsReturnValue = .error(apiError)
 
-        let errorObserver = testScheduler.createObserver(FactsListError.self)
+        let errorObserver = testScheduler.createObserver(FactsListErrorViewModel.self)
 
-        factsListViewModel.outputs.errors
+        factsListViewModel.outputs.factsListError
             .subscribe(errorObserver)
             .disposed(by: disposeBag)
 
@@ -104,18 +103,17 @@ class FactsListViewModelTests: XCTestCase {
 
         testScheduler.start()
 
-        let error = errorObserver.events.compactMap { $0.value.element }.first
-        XCTAssertEqual(error?.code, FactsListError.searchFacts(apiError).code)
+        let factsListError = errorObserver.events.compactMap { $0.value.element }.first
+        XCTAssertEqual(factsListError?.error.code, apiError.code)
     }
 
-    func test_FactsListViewModel_WhenSyncCategoriesWithError_ShouldEmmitFactListError() throws {
-        let response = APIResponse(statusCode: 500, data: nil)
-        let apiError = APIError.statusCode(response)
+    func test_FactsListViewModel_WhenSyncCategoriesWithError_ShouldEmmitFactsListError() throws {
+        let apiError = APIError.statusCode(500)
         factsServiceMock.syncCategoriesReturnValue = .error(apiError)
 
-        let errorObserver = testScheduler.createObserver(FactsListError.self)
+        let errorObserver = testScheduler.createObserver(FactsListErrorViewModel.self)
 
-        factsListViewModel.outputs.errors
+        factsListViewModel.outputs.factsListError
             .subscribe(errorObserver)
             .disposed(by: disposeBag)
 
@@ -123,7 +121,7 @@ class FactsListViewModelTests: XCTestCase {
 
         testScheduler.start()
 
-        let error = errorObserver.events.compactMap { $0.value.element }.first
-        XCTAssertEqual(error?.code, FactsListError.syncCategories(apiError).code)
+        let factsListError = errorObserver.events.compactMap { $0.value.element }.first
+        XCTAssertEqual(factsListError?.error.code, apiError.code)
     }
 }

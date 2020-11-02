@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PastSearchCell: UITableViewCell {
+final class PastSearchCell: UITableViewCell {
 
     static let identifier = "PastSearchCell"
 

@@ -37,7 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if LaunchArgument.check(.mockStorage) {
             let entities = [
                 SearchEntity(searchTerm: "games"),
-                SearchEntity(searchTerm: "fashion")
+                SearchEntity(searchTerm: "fashion"),
+                FactCategoryEntity(category: FactCategory(text: "games")),
+                FactCategoryEntity(category: FactCategory(text: "fashion"))
             ]
 
             let realm = try? Realm()

@@ -12,3 +12,16 @@ struct APIResponse {
     let statusCode: Int
     let data: Data?
 }
+
+extension APIResponse {
+    func filter<R: RangeExpression>(statusCodes: R) throws -> APIResponse where R.Bound == Int {
+        guard statusCodes.contains(statusCode) else {
+            throw APIError.statusCode(statusCode)
+        }
+        return self
+    }
+
+    func filterSuccessfulStatusCodes() throws -> APIResponse {
+        return try filter(statusCodes: 200...299)
+    }
+}

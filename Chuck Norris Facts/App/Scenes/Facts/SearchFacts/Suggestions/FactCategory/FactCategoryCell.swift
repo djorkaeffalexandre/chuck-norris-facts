@@ -8,9 +8,13 @@
 
 import UIKit
 
-class FactCategoryCell: UICollectionViewCell {
+final class FactCategoryCell: UICollectionViewCell {
 
-    private let categoryView: CategoryView = CategoryView()
+    private lazy var categoryView: CategoryView = {
+        let categoryView = CategoryView()
+        categoryView.translatesAutoresizingMaskIntoConstraints = false
+        return categoryView
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,8 +36,9 @@ class FactCategoryCell: UICollectionViewCell {
 
     func setupView() {
         contentView.addSubview(categoryView)
-        categoryView.translatesAutoresizingMaskIntoConstraints = false
-        categoryView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        categoryView.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            categoryView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            categoryView.heightAnchor.constraint(equalTo: contentView.heightAnchor)
+        ])
     }
 }
