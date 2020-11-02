@@ -9,8 +9,6 @@
 import RxSwift
 import RxDataSources
 
-typealias SuggestionsSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
-
 protocol SuggestionsViewModelInputs {
     var selectSuggestion: AnyObserver<String> { get }
 }

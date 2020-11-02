@@ -9,6 +9,8 @@
 import Foundation
 import RxDataSources
 
+typealias SuggestionsSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
+
 class FactCategoryViewModel {
     let category: FactCategory
     let text: String

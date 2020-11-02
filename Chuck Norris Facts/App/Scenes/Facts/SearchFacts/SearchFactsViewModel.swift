@@ -10,8 +10,6 @@ import Foundation
 import RxDataSources
 import RxSwift
 
-typealias PastSearchesSectionModel = AnimatableSectionModel<String, PastSearchViewModel>
-
 protocol SearchFactsViewModelInputs {
     var cancel: AnyObserver<Void> { get }
 
