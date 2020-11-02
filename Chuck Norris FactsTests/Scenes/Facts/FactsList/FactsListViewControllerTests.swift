@@ -67,7 +67,7 @@ class FactsListViewControllerTests: XCTestCase {
         XCTAssertFalse(factsListViewController.errorView.isHidden)
     }
 
-    func test_FactCell_WhenContentIsShort_FontSizeShouldBe28() throws {
+    func test_FactCell_WhenContentIsShort_FontSizeShouldBeTitle1() throws {
         let factStub = try stub("short-fact", type: Fact.self)
         let fact = try XCTUnwrap(factStub)
 
@@ -77,10 +77,10 @@ class FactsListViewControllerTests: XCTestCase {
 
         let factCell = factsListFirstCell()
 
-        XCTAssertEqual(factCell?.bodyLabel.font.pointSize, 28)
+        XCTAssertEqual(factCell?.bodyLabel.font, .preferredFont(forTextStyle: .title1))
     }
 
-    func test_FactCell_WhenContentIsLong_FontSizeShouldBe20() throws {
+    func test_FactCell_WhenContentIsLong_FontSizeShouldBeTitle3() throws {
         let factStub = try stub("long-fact", type: Fact.self)
         let fact = try XCTUnwrap(factStub)
 
@@ -90,7 +90,7 @@ class FactsListViewControllerTests: XCTestCase {
 
         let factCell = factsListFirstCell()
 
-        XCTAssertEqual(factCell?.bodyLabel.font.pointSize, 20)
+        XCTAssertEqual(factCell?.bodyLabel.font, .preferredFont(forTextStyle: .title3))
     }
 
     func test_FactCell_WhenTapShareFact_ShouldShowShareActivity() throws {
