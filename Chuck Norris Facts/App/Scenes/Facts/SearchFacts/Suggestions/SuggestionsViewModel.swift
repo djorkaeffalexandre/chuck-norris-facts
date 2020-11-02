@@ -12,9 +12,7 @@ import RxDataSources
 typealias SuggestionsSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
 
 protocol SuggestionsViewModelInputs {
-    var suggestion: AnyObserver<String> { get }
-
-    var selectAction: AnyObserver<Void> { get }
+    var selectSuggestion: AnyObserver<String> { get }
 }
 
 protocol SuggestionsViewModelOutputs {
@@ -31,9 +29,7 @@ struct SuggestionsViewModel: SuggestionsViewModelInputs, SuggestionsViewModelOut
 
     // MARK: - Inputs
 
-    var suggestion: AnyObserver<String>
-
-    var selectAction: AnyObserver<Void>
+    var selectSuggestion: AnyObserver<String>
 
     // MARK: - Outputs
 
@@ -47,14 +43,10 @@ struct SuggestionsViewModel: SuggestionsViewModelInputs, SuggestionsViewModelOut
 
         suggestionsSubject.onNext([SuggestionsSectionModel(model: "", items: suggestions)])
 
-        let suggestionSubject = BehaviorSubject<String>(value: "")
-        self.suggestion = suggestionSubject.asObserver()
+        let selectSuggestionSubject = BehaviorSubject<String>(value: "")
+        self.selectSuggestion = selectSuggestionSubject.asObserver()
 
-        let selectActionSubject = PublishSubject<Void>()
-        self.selectAction = selectActionSubject.asObserver()
-
-        self.didSelectSuggestion = selectActionSubject
-            .withLatestFrom(suggestionSubject)
+        self.didSelectSuggestion = selectSuggestionSubject
             .filter { !$0.isEmpty }
     }
 }

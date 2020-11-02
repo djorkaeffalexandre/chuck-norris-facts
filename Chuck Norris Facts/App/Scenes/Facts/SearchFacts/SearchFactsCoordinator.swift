@@ -31,10 +31,11 @@ class SearchFactsCoordinator: BaseCoordinator<SearchFactsCoordinationResult> {
 
         let cancel = searchFactsViewModel.outputs.didCancel.map { _ in CoordinationResult.cancel }
         let search = searchFactsViewModel.outputs.didSearchFacts.map { CoordinationResult.search($0) }
+        let select = searchFactsViewModel.outputs.didSelectItem.map { CoordinationResult.search($0) }
 
         rootViewController.present(navigationController, animated: true)
 
-        return Observable.merge(cancel, search)
+        return Observable.merge(cancel, search, select)
             .take(1)
             .do(onNext: { [weak self] _ in self?.rootViewController.dismiss(animated: true) })
     }

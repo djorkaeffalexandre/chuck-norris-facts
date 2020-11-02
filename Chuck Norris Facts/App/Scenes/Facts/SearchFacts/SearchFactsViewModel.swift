@@ -20,6 +20,8 @@ protocol SearchFactsViewModelInputs {
     var searchAction: AnyObserver<Void> { get }
 
     var viewWillAppear: AnyObserver<Void> { get }
+
+    var selectItem: AnyObserver<String> { get }
 }
 
 protocol SearchFactsViewModelOutputs {
@@ -28,6 +30,8 @@ protocol SearchFactsViewModelOutputs {
     var didSearchFacts: Observable<String> { get }
 
     var items: Observable<[SearchFactsTableViewSection]> { get }
+
+    var didSelectItem: Observable<String> { get }
 }
 
 final class SearchFactsViewModel: SearchFactsViewModelInputs, SearchFactsViewModelOutputs {
@@ -46,11 +50,15 @@ final class SearchFactsViewModel: SearchFactsViewModelInputs, SearchFactsViewMod
 
     var viewWillAppear: AnyObserver<Void>
 
+    var selectItem: AnyObserver<String>
+
     // MARK: - Outputs
 
     var didCancel: Observable<Void>
 
     var didSearchFacts: Observable<String>
+
+    var didSelectItem: Observable<String>
 
     var items: Observable<[SearchFactsTableViewSection]>
 
@@ -67,6 +75,12 @@ final class SearchFactsViewModel: SearchFactsViewModelInputs, SearchFactsViewMod
 
         self.didSearchFacts = searchActionSubject
             .withLatestFrom(searchTermSubject)
+            .filter { !$0.isEmpty }
+
+        let selectItemSubject = BehaviorSubject<String>(value: "")
+        self.selectItem = selectItemSubject.asObserver()
+
+        self.didSelectItem = selectItemSubject
             .filter { !$0.isEmpty }
 
         let viewWillAppearSubject = PublishSubject<Void>()

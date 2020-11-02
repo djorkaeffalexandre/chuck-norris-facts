@@ -19,3 +19,9 @@ struct FactCategory: Decodable {
         self.text = try decoder.singleValueContainer().decode(String.self)
     }
 }
+
+extension FactCategory: Equatable {
+    static func == (lhs: FactCategory, rhs: FactCategory) -> Bool {
+        lhs.text == rhs.text
+    }
+}

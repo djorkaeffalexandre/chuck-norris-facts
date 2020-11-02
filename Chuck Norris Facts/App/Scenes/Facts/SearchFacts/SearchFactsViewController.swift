@@ -27,18 +27,13 @@ final class SearchFactsViewController: UIViewController {
                 cell.viewModel = viewModel
 
                 viewModel.outputs.didSelectSuggestion
-                    .bind(to: self.viewModel.inputs.searchTerm)
-                    .disposed(by: cell.disposeBag)
-
-                viewModel.outputs.didSelectSuggestion
-                    .mapToVoid()
-                    .bind(to: self.viewModel.inputs.searchAction)
+                    .bind(to: self.viewModel.inputs.selectItem)
                     .disposed(by: cell.disposeBag)
 
                 return cell
-            case .PastSearchTableViewItem(let model):
+            case .PastSearchTableViewItem(let pastSearch):
                 let cell = tableView.dequeueReusableCell(cell: PastSearchCell.self, indexPath: indexPath)
-                cell.setup(model)
+                cell.setup(pastSearch)
                 return cell
             }
 
@@ -136,17 +131,8 @@ final class SearchFactsViewController: UIViewController {
             .asObservable()
 
         pastSearchSelected
-            .compactMap {
-                switch $0 {
-                case .PastSearchTableViewItem(let model):
-                    return model.text
-                default:
-                    break
-                }
-                return ""
-            }
-            .filter { !$0.isEmpty }
-            .bind(to: viewModel.inputs.searchTerm)
+            .compactMap { $0.text }
+            .bind(to: viewModel.inputs.selectItem)
             .disposed(by: disposeBag)
 
         pastSearchSelected

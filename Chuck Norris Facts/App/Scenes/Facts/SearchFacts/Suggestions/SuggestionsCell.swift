@@ -78,18 +78,13 @@ class SuggestionsCell: UITableViewCell {
             .bind(to: collectionView.rx.items(dataSource: suggestionsDataSource))
             .disposed(by: disposeBag)
 
-        let categorySelected = collectionView.rx
+        let suggestionSelected = collectionView.rx
             .modelSelected(FactCategoryViewModel.self)
             .asObservable()
 
-        categorySelected
+        suggestionSelected
             .compactMap { $0.text }
-            .bind(to: viewModel.inputs.suggestion)
-            .disposed(by: disposeBag)
-
-        categorySelected
-            .mapToVoid()
-            .bind(to: viewModel.inputs.selectAction)
+            .bind(to: viewModel.inputs.selectSuggestion)
             .disposed(by: disposeBag)
     }
 }

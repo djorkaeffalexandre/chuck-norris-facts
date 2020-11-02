@@ -37,6 +37,6 @@ class FactViewModelTests: XCTestCase {
         let fact = try XCTUnwrap(factStub)
 
         let factViewModelTest = FactViewModel(fact: fact)
-        XCTAssertEqual(factViewModelTest.identity, fact.value)
+        XCTAssertEqual(factViewModelTest.identity, fact.id)
     }
 }

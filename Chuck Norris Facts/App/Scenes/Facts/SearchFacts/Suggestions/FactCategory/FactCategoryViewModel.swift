@@ -10,21 +10,23 @@ import Foundation
 import RxDataSources
 
 class FactCategoryViewModel {
+    let category: FactCategory
     let text: String
 
     init(category: FactCategory) {
+        self.category = category
         self.text = category.text.uppercased()
     }
 }
 
 extension FactCategoryViewModel: IdentifiableType {
     var identity: String {
-        text
+        category.text
     }
 }
 
 extension FactCategoryViewModel: Equatable {
     static func == (lhs: FactCategoryViewModel, rhs: FactCategoryViewModel) -> Bool {
-        return lhs.text == rhs.text
+        return lhs.category == rhs.category
     }
 }
