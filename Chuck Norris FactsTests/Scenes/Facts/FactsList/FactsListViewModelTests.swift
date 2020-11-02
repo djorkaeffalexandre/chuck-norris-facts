@@ -75,7 +75,7 @@ class FactsListViewModelTests: XCTestCase {
         let categories = try XCTUnwrap(stubCategories)
         factsServiceMock.retrieveCategoriesReturnValue = .just(categories)
 
-        let errorObserver = testScheduler.createObserver(FactsListError.self)
+        let errorObserver = testScheduler.createObserver(FactsListErrorViewModel.self)
 
         factsListViewModel.outputs.errors
             .subscribe(errorObserver)
@@ -93,7 +93,7 @@ class FactsListViewModelTests: XCTestCase {
         let apiError = APIError.statusCode(500)
         factsServiceMock.searchFactsReturnValue = .error(apiError)
 
-        let errorObserver = testScheduler.createObserver(FactsListError.self)
+        let errorObserver = testScheduler.createObserver(FactsListErrorViewModel.self)
 
         factsListViewModel.outputs.errors
             .subscribe(errorObserver)
@@ -103,15 +103,15 @@ class FactsListViewModelTests: XCTestCase {
 
         testScheduler.start()
 
-        let error = errorObserver.events.compactMap { $0.value.element }.first
-        XCTAssertEqual(error?.code, FactsListError.searchFacts(apiError).code)
+        let factsListError = errorObserver.events.compactMap { $0.value.element }.first
+        XCTAssertEqual(factsListError?.error.code, apiError.code)
     }
 
     func test_FactsListViewModel_WhenSyncCategoriesWithError_ShouldEmmitFactsListError() throws {
         let apiError = APIError.statusCode(500)
         factsServiceMock.syncCategoriesReturnValue = .error(apiError)
 
-        let errorObserver = testScheduler.createObserver(FactsListError.self)
+        let errorObserver = testScheduler.createObserver(FactsListErrorViewModel.self)
 
         factsListViewModel.outputs.errors
             .subscribe(errorObserver)
@@ -121,7 +121,7 @@ class FactsListViewModelTests: XCTestCase {
 
         testScheduler.start()
 
-        let error = errorObserver.events.compactMap { $0.value.element }.first
-        XCTAssertEqual(error?.code, FactsListError.syncCategories(apiError).code)
+        let factsListError = errorObserver.events.compactMap { $0.value.element }.first
+        XCTAssertEqual(factsListError?.error.code, apiError.code)
     }
 }
