@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FactCategoryCell: UICollectionViewCell {
+final class FactCategoryCell: UICollectionViewCell {
 
     private lazy var categoryView: CategoryView = {
         let categoryView = CategoryView()

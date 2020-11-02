@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoryView: UIView {
+final class CategoryView: UIView {
 
     lazy var label: UILabel = {
         let label = UILabel()

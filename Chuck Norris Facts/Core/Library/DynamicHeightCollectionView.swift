@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DynamicHeightCollectionView: UICollectionView {
+final class DynamicHeightCollectionView: UICollectionView {
 
     override func layoutSubviews() {
         super.layoutSubviews()

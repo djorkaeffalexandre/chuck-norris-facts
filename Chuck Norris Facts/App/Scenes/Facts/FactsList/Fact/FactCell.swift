@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class FactCell: UITableViewCell {
+final class FactCell: UITableViewCell {
 
     var disposeBag = DisposeBag()
 

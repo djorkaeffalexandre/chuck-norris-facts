@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 import Lottie
 
-class FactsListViewController: UIViewController {
+final class FactsListViewController: UIViewController {
 
     var viewModel: FactsListViewModel!
 
