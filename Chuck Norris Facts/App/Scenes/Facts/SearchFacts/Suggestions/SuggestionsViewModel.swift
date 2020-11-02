@@ -9,13 +9,18 @@
 import RxSwift
 import RxDataSources
 
+typealias SuggestionsSectionModel = AnimatableSectionModel<String, FactCategoryViewModel>
+
 protocol SuggestionsViewModelInputs {
+    // Call when a suggestion is selected to start a new search
     var selectSuggestion: AnyObserver<String> { get }
 }
 
 protocol SuggestionsViewModelOutputs {
+    // Emmits an array of suggestions to bind on tableView
     var suggestions: Observable<[SuggestionsSectionModel]> { get }
 
+    // Emmits an string of a selected suggestion
     var didSelectSuggestion: Observable<String> { get }
 }
 

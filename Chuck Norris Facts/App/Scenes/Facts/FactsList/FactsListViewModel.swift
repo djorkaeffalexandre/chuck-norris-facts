@@ -13,28 +13,39 @@ import RxDataSources
 typealias FactsSectionModel = AnimatableSectionModel<String, FactViewModel>
 
 protocol FactsListViewModelInputs {
+    // Call when view did appear to syncCategories
     var viewDidAppear: AnyObserver<Void> { get }
 
+    // Call when user start to share a fact
     var startShareFact: AnyObserver<FactViewModel> { get }
 
+    // Call to show SearchFacts scene
     var startSearchFacts: AnyObserver<Void> { get }
 
+    // Call to set SearchTerm to be used on search
     var setSearchTerm: AnyObserver<String> { get }
 
+    // Call to retry a syncCategories action
     var retryAction: AnyObserver<Void> { get }
 }
 
 protocol FactsListViewModelOutputs {
+    // Emmits an array of FactsSectionModel to bind on tableView
     var facts: Observable<[FactsSectionModel]> { get }
 
+    // Emmits an FactViewModel to be shared
     var showShareFact: Observable<FactViewModel> { get }
 
+    // Emmits an event to show SearchFacts scene
     var showSearchFacts: Observable<Void> { get }
 
+    // Emmits an string to be used as a search query and check empty state
     var searchTerm: Observable<String> { get }
 
+    // Emmits an ActivityIndicator to check if there is a facts search happening
     var isLoading: ActivityIndicator { get }
 
+    // Emmits an FactsListError to be shown
     var errors: Observable<FactsListError> { get }
 }
 
@@ -107,7 +118,7 @@ final class FactsListViewModel: FactsListViewModelInputs, FactsListViewModelOutp
             .errors()
             .map { FactsListError.syncCategories($0) }
 
-        let searchFacts = Observable.combineLatest(viewDidAppearSubject, searchTerm) { _, term in term }
+        let searchFacts = searchTermSubject
             .flatMapLatest { searchTerm in
                 factsService.searchFacts(searchTerm: searchTerm)
                     .trackActivity(loadingIndicator)

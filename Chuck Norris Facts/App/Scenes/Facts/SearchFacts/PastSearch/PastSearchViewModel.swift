@@ -9,8 +9,6 @@
 import Foundation
 import RxDataSources
 
-typealias PastSearchesSectionModel = AnimatableSectionModel<String, PastSearchViewModel>
-
 struct PastSearchViewModel {
     let text: String
 }

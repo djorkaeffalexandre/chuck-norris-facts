@@ -10,26 +10,37 @@ import Foundation
 import RxDataSources
 import RxSwift
 
+typealias PastSearchesSectionModel = AnimatableSectionModel<String, PastSearchViewModel>
+
 protocol SearchFactsViewModelInputs {
+    // Call when search facts scene is cancelled
     var cancel: AnyObserver<Void> { get }
 
+    // Call when search term changes
     var searchTerm: AnyObserver<String> { get }
 
+    // Call when a search is started (textDidEndEditing)
     var searchAction: AnyObserver<Void> { get }
 
+    // Call when view will appear to load categories and pastSearches
     var viewWillAppear: AnyObserver<Void> { get }
 
+    // Call when a item is selected to start a new search
     var selectItem: AnyObserver<String> { get }
 }
 
 protocol SearchFactsViewModelOutputs {
+    // Emmits an event to SearchFacts coordinator dismiss SearchFacts Scene
     var didCancel: Observable<Void> { get }
 
+    // Emmits an string to start a new search when a term is sent by searchAction
     var didSearchFacts: Observable<String> { get }
 
-    var items: Observable<[SearchFactsTableViewSection]> { get }
-
+    // Emmits an string to start a new search when a item is selected
     var didSelectItem: Observable<String> { get }
+
+    // Emmits an array of SearchFacts TableView sections to bind on tableView
+    var items: Observable<[SearchFactsTableViewSection]> { get }
 }
 
 final class SearchFactsViewModel: SearchFactsViewModelInputs, SearchFactsViewModelOutputs {
