@@ -26,7 +26,7 @@ class FactCategoryCell: UICollectionViewCell {
     }
 
     func setup(_ factCategory: FactCategoryViewModel) {
-        categoryView.label.text = factCategory.text
+        categoryView.label.text = factCategory.text.uppercased()
         categoryView.label.font = .preferredFont(forTextStyle: .headline)
     }
 

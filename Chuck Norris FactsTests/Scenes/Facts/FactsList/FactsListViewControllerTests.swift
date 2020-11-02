@@ -62,7 +62,7 @@ class FactsListViewControllerTests: XCTestCase {
         let apiError = APIError.statusCode(response)
         factsServiceMock.searchFactsReturnValue = .error(apiError)
 
-        factsListViewModel.inputs.viewDidAppear.onNext(())
+        factsListViewModel.inputs.setSearchTerm.onNext("")
 
         XCTAssertFalse(factsListViewController.errorView.isHidden)
     }
@@ -73,7 +73,7 @@ class FactsListViewControllerTests: XCTestCase {
 
         factsServiceMock.searchFactsReturnValue = .just([fact])
 
-        factsListViewModel.inputs.viewDidAppear.onNext(())
+        factsListViewModel.inputs.setSearchTerm.onNext("")
 
         let factCell = factsListFirstCell()
 
@@ -86,7 +86,7 @@ class FactsListViewControllerTests: XCTestCase {
 
         factsServiceMock.searchFactsReturnValue = .just([fact])
 
-        factsListViewModel.inputs.viewDidAppear.onNext(())
+        factsListViewModel.inputs.setSearchTerm.onNext("")
 
         let factCell = factsListFirstCell()
 

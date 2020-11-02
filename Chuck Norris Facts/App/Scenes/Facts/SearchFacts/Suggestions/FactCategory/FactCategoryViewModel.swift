@@ -15,7 +15,7 @@ class FactCategoryViewModel {
 
     init(category: FactCategory) {
         self.category = category
-        self.text = category.text.uppercased()
+        self.text = category.text
     }
 }
 

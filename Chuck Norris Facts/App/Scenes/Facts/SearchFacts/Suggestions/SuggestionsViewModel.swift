@@ -51,5 +51,6 @@ struct SuggestionsViewModel: SuggestionsViewModelInputs, SuggestionsViewModelOut
 
         self.didSelectSuggestion = selectSuggestionSubject
             .filter { !$0.isEmpty }
+            .map { $0.capitalized }
     }
 }
