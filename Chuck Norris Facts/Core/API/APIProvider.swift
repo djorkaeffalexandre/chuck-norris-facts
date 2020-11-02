@@ -44,53 +44,37 @@ class APIProvider<Target: APITarget>: APIProviderType {
 
         let request = requestClosure(target)
 
+        // Check if request has some sampleData
         if let sampleData = target.sampleData {
             completion(.success(APIResponse(statusCode: 200, data: sampleData)))
             return nil
         }
 
         let task = urlSession.dataTask(with: request) { (data, response, error) in
-            let response = response as? HTTPURLResponse
+            // Check if error is not connected to internet
+            if let error = error as NSError?, error.code == NSURLErrorNotConnectedToInternet {
+                completion(.failure(.noConnection))
+                return
+            }
 
-            let result = self.convertResponseToResult(
-                response,
-                request: request,
-                data: data,
-                error: error
-            )
+            // Check if there is an error
+            if let error = error {
+                completion(.failure(.unknown(error)))
+                return
+            }
 
-            completion(result)
+            // Check if response is a HTTPURLResponse
+            guard let response = response as? HTTPURLResponse else {
+                completion(.failure(.connectionError))
+                return
+            }
+
+            // Complete with an APIResponse
+            completion(.success(APIResponse(statusCode: response.statusCode, data: data)))
         }
 
         task.resume()
 
         return task
-    }
-
-    // A function responsible for converting the result of a `URLRequest` to a Result<APIResponse, APIError>.
-    private func convertResponseToResult(
-        _ response: HTTPURLResponse?,
-        request: URLRequest?,
-        data: Data?,
-        error: Swift.Error?
-    ) -> Result<APIResponse, APIError> {
-            switch (response, data, error) {
-            case let (.some(response), data, .none):
-                let response = APIResponse(statusCode: response.statusCode, data: data ?? Data())
-                return .success(response)
-            case let (.some(response), _, .some(error)):
-                let response = APIResponse(statusCode: response.statusCode, data: data ?? Data())
-                let error = APIError.underlying(error, response)
-                return .failure(error)
-            case let (_, _, .some(error)):
-                let error = APIError.underlying(error, nil)
-                return .failure(error)
-            default:
-                let error = APIError.underlying(
-                    NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil),
-                    nil
-                )
-                return .failure(error)
-            }
     }
 }

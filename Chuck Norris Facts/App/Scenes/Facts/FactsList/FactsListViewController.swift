@@ -200,8 +200,8 @@ final class FactsListViewController: UIViewController {
     private func showErrorView(_ factsListError: FactsListError) {
         emptyListView.isHidden = true
 
-        let localizedErrorDescription = factsListError.error.underlyingError?.localizedDescription
-        errorView.label.text = localizedErrorDescription ?? L10n.FactListError.serviceUnavailable
+        errorView.label.text = factsListError.error.message
+        errorView.retryButton.isHidden = factsListError.error.code == APIError.noConnection.code
         errorView.isHidden = false
         errorView.play()
     }

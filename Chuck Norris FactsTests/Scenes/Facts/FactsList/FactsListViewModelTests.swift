@@ -90,8 +90,7 @@ class FactsListViewModelTests: XCTestCase {
     }
 
     func test_FactsListViewModel_WhenSearchFactsWithError_ShouldEmmitFactListError() throws {
-        let response = APIResponse(statusCode: 500, data: nil)
-        let apiError = APIError.statusCode(response)
+        let apiError = APIError.statusCode(500)
         factsServiceMock.searchFactsReturnValue = .error(apiError)
 
         let errorObserver = testScheduler.createObserver(FactsListError.self)
@@ -109,8 +108,7 @@ class FactsListViewModelTests: XCTestCase {
     }
 
     func test_FactsListViewModel_WhenSyncCategoriesWithError_ShouldEmmitFactListError() throws {
-        let response = APIResponse(statusCode: 500, data: nil)
-        let apiError = APIError.statusCode(response)
+        let apiError = APIError.statusCode(500)
         factsServiceMock.syncCategoriesReturnValue = .error(apiError)
 
         let errorObserver = testScheduler.createObserver(FactsListError.self)

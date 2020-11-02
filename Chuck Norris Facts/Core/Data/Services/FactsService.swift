@@ -45,6 +45,7 @@ struct FactsService: FactsServiceType {
         return provider.rx
             .request(.searchFacts(searchTerm: searchTerm))
             .asObservable()
+            .filterSuccessfulStatusCodes()
             .observeOn(self.scheduler ?? MainScheduler.asyncInstance)
             .map(SearchFactsResponse.self, using: JSON.decoder)
             .map { $0.facts }
@@ -61,6 +62,7 @@ struct FactsService: FactsServiceType {
                 return self.provider.rx
                     .request(.getCategories)
                     .asObservable()
+                    .filterSuccessfulStatusCodes()
                     .observeOn(self.scheduler ?? MainScheduler.asyncInstance)
                     .map([FactCategory].self, using: JSON.decoder)
                     .map { self.storage.storeCategories($0) }

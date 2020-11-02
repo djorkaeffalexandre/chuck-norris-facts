@@ -58,9 +58,7 @@ class FactsListViewControllerTests: XCTestCase {
     }
 
     func test_FactsListViewController_WhenThereIsAnError_ShouldShowErrorView() {
-        let response = APIResponse(statusCode: 500, data: nil)
-        let apiError = APIError.statusCode(response)
-        factsServiceMock.searchFactsReturnValue = .error(apiError)
+        factsServiceMock.searchFactsReturnValue = .error(APIError.statusCode(500))
 
         factsListViewModel.inputs.setSearchTerm.onNext("")
 

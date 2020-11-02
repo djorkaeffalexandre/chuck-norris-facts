@@ -27,7 +27,7 @@ final class ErrorView: UIView {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .headline)
 
         return label
     }()
@@ -38,7 +38,7 @@ final class ErrorView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.accessibilityLabel = "Retry"
         button.setTitle("Retry", for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .body)
         button.accessibilityIdentifier = "retryButton"
 
         return button
