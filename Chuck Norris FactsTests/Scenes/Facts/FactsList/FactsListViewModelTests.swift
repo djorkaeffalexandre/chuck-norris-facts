@@ -77,7 +77,7 @@ class FactsListViewModelTests: XCTestCase {
 
         let errorObserver = testScheduler.createObserver(FactsListErrorViewModel.self)
 
-        factsListViewModel.outputs.errors
+        factsListViewModel.outputs.factsListError
             .subscribe(errorObserver)
             .disposed(by: disposeBag)
 
@@ -95,7 +95,7 @@ class FactsListViewModelTests: XCTestCase {
 
         let errorObserver = testScheduler.createObserver(FactsListErrorViewModel.self)
 
-        factsListViewModel.outputs.errors
+        factsListViewModel.outputs.factsListError
             .subscribe(errorObserver)
             .disposed(by: disposeBag)
 
@@ -113,7 +113,7 @@ class FactsListViewModelTests: XCTestCase {
 
         let errorObserver = testScheduler.createObserver(FactsListErrorViewModel.self)
 
-        factsListViewModel.outputs.errors
+        factsListViewModel.outputs.factsListError
             .subscribe(errorObserver)
             .disposed(by: disposeBag)
 

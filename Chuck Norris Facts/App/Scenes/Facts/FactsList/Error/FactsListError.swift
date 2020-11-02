@@ -36,6 +36,16 @@ extension FactsListError {
             return 1
         }
     }
+
+    // A message that will be shown to user.
+    var message: String {
+        switch self {
+        case .syncCategories:
+            return L10n.Errors.cantSyncCategories
+        case .searchFacts:
+            return L10n.Errors.cantSearchFacts
+        }
+    }
 }
 
 extension FactsListError: Equatable {

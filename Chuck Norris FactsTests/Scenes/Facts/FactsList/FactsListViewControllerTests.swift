@@ -57,14 +57,6 @@ class FactsListViewControllerTests: XCTestCase {
         XCTAssertTrue(factsListViewController.emptyListView.searchButton.isHidden)
     }
 
-    func test_FactsListViewController_WhenThereIsAnError_ShouldShowErrorView() {
-        factsServiceMock.searchFactsReturnValue = .error(APIError.statusCode(500))
-
-        factsListViewModel.inputs.setSearchTerm.onNext("")
-
-        XCTAssertFalse(factsListViewController.errorView.isHidden)
-    }
-
     func test_FactCell_WhenContentIsShort_FontSizeShouldBeTitle1() throws {
         let factStub = try stub("short-fact", type: Fact.self)
         let fact = try XCTUnwrap(factStub)

@@ -19,7 +19,6 @@ final class FactsListViewController: UIViewController {
     private let disposeBag = DisposeBag()
 
     let tableView = UITableView()
-    let errorView = ErrorView()
     let loadingView = LoadingView()
     let emptyListView = EmptyListView()
     let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: nil)
@@ -46,7 +45,6 @@ final class FactsListViewController: UIViewController {
         setupView()
         setupBindings()
         setupTableView()
-        setupErrorView()
         setupEmptyListView()
         setupLoadingView()
         setupNavigationBar()
@@ -82,19 +80,6 @@ final class FactsListViewController: UIViewController {
             loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-    }
-
-    private func setupErrorView() {
-        view.addSubview(errorView)
-
-        errorView.isHidden = true
-        errorView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            errorView.topAnchor.constraint(equalTo: view.topAnchor),
-            errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 
@@ -157,16 +142,6 @@ final class FactsListViewController: UIViewController {
         emptyListView.searchButton.rx.tap
             .bind(to: viewModel.inputs.startSearchFacts)
             .disposed(by: disposeBag)
-
-        errorView.retryButton.rx.tap
-            .bind(to: viewModel.inputs.retryAction)
-            .disposed(by: disposeBag)
-
-        viewModel.outputs.errors
-            .bind(onNext: { [weak self] error in
-                self?.showErrorView(error)
-            })
-            .disposed(by: disposeBag)
     }
 
     private func showEmptyView(_ listEmpty: Bool, _ searchEmpty: Bool) {
@@ -195,14 +170,5 @@ final class FactsListViewController: UIViewController {
         } else {
             loadingView.stop()
         }
-    }
-
-    private func showErrorView(_ factsListError: FactsListErrorViewModel) {
-        emptyListView.isHidden = true
-
-        errorView.label.text = factsListError.message
-        errorView.retryButton.isHidden = !factsListError.canRetry
-        errorView.isHidden = false
-        errorView.play()
     }
 }

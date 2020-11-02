@@ -38,6 +38,15 @@ final class FactsListCoordinator: BaseCoordinator<Void> {
             .bind(to: factsListViewModel.inputs.setSearchTerm)
             .disposed(by: disposeBag)
 
+        factsListViewModel.outputs.factsListError
+            .flatMap { [weak self] error in
+                self?.showFactsListError(error: error, in: navigationController) ?? .empty()
+            }
+            .filter { $0.shouldRetry }
+            .mapToVoid()
+            .bind(to: factsListViewModel.inputs.retryAction)
+            .disposed(by: disposeBag)
+
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
 
@@ -64,5 +73,27 @@ final class FactsListCoordinator: BaseCoordinator<Void> {
                 case .search(let searchTerm): return searchTerm
                 }
             }
+    }
+
+    private func showFactsListError(
+        error: FactsListErrorViewModel,
+        in navigationController: UINavigationController
+    ) -> Observable<FactsListErrorViewModel> {
+        Observable.create { observer in
+            let alert = UIAlertController(title: error.title, message: error.message, preferredStyle: .alert)
+
+            let action = UIAlertAction(title: L10n.Common.ok, style: .default) { _ in
+                observer.onNext(error)
+                observer.onCompleted()
+            }
+
+            alert.addAction(action)
+
+            navigationController.present(alert, animated: true, completion: nil)
+
+            return Disposables.create {
+                alert.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 }

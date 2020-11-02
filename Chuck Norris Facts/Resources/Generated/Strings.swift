@@ -11,6 +11,13 @@ import Foundation
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
 
+  internal enum Common {
+    /// Ok
+    internal static let ok = L10n.tr("Localizable", "Common.ok")
+    /// Oops
+    internal static let oops = L10n.tr("Localizable", "Common.oops")
+  }
+
   internal enum EmptyView {
     /// Looks like there are no Facts
     internal static let empty = L10n.tr("Localizable", "EmptyView.empty")
@@ -20,9 +27,11 @@ internal enum L10n {
     internal static let search = L10n.tr("Localizable", "EmptyView.search")
   }
 
-  internal enum ErrorView {
-    /// Retry
-    internal static let retry = L10n.tr("Localizable", "ErrorView.retry")
+  internal enum Errors {
+    /// Can't search facts
+    internal static let cantSearchFacts = L10n.tr("Localizable", "Errors.cantSearchFacts")
+    /// Can't sync categories
+    internal static let cantSyncCategories = L10n.tr("Localizable", "Errors.cantSyncCategories")
   }
 
   internal enum FactCategory {
