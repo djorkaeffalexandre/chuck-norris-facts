@@ -10,27 +10,31 @@ import Foundation
 import RxDataSources
 
 final class FactViewModel {
+    let fact: Fact
+
     let text: String
-    var url: URL?
     let category: String
+    var url: URL?
 
     init(fact: Fact) {
+        self.fact = fact
         self.text = fact.value
-        if let factUrl = fact.url {
-            self.url = URL(string: factUrl)
-        }
         self.category = fact.categories.first?.text.uppercased() ?? L10n.FactCategory.uncategorized
+
+        if let url = fact.url {
+            self.url = URL(string: url)
+        }
     }
 }
 
 extension FactViewModel: IdentifiableType {
     var identity: String {
-        text
+        fact.id
     }
 }
 
 extension FactViewModel: Equatable {
     static func == (lhs: FactViewModel, rhs: FactViewModel) -> Bool {
-        return lhs.text == rhs.text
+        return lhs.fact == rhs.fact
     }
 }
