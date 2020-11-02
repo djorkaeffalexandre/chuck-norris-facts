@@ -279,7 +279,6 @@
 			isa = PBXGroup;
 			children = (
 				1E32758E2532A2C0007E838A /* EmptyListView.swift */,
-				1EF0DA1325449898005CF7E2 /* CategoryView.swift */,
 				1ED06C942548AAD300139151 /* LoadingView.swift */,
 				1E15408E2549FA6200675DC4 /* ErrorView.swift */,
 			);
@@ -307,6 +306,24 @@
 				1E8A0FEB25475B0800565A86 /* SearchFactsTableViewSection.swift */,
 			);
 			path = SearchFacts;
+			sourceTree = "<group>";
+		};
+		1E49C420254F8FC3005BB6B4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1EF0DA1325449898005CF7E2 /* CategoryView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1E49C421254F9043005BB6B4 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				1ED5D18E25349E8D0035046C /* Extensions */,
+				1EFE2881253210A4008806B9 /* Data */,
+				1EFE2865253206C8008806B9 /* Library */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		1E5617212540F42600BF26A0 /* Data */ = {
@@ -535,13 +552,9 @@
 		1EE0713B25314AF500F6BF6D /* Chuck Norris Facts */ = {
 			isa = PBXGroup;
 			children = (
-				1E3075C0254C9CFC0082A194 /* API */,
-				1ED5D18E25349E8D0035046C /* Extensions */,
-				1EFE2881253210A4008806B9 /* Data */,
-				1EFE2865253206C8008806B9 /* Library */,
-				1EFE28632532062A008806B9 /* Scenes */,
-				1EFE286125320620008806B9 /* App */,
+				1E49C421254F9043005BB6B4 /* Core */,
 				1EFE286025320614008806B9 /* Resources */,
+				1EFE286125320620008806B9 /* App */,
 			);
 			path = "Chuck Norris Facts";
 			sourceTree = "<group>";
@@ -587,6 +600,8 @@
 		1EFE286125320620008806B9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				1E49C420254F8FC3005BB6B4 /* Views */,
+				1EFE28632532062A008806B9 /* Scenes */,
 				1EE0713C25314AF500F6BF6D /* AppDelegate.swift */,
 				1EE0713E25314AF500F6BF6D /* SceneDelegate.swift */,
 				1EFE2868253207B2008806B9 /* AppCoordinator.swift */,
@@ -627,6 +642,7 @@
 		1EFE2881253210A4008806B9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				1E3075C0254C9CFC0082A194 /* API */,
 				1E921137253F908C00DB340B /* Storage */,
 				1E92112B253F6CF500DB340B /* Services */,
 				1EFE288525321111008806B9 /* Models */,
