@@ -63,19 +63,25 @@ final class ErrorView: UIView {
         backgroundColor = .systemBackground
 
         addSubview(animation)
-        animation.widthAnchor.constraint(equalToConstant: animationSize).isActive = true
-        animation.heightAnchor.constraint(equalToConstant: animationSize).isActive = true
-        animation.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        animation.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            animation.widthAnchor.constraint(equalToConstant: animationSize),
+            animation.heightAnchor.constraint(equalToConstant: animationSize),
+            animation.centerXAnchor.constraint(equalTo: centerXAnchor),
+            animation.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
 
         addSubview(label)
-        label.topAnchor.constraint(equalTo: animation.bottomAnchor).isActive = true
-        label.widthAnchor.constraint(equalTo: widthAnchor, constant: -padding).isActive = true
-        label.centerXAnchor.constraint(equalTo: animation.centerXAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: animation.bottomAnchor),
+            label.widthAnchor.constraint(equalTo: widthAnchor, constant: -padding),
+            label.centerXAnchor.constraint(equalTo: animation.centerXAnchor)
+        ])
 
         addSubview(retryButton)
-        retryButton.topAnchor.constraint(equalTo: label.bottomAnchor).isActive = true
-        retryButton.centerXAnchor.constraint(equalTo: label.centerXAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            retryButton.topAnchor.constraint(equalTo: label.bottomAnchor),
+            retryButton.centerXAnchor.constraint(equalTo: label.centerXAnchor)
+        ])
     }
 
     func play() {

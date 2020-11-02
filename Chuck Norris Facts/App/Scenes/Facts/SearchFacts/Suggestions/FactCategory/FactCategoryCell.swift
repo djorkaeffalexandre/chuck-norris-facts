@@ -36,7 +36,9 @@ class FactCategoryCell: UICollectionViewCell {
 
     func setupView() {
         contentView.addSubview(categoryView)
-        categoryView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        categoryView.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            categoryView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            categoryView.heightAnchor.constraint(equalTo: contentView.heightAnchor)
+        ])
     }
 }

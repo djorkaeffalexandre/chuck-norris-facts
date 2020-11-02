@@ -63,10 +63,12 @@ class FactsListViewController: UIViewController {
 
         tableView.register(FactCell.self)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
 
         tableView.accessibilityIdentifier = "factsTableView"
     }
@@ -75,10 +77,12 @@ class FactsListViewController: UIViewController {
         view.addSubview(loadingView)
 
         loadingView.translatesAutoresizingMaskIntoConstraints = false
-        loadingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 
     private func setupErrorView() {
@@ -86,20 +90,24 @@ class FactsListViewController: UIViewController {
 
         errorView.isHidden = true
         errorView.translatesAutoresizingMaskIntoConstraints = false
-        errorView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            errorView.topAnchor.constraint(equalTo: view.topAnchor),
+            errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 
     private func setupEmptyListView() {
         view.addSubview(emptyListView)
 
         emptyListView.translatesAutoresizingMaskIntoConstraints = false
-        emptyListView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        emptyListView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        emptyListView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        emptyListView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            emptyListView.topAnchor.constraint(equalTo: view.topAnchor),
+            emptyListView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            emptyListView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            emptyListView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 
     private func setupNavigationBar() {

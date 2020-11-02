@@ -61,11 +61,13 @@ class SuggestionsCell: UITableViewCell {
     }()
 
     private func setupView() {
-        contentView.addSubview(collectionView)
-
         collectionView.backgroundColor = .systemBackground
-        collectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        collectionView.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
+
+        contentView.addSubview(collectionView)
+        NSLayoutConstraint.activate([
+            collectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            collectionView.heightAnchor.constraint(equalTo: contentView.heightAnchor)
+        ])
     }
 
     private func setupBindings() {
