@@ -14,7 +14,7 @@ import Lottie
 
 final class FactsListViewController: UIViewController {
 
-    var viewModel: FactsListViewModel!
+    var viewModel: FactsListViewModel?
 
     private let disposeBag = DisposeBag()
 
@@ -104,6 +104,8 @@ final class FactsListViewController: UIViewController {
     }
 
     private func setupBindings() {
+        guard let viewModel = viewModel else { return }
+
         rx.viewDidAppear
             .bind(to: viewModel.inputs.viewDidAppear)
             .disposed(by: disposeBag)

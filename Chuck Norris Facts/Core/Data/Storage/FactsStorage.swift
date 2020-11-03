@@ -26,32 +26,40 @@ protocol FactsStorageType {
 }
 
 final class FactsStorage: FactsStorageType {
-    private let realm: Realm!
+    private let realm: Realm?
 
     init(realm: Realm? = nil) {
         self.realm = realm ?? (try? Realm())
     }
 
     func storeCategories(_ categories: [FactCategory]) {
+        guard let realm = realm else { return }
+
         try? realm.write {
             let entities = categories.map(FactCategoryEntity.init)
-            self.realm.add(entities, update: .modified)
+            realm.add(entities, update: .modified)
         }
     }
 
     func retrieveCategories() -> Observable<[FactCategory]> {
+        guard let realm = realm else { return .never() }
+
         let entities = realm.objects(FactCategoryEntity.self)
         return Observable.collection(from: entities).map { $0.map { $0.item } }
     }
 
     func storeSearch(searchTerm: String) {
+        guard let realm = realm else { return }
+
         try? realm.write {
             let entity = SearchEntity(searchTerm: searchTerm)
-            self.realm.add(entity, update: .modified)
+            realm.add(entity, update: .modified)
         }
     }
 
     func retrieveSearches() -> Observable<[String]> {
+        guard let realm = realm else { return .never() }
+
         let entities = realm.objects(SearchEntity.self).sorted(byKeyPath: "updatedAt", ascending: false)
         return Observable.collection(from: entities).map { $0.map { $0.searchTerm } }
     }

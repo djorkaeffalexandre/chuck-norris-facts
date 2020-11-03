@@ -12,7 +12,7 @@ import RxDataSources
 
 final class SearchFactsViewController: UIViewController {
 
-    var viewModel: SearchFactsViewModel!
+    var viewModel: SearchFactsViewModel?
 
     let disposeBag = DisposeBag()
 
@@ -109,6 +109,8 @@ final class SearchFactsViewController: UIViewController {
     }
 
     private func setupBindings() {
+        guard let viewModel = viewModel else { return }
+
         rx.viewWillAppear
             .bind(to: viewModel.inputs.viewWillAppear)
             .disposed(by: disposeBag)
