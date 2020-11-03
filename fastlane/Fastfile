@@ -1,0 +1,20 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Run Tests"
+  lane :tests do
+
+    cocoapods
+    scan(workspace: "Chuck Norris Facts.xcworkspace", code_coverage: true)
+
+  end
+
+  desc "Build and Deploy Beta"
+  lane :beta do
+
+    cocoapods
+    build_app(workspace: "Chuck Norris Facts.xcworkspace")
+    upload_to_testflight(skip_waiting_for_build_processing: true)
+
+  end
+end
