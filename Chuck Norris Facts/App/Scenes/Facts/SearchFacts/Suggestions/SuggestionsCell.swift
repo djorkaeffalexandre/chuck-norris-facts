@@ -37,7 +37,7 @@ final class SuggestionsCell: UITableViewCell {
         }
     )
 
-    var viewModel: SuggestionsViewModel! {
+    var viewModel: SuggestionsViewModel? {
         didSet {
             self.setupBindings()
         }
@@ -71,6 +71,8 @@ final class SuggestionsCell: UITableViewCell {
     }
 
     private func setupBindings() {
+        guard let viewModel = viewModel else { return }
+
         collectionView.rx
             .setDelegate(self)
             .disposed(by: disposeBag)
